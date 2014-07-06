@@ -55,5 +55,7 @@ button
 	margin: 1em auto;
 	background-color: white;
 	box-shadow: 0 0 8px 2px #555;
+	transform: scale(1,1);
+	-webkit-transform: scale(1,1);
 }
 

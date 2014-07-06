@@ -2,25 +2,27 @@
 <html>  
 <head>  
 	<meta charset="utf-8">  
-	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
 	<title>Free Games bandit - Free mobile games for iPhone, iPad and Android</title>  
 	<link rel="stylesheet" type="text/css" href="app.css">
 	<script src="lib/jquery-1.8.1.min.js"></script>
-	<script src="canvas2d.js"></script>
-	<script src="scene.js"></script>
-	<script src="spriteAtlas.js"></script>
-	<script src="sprite.js"></script>
+	<script src="lib/Box2dWeb-2.1.a.3.min.js"></script>
+	<script src="lib/engine/canvas2d.js"></script>
+	<script src="lib/engine/scene.js"></script>
+	<script src="lib/engine/imageAtlas.js"></script>
+	<script src="lib/engine/actor.js"></script>
+	<script src="lib/engine/app.js"></script>
 	<script src="resources.js"></script>
-	<script src="app.js"></script>
+	<script src="main.js"></script>
 </head>  
 <body>  
     <div id="app">
         <header>Free Games Bandit</header>
         <div id="main">
-			<canvas width="800" height="600">
+			<canvas id="canvas" width="800" height="600">
 			</canvas>
 			<br />
 			<button id="button1">click me</button>

@@ -1,0 +1,1 @@
+All images are copyright Mat Hopwood @2014. Do not use any of these images in your own works without expression written permission from Mat Hopwood of www.drmop.com
