@@ -3,10 +3,7 @@
 $(function()
 {
 	// Create the app
-	window.app = new TheApp();
-
-	// Create the 2D canvas
-	window.canvas2d = new Canvas2D($("#main>canvas"));
+	window.app = new TheApp($("#main>canvas"));
 
 /*	function resizeCanvas()
 	{
@@ -29,6 +26,7 @@ $(function()
 	var scene = new Scene();
 	scene.initWorld(0, 10, true);
 	window.app.addScene(scene);
+	window.app.focus_scene = scene;
 
 	// Create background
 	var bg = new Actor();
@@ -38,7 +36,7 @@ $(function()
 	bg.w = 800;
 	bg.h = 600;
 	bg.rotation = 0;
-	bg.atlas = window.resources.backgroundAtlas;
+	bg.atlas = window.resources.background_atlas;
 	scene.addActor(bg);
 	
 	// Create floor
@@ -49,7 +47,7 @@ $(function()
 	floor.w = 800;
 	floor.h = 57;
 	floor.rotation = 0;
-	floor.atlas = window.resources.floorAtlas;
+	floor.atlas = window.resources.floor_atlas;
 	floor.use_transform = true;
 	scene.addActor(floor);
 	floor.initBody("static");
@@ -60,13 +58,19 @@ $(function()
 	{
 		var actor = new Actor();
 		actor.name = "reel" + t;
+		actor.touchable = true;
 		actor.x = Math.random() * window.canvas2d.canvas_width;
 		actor.y = Math.random() * window.canvas2d.canvas_height - 100;
+/*		actor.x = 300;
+		actor.y = 300;
+actor.use_transform = true;
+actor.setRotation(5);
+actor.setScale(1, 1);*/
 		actor.w = 86;
 		actor.h = 89;
 		actor.frame = Math.random() * 2;
 		actor.frame_speed = 0.01 + Math.random() * 0.01;
-		actor.atlas = window.resources.reelAtlas;
+		actor.atlas = window.resources.reel_atlas;
 		scene.addActor(actor);
 		actor.initBody("dynamic");
 		actor.addFixture({type: "box", width: 86, height: 89, restitution: 0.2, friction: 1.0, density: 1.0});
