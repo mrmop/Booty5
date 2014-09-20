@@ -1,0 +1,34 @@
+v1.2
+---------
+* GSAP dependency removed
+* JQuery dependency removed
+* Support for actor hierarchies added
+* Support for physics joints added to actors
+* Opacity for actors and scenes added
+* Actors now support 3D depth property
+* Actors now have support for onCreate and onDestroy event handlers
+* Actors now support box, circle and polygon shaped fixtures
+* Fixtures can now be marked as sensors
+* Actors and Scenes can now clip their children against box, circle and polygon cliopping shapes
+* Actors and Scenes now have separate active and visible states
+* Actors now have a simple physics system that is used on Actors that are not under control of Box2D
+* Actors can be docked to the edged of the display as well as to the edges of canvas actors
+* Actors can now ignore scene camera movement
+* Actors now support onCollisionStart and onCollisionEnd events
+* Child actors can now bubble events up to parents
+* Scene camera can track actors
+* Scenes now support touch panning
+* New actor types added:
+  * ArcActor - Displays arcs / circles
+  * CanvasActor - A UI actor that can arrange, scroll around and dock its content
+  * ParticleActor - An actor that is a particle system
+  * Polygon Actor - An actor that displays polygon shapes
+  * RedctActor - An actor that displays rectangle shapes
+* Support for timeline key frame based tween animations added
+* Support for various types of resources added on a global or scene local level, including:
+  * Shapes - Used by clipping and physics systems
+  * Geometries - Used by rendering system to render geometries
+  * Brushes - Used to create sprite atlases / bitmap animation
+  * Sounds - used to play back audio
+  * Materials - Used to define physics materials
+* Full support for the Goji Editor added, including XOML loader

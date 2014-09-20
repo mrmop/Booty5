@@ -1,41 +1,45 @@
 "use strict";
 
-function SheepGame()
+function SheepGame(app)
 {
-	this.loadResources = function()
+	this.app = app;
+	
+	this.loadResources = function(scene)
 	{
-		this.reel_image = new Image();
-		this.reel_image.src = "images/sheep.png";
-		this.reel_atlas = new ImageAtlas();
-		this.reel_atlas.width = 86;
-		this.reel_atlas.height = 89;
-		this.reel_atlas.image = this.reel_image;
-		this.reel_atlas.addFrame(0,0,86,89);
-		this.reel_atlas.addFrame(86,0,86,89);
+		var sheep_bitmap = new Bitmap("sheep", "images/sheep.png", true);
+		scene.addResource(sheep_bitmap, "bitmap");
+		
+		var sheep_atlas = new ImageAtlas("sheep", sheep_bitmap);
+		sheep_atlas.addFrame(0,0,86,89);
+		sheep_atlas.addFrame(86,0,86,89);
+		scene.addResource(sheep_atlas, "brush");
 
-		this.background_image = new Image();
-		this.background_image.src = "images/background.jpg";
+		var background_bitmap = new Bitmap("background", "images/background.jpg", true);
+		scene.addResource(background_bitmap, "bitmap");
 
-		this.floor_image = new Image();
-		this.floor_image.src = "images/hbar.png";
+		var floor_bitmap = new Bitmap("floor", "images/hbar.png", true);
+		scene.addResource(floor_bitmap, "bitmap");
 	}
 
 	this.initGame = function()
 	{
-		window.app.clear_canvas = true;
-		var cw = window.canvas2d.canvas_width;
-		var ch = window.canvas2d.canvas_height;
+		var app = this.app;
+		app.clear_canvas = true;
+		var cw = app.display.canvas_width;
+		var ch = app.display.canvas_height;
 		
-		// Load resources
-		this.loadResources();
-	
 		// Create a scene
-		var scene = new Scene();
+		var scene = new SheepScene();
 		scene.name = "main_scene";
 		scene.initWorld(0, 40, true);
-		window.app.addScene(scene);
-		window.app.focus_scene = scene;
+		scene.touch_pan_x = true;
+		scene.touch_pan_y = true;
+		app.addScene(scene);
+		app.focus_scene = scene;
 
+		// Load resources
+		this.loadResources(scene);
+	
 		// Create background
 		var bg = new Actor();
 		bg.name = "background";
@@ -44,8 +48,9 @@ function SheepGame()
 		bg.w = 800;
 		bg.h = 600;
 		bg.rotation = 0;
-		bg.image = this.background_image;
+		bg.bitmap = scene.findResource("background", "bitmap");
 		bg.touchable = false;
+		bg.ignore_camera = true;
 		scene.addActor(bg);
 		
 		// Create floor
@@ -53,18 +58,18 @@ function SheepGame()
 		floor.name = "floor";
 		floor.w = 800;
 		floor.h = 57;
-		floor.x = cw / 2;
-		floor.y = ch - 30;
+		floor.x = 0;
+		floor.y = (ch - 30) / 2;
 		floor.rotation = 0;
-		floor.image = this.floor_image;
+		floor.bitmap = scene.findResource("floor", "bitmap");;
 		floor.use_transform = true;
 		floor.touchable = false;
 		scene.addActor(floor);
 		floor.initBody("static");
-		floor.addFixture({type: "box", width: floor.w, height: floor.h});
+		floor.addFixture({type: Shape.TypeBox, width: floor.w, height: floor.h});
 		
 		// Create sides
-	/*	var left_side = new Actor();
+		var left_side = new Actor();
 		left_side.name = "left_side";
 		left_side.w = 800;
 		left_side.h = 57;
@@ -76,7 +81,7 @@ function SheepGame()
 		left_side.touchable = false;
 		scene.addActor(left_side);
 		left_side.initBody("static");
-		left_side.addFixture({type: "box", width: left_side.w, height: left_side.h});
+		left_side.addFixture({type: Shape.TypeBox, width: left_side.w, height: left_side.h});
 		var right_side = new Actor();
 		right_side.name = "right_side";
 		right_side.w = 800;
@@ -89,32 +94,205 @@ function SheepGame()
 		right_side.touchable = false;
 		scene.addActor(right_side);
 		right_side.initBody("static");
-		right_side.addFixture({type: "box", width: right_side.w, height: right_side.h});*/
+		right_side.addFixture({type: Shape.TypeBox, width: right_side.w, height: right_side.h});
 		
 		// Add some actors
+		var depth = 1;
 		for (var t = 0; t < 20; t++)
 		{
 			var actor = new SheepActor();
-			actor.name = "reel" + t;
+			actor.name = "sheep" + t;
 			actor.touchable = true;
-			actor.x = Math.random() * window.canvas2d.canvas_width;
-			actor.y = Math.random() * window.canvas2d.canvas_height - 100;
+			actor.x = Math.random() * app.display.canvas_width - app.display.canvas_width / 2;
+			actor.y = Math.random() * app.display.canvas_height - app.display.canvas_height / 2 - 100;
 			actor.w = 86;
 			actor.h = 89;
 			actor.frame = Math.random() * 2;
-			actor.frame_speed = 0.01 + Math.random() * 0.01;
-			actor.atlas = this.reel_atlas;
+			actor.frame_speed = 0.5 + Math.random() * 0.5;
+			actor.atlas = scene.findResource("sheep", "brush");
+			console.log(actor.atlas.bitmap);
+			actor.use_transform = true;
 			scene.addActor(actor);
 			actor.initBody("dynamic");
-			floor.touchable = true;
-			actor.addFixture({type: "box", width: 86, height: 89, restitution: 0.2, friction: 1.0, density: 1.0});
+//			actor.depth = depth;
+			actor.addFixture({type: Shape.TypeBox, width: 86, height: 89, restitution: 0.2, friction: 1.0, density: 1.0});
+			depth += 0.1;
 		}
+		
+		depth = 0.1;
+		for (var t = 0; t < 20; t++)
+		{
+			var actor = new LabelActor();
+			actor.name = "text" + t;
+			actor.touchable = false;
+			actor.x = Math.random() * app.display.canvas_width - app.display.canvas_width / 2;
+			actor.y = Math.random() * app.display.canvas_height - app.display.canvas_height / 2 - 100;
+			actor.w = 86;
+			actor.h = 89;
+			actor.text = "Hello World";
+			actor.use_transform = true;
+			scene.addActor(actor);
+//			actor.initBody("dynamic");
+			actor.depth = depth;
+//		actor.vr = 2;
+//			actor.addFixture({type: "box", width: 86, height: 89, restitution: 0.2, friction: 1.0, density: 1.0});
+			depth += 0.1;
+		}
+		
+		var actor = new SheepActor();
+		actor.name = "reel1";
+		actor.touchable = true;
+		actor.x = 0;
+		actor.y = 0;
+		actor.w = 186;
+		actor.h = 189;
+		actor.frame = Math.random() * 2;
+		actor.frame_speed = 0.5 + Math.random() * 1.0;
+		actor.atlas = scene.findResource("sheep", "brush");
+		actor.use_transform = true;
+		actor.vr = 0;
+//		actor.vx = 500;
+//		actor.vy = 300;
+//		actor.dock_x = 0;
+//		actor.dock_y = 1;
+		actor.wrap_position = true;
+		scene.addActor(actor);
+		
+		var actor2 = new SheepActor();
+		actor2.name = "reel2";
+		actor2.touchable = false;
+		actor2.x = 100;
+		actor2.y = 0;
+		actor2.w = 86;
+		actor2.h = 89;
+		actor2.frame = Math.random() * 2;
+		actor2.frame_speed = 0.5 + Math.random() * 1.0;
+		actor2.atlas = scene.findResource("sheep", "brush");
+		actor2.use_transform = true;
+		actor2.vr = -0.2;
+		actor.addActor(actor2);
+		
+		var actor3 = new SheepActor();
+		actor3.name = "reel3";
+		actor3.touchable = false;
+		actor3.x = 0;
+		actor3.y = 0;
+		actor3.ox = 86 / 2 + 100;
+		actor3.oy = 89 / 2;
+		actor3.absolute_origin = true;
+		actor3.w = 86;
+		actor3.h = 89;
+		actor3.frame = Math.random() * 2;
+		actor3.frame_speed = 0.5 + Math.random() * 1.0;
+		actor3.atlas = scene.findResource("sheep", "brush");
+		actor3.use_transform = true;
+		actor3.vr = 2;
+		actor2.addActor(actor3);
+		
+		var actor4 = new ArcActor();
+		actor4.name = "arc1";
+		actor4.touchable = true;
+		actor4.x = 100;
+		actor4.y = 0;
+		actor4.stroke_style = "#ff00ff";
+		actor4.fill_style = "#00ffff";
+		actor4.start_angle = 0;
+		actor4.end_angle = 2 * Math.PI * 0.75;
+		actor4.radius = 50;
+		actor4.filled = true;
+//		actor4.ox = 2;
+//		actor4.oy = 89 / 2;
+		actor4.w = 86;
+		actor4.h = 89;
+		actor4.use_transform = true;
+		actor4.vr = 2;
+		scene.addActor(actor4);
+		
+		var actor5 = new RectActor();
+		actor5.name = "rect1";
+		actor5.touchable = true;
+		actor5.x = 0;
+		actor5.y = 0;
+		actor5.stroke_style = "#ff00ff";
+		actor5.fill_style = "#40ff4f";
+		actor5.filled = true;
+//		actor5.ox = 2;
+//		actor5.oy = 89 / 2;
+		actor5.w = 86;
+		actor5.h = 89;
+		actor5.use_transform = true;
+		actor5.vr = 2;
+		scene.addActor(actor5);
+		
+		var actor6 = new PolygonActor();
+		actor6.name = "polygon1";
+		actor6.touchable = true;
+		actor6.x = 0;
+		actor6.y = 0;
+		actor6.points = [0, -50, 50, 50, -50, 50];
+		actor6.stroke_style = "#ffff0f";
+		actor6.fill_style = "#804fff";
+		actor6.filled = true;
+//		actor6.ox = 2;
+//		actor6.oy = 89 / 2;
+		actor6.w = 86;
+		actor6.h = 89;
+		actor6.use_transform = true;
+		actor6.vr = 2;
+		scene.addActor(actor6);
+		
+//		scene.targetx = actor;
+//		scene.targety = actor;
+
+		// Create a smoke plume particles actor
+		var smoke_particles = new ParticleActor();
+//		smoke_particles.gravity = 40;
+		app.focus_scene.addActor(smoke_particles);
+		smoke_particles.generatePlume(20, ArcActor, 3, 40, 10, 0.25, 1, {
+			fill_style: "#e0e0e0",
+			radius: 20,
+			vsx: 0.6,
+			vsy: 0.6
+		});
+
+		// Create a explosion particles actor
+		var exp_particles = new ParticleActor();
+		app.focus_scene.addActor(exp_particles);
+		exp_particles.generateExplosion(50, ArcActor, 2, 50, 10, 1, 0.999, {
+			fill_style: "#ffff00",
+			x : -200,
+			radius: 30
+		});
+
+		// Create a rain particles actor
+		var rain_particles = new ParticleActor();
+		app.focus_scene.addActor(rain_particles);
+		rain_particles.generateRain(50, ArcActor, 4, 200, 10, 0.3, 1.0, 1000, {
+			fill_style: "#8080ff",
+			radius: 10,
+			y: -500,
+			vx: 0,
+			ignore_camera: true
+		});
+		
+		// Create a timeline animation
+		var timeline = new Timeline();
+		var anim = timeline.add(smoke_particles, "x", [0, 100, 300, 400], [0, 2, 4, 6], 2, [Ease.sin, Ease.sin, Ease.sin]);
+		anim.setAction(0,function() { console.log("Hit start of frame 0"); });
+		anim.setAction(1,function() { console.log("Hit start of frame 1"); });
+		anim.setAction(2,function() { console.log("Hit start of frame 2"); });
+		anim.onEnd = function() { console.log("Animation ended"); };
+		anim.onRepeat = function() { console.log("Animation repeated"); };
+		anim.setTime(-5);	// Delay start by two seconds
+		scene.timelines.add(timeline);
+
+		
 	}
 	
 	this.releaseGame = function()
 	{
-		window.app.removeScene(window.app.focus_scene);
-		window.app.focus_scene = null;
+		this.app.removeScene(this.app.focus_scene);
+		this.app.focus_scene = null;
 	}
 }
 
