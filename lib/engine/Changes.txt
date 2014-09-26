@@ -1,3 +1,18 @@
+v1.3
+---------
+* Added more comments
+* Actor setters now only dirty transform if a change is made
+* Actor.findActorDeep() removed
+* Actor.findActor() has additional parameter that allows recursive searching
+* Actor.sendToBack() added
+* Actor.addFixture() now returns the created fixture
+* Actor.addJoint() now returns the created joint
+* Scenes now active property which can be used to pause processing
+* Scenes will now still be processed when not visible
+* Scene.findActorDeep() removed
+* Scene.findActor() has additional parameter that allows recursive searching
+* Scene.sendToBack() added
+
 v1.2
 ---------
 * GSAP dependency removed

@@ -1,4 +1,6 @@
-Booty5 is a free open source game engine written using HTML5 and JavaScript. It is also a primary game engine that the [Goji Editor](http://www.gojieditor.com) (a 2D native and HTML5 game editor) targets. Current version is 1.2
+Booty5 is a free open source HTML5 game engine written using JavaScript. It is also a primary game engine that the [Goji Editor](http://www.gojieditor.com) (a 2D native and HTML5 game editor) targets. Current version is 1.3
+
+For more in-depth information about Booty5 see the [Booty5 website](http://www.gojieditor.com/index.php/booty5). For API reference see the [Booty5 API reference](http://www.gojieditor.com/index.php/booty5/reference)
 
 Currently supports:
 - Resource management
