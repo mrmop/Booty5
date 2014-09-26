@@ -1,3 +1,7 @@
+v1.3.1
+---------
+* Modified engine so that Box2D can be safely excluded if not needed
+
 v1.3
 ---------
 * Added more comments
