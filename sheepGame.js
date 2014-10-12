@@ -25,18 +25,42 @@ function SheepGame(app)
 	{
 		var app = this.app;
 		app.clear_canvas = true;
-		var cw = app.display.canvas_width;
-		var ch = app.display.canvas_height;
-		
+		var cw = app.canvas_width;
+		var ch = app.canvas_height;
 		// Create a scene
 		var scene = new SheepScene();
 		scene.name = "main_scene";
 		scene.initWorld(0, 40, true);
+		app.addScene(scene);
+		app.focus_scene = scene;	// Set as focus scene (scene that receives input
+
+		// Enable scene touch panning
 		scene.touch_pan_x = true;
 		scene.touch_pan_y = true;
-		app.addScene(scene);
-		app.focus_scene = scene;
+		scene.extents = [-2048,-2048,4096,4096];
+		
+		// Add clipper to scene
+/*		var clipper = new Shape();
+		clipper.type = Shape.TypeCircle;
+		clipper.width = 300;
+		scene.clip_shape = clipper;*/
 
+		// Add a scene update (onTick) handler
+		scene.onTick = function(dt) {
+//			this.x++;
+		};
+
+		// Add touch handlers to a scene
+		scene.onBeginTouch = function(touch_pos) {
+			console.log("Scene touch begin");
+		};
+		scene.onEndTouch = function(touch_pos) {
+			console.log("Scene touch end");
+		};
+		scene.onMoveTouch = function(touch_pos) {
+//			console.log("Scene touch move");
+		};
+		
 		// Load resources
 		this.loadResources(scene);
 	
@@ -73,10 +97,10 @@ function SheepGame(app)
 		left_side.name = "left_side";
 		left_side.w = 800;
 		left_side.h = 57;
-		left_side.x = 0;
-		left_side.y = ch / 2;
+		left_side.x = -cw / 2;
+		left_side.y = 0;
 		left_side.rotation = Math.PI / 2;
-		left_side.image = this.floor_image;
+		left_side.bitmap = floor.bitmap;
 		left_side.use_transform = true;
 		left_side.touchable = false;
 		scene.addActor(left_side);
@@ -86,10 +110,10 @@ function SheepGame(app)
 		right_side.name = "right_side";
 		right_side.w = 800;
 		right_side.h = 57;
-		right_side.x = cw;
-		right_side.y = ch / 2;
+		right_side.x = cw / 2;
+		right_side.y = 0;
 		right_side.rotation = Math.PI / 2;
-		right_side.image = this.floor_image;
+		right_side.bitmap = floor.bitmap;
 		right_side.use_transform = true;
 		right_side.touchable = false;
 		scene.addActor(right_side);
@@ -103,20 +127,19 @@ function SheepGame(app)
 			var actor = new SheepActor();
 			actor.name = "sheep" + t;
 			actor.touchable = true;
-			actor.x = Math.random() * app.display.canvas_width - app.display.canvas_width / 2;
-			actor.y = Math.random() * app.display.canvas_height - app.display.canvas_height / 2 - 100;
+			actor.x = Math.random() * cw - cw / 2;
+			actor.y = Math.random() * ch - ch / 2 - 100;
 			actor.w = 86;
 			actor.h = 89;
 			actor.frame = Math.random() * 2;
 			actor.frame_speed = 0.5 + Math.random() * 0.5;
 			actor.atlas = scene.findResource("sheep", "brush");
-			console.log(actor.atlas.bitmap);
 			actor.use_transform = true;
 			scene.addActor(actor);
 			actor.initBody("dynamic");
-//			actor.depth = depth;
+			actor.depth = depth;
 			actor.addFixture({type: Shape.TypeBox, width: 86, height: 89, restitution: 0.2, friction: 1.0, density: 1.0});
-			depth += 0.1;
+//			depth += 0.1;
 		}
 		
 		depth = 0.1;
@@ -125,17 +148,14 @@ function SheepGame(app)
 			var actor = new LabelActor();
 			actor.name = "text" + t;
 			actor.touchable = false;
-			actor.x = Math.random() * app.display.canvas_width - app.display.canvas_width / 2;
-			actor.y = Math.random() * app.display.canvas_height - app.display.canvas_height / 2 - 100;
+			actor.x = Math.random() * cw - cw / 2;
+			actor.y = Math.random() * ch - ch / 2 - 100;
 			actor.w = 86;
 			actor.h = 89;
 			actor.text = "Hello World";
 			actor.use_transform = true;
 			scene.addActor(actor);
-//			actor.initBody("dynamic");
 			actor.depth = depth;
-//		actor.vr = 2;
-//			actor.addFixture({type: "box", width: 86, height: 89, restitution: 0.2, friction: 1.0, density: 1.0});
 			depth += 0.1;
 		}
 		
@@ -175,11 +195,8 @@ function SheepGame(app)
 		var actor3 = new SheepActor();
 		actor3.name = "reel3";
 		actor3.touchable = false;
-		actor3.x = 0;
+		actor3.x = 90;
 		actor3.y = 0;
-		actor3.ox = 86 / 2 + 100;
-		actor3.oy = 89 / 2;
-		actor3.absolute_origin = true;
 		actor3.w = 86;
 		actor3.h = 89;
 		actor3.frame = Math.random() * 2;
@@ -188,6 +205,17 @@ function SheepGame(app)
 		actor3.use_transform = true;
 		actor3.vr = 2;
 		actor2.addActor(actor3);
+		
+		var particles = new ParticleActor();
+		actor3.addActor(particles);
+		particles.generatePlume(20, ArcActor, 3, 40, 10, 0.25, 1, {
+			fill_style: "#ffff00",
+			radius: 20,
+			vsx: 0.6,
+			vsy: 0.6,
+			y: -50,
+			orphaned: false
+		});
 		
 		var actor4 = new ArcActor();
 		actor4.name = "arc1";
@@ -224,12 +252,14 @@ function SheepGame(app)
 		actor5.vr = 2;
 		scene.addActor(actor5);
 		
+		var geom = new Geometry("geom1", [0, -50, 50, 50, -50, 50]);
+		
 		var actor6 = new PolygonActor();
 		actor6.name = "polygon1";
 		actor6.touchable = true;
 		actor6.x = 0;
 		actor6.y = 0;
-		actor6.points = [0, -50, 50, 50, -50, 50];
+		actor6.points = geom.vertices;
 		actor6.stroke_style = "#ffff0f";
 		actor6.fill_style = "#804fff";
 		actor6.filled = true;
@@ -238,11 +268,34 @@ function SheepGame(app)
 		actor6.w = 86;
 		actor6.h = 89;
 		actor6.use_transform = true;
+//		actor6.vx = 100;
 		actor6.vr = 2;
 		scene.addActor(actor6);
 		
-//		scene.targetx = actor;
-//		scene.targety = actor;
+		var timeline = new Timeline();
+		timeline.add(actor6, "x", [0,100,200], [0, 1, 2], 0, [Ease.quadin, Ease.quadout]);
+		timeline.add(actor6, "y", [0,100,200], [0, 1, 2], 0, [Ease.quadin, Ease.quadout]);
+		scene.timelines.add(timeline);
+		
+		var canvas_actor = new CanvasActor();
+		canvas_actor.w = 200;
+		canvas_actor.h = 200;
+		canvas_actor.x = 100;
+		canvas_actor.y = 100;
+		canvas_actor.bitmap = scene.findResource("floor", "bitmap");;
+		canvas_actor.touchable = true;
+		canvas_actor.clip_children = true;
+		canvas_actor.scroll_range = [-100,-100,200,200];
+		scene.addActor(canvas_actor);
+		
+		var child_actor = new Actor();
+		child_actor.w = 50;
+		child_actor.h = 50;
+		child_actor.bitmap = scene.findResource("floor", "bitmap");;
+		canvas_actor.addActor(child_actor);
+		
+//		scene.target_x = actor6;
+//		scene.target_y = actor6;
 
 		// Create a smoke plume particles actor
 		var smoke_particles = new ParticleActor();
@@ -252,7 +305,8 @@ function SheepGame(app)
 			fill_style: "#e0e0e0",
 			radius: 20,
 			vsx: 0.6,
-			vsy: 0.6
+			vsy: 0.6,
+			orphaned: true
 		});
 
 		// Create a explosion particles actor

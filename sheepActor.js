@@ -3,12 +3,12 @@
 SheepActor.prototype = new Actor();
 SheepActor.prototype.constructor = SheepActor;
 SheepActor.prototype.parent = Actor.prototype;
-function SheepActor(options)
+function SheepActor()
 {
 	// Public variables
 
 	// Call constructor
-	Actor.call(this, options);
+	Actor.call(this);
 }
 
 SheepActor.prototype.update = function(dt)

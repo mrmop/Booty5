@@ -1,6 +1,20 @@
 v1.3.1
 ---------
+* Updated comments and added examples
 * Modified engine so that Box2D can be safely excluded if not needed
+* TheApp now supports dynamic canvas calling to fit the canvas to the browsers client area, supports scale to fit to x-y axis or resize to client area, see TheApp.canvas_scale_method. TheApp.setCanvasScalingMethod can be used to change method
+* Added new functions to TheApp, Scene and Actor that can dirty all transforms and force an update
+* TheApp now stores canvas size (canvas_width, canvas_height), display size (display_width, display_height), canvas scale and centre points and device pixel ratio (pixel_ratio)
+* TheApPp now has touch_supported property that  is set to true if touch is supported
+* TheApp now has new property called dt which represents the time passed since the last frame was updated
+* ImageAtlas generation now supports start x and y position which enables an image offset to be specified
+* Xoml loader now supports text_align, text_baseline and fill_stye properties
+* Added Actor._scale property
+* Added Actor.changeParent(actor, parent) that enables actors to be moved from one parent to another
+* Added Actor.findFirstParent() which finds the first Actor based parent
+* Added Actor.transformPoint() that ca be used to transform a point into the actors coordinate system
+* ParticleActor.add() has a 5th parameter called orphaned, if set to true then the particle will be added to the scene and not the particle actor
+
 
 v1.3
 ---------

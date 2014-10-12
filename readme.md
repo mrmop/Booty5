@@ -1,8 +1,9 @@
-Booty5 is a free open source HTML5 game engine written using JavaScript. It is also a primary game engine that the [Goji Editor](http://www.gojieditor.com) (a 2D native and HTML5 game editor) targets. Current version is 1.3
+Booty5 is a free open source HTML5 game engine written using JavaScript. A full game editor / game maker application is also available from the [Booty5 website](http://www.booty5.com).
 
-For more in-depth information about Booty5 see the [Booty5 website](http://www.gojieditor.com/index.php/booty5). For API reference see the [Booty5 API reference](http://www.gojieditor.com/index.php/booty5/reference)
+For more in-depth information about the Booty5 engine and game ditor see the [Booty5 website](http://www.booty5.com/index.php/booty5). For API reference see the [Booty5 API reference](http://booty5.com/html5-game-engine/booty5-html5-game-engine-reference/)
 
 Currently supports:
+- Mobile and desktop
 - Resource management
 - Scene management
 - Actor (game object) management, image, text, shape and particle system based
@@ -13,17 +14,19 @@ Currently supports:
 - Touch event handlers
 - 2D canvas
 - Audio play back
-- Support for Goji Editor the game IDE
+- Dynamic scaling of canvas to fit display
+- Support for Booty5 game HTML5 editor / maker
 
 #The Basics
 ##TheApp
-TheApp is the main app controller and is responsible for general housekeeping and Scene processing, ThEApp ahs the following features:
+TheApp is the main app controller and is responsible for general housekeeping and Scene processing, TheApp has the following features:
 - Manages global resources
 - Manages global animation timelines
 - Manages a collection of Scenes
 - Handles touch input
 - Finds which Actor was touched
 - Main loop processing
+- Scales / resizes  canvas to fit the display
 
 ##Scenes
 A Scene is a container for game objects and has the following features:
