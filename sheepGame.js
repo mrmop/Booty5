@@ -252,7 +252,8 @@ function SheepGame(app)
 		actor5.vr = 2;
 		scene.addActor(actor5);
 		
-		var geom = new Geometry("geom1", [0, -50, 50, 50, -50, 50]);
+		var geom = new Shape("geom1");
+		geom.vertices = [0, -50, 50, 50, -50, 50];
 		
 		var actor6 = new PolygonActor();
 		actor6.name = "polygon1";
@@ -277,7 +278,7 @@ function SheepGame(app)
 		timeline.add(actor6, "y", [0,100,200], [0, 1, 2], 0, [Ease.quadin, Ease.quadout]);
 		scene.timelines.add(timeline);
 		
-		var canvas_actor = new CanvasActor();
+		var canvas_actor = new Actor(true);
 		canvas_actor.w = 200;
 		canvas_actor.h = 200;
 		canvas_actor.x = 100;

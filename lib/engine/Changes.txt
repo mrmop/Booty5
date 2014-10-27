@@ -1,4 +1,20 @@
-v1.3.1
+v1.3.4
+------
+* Removed CanvasActor and rolled into Actor. To give an actor a virtual canvas call makeVirtual() on the actor
+* Fixed bug in App.cleanupDestroyedScenes() that was preventing removed scenes from being cleaned up
+* Added new array property to Actor called anim_frames that enables specification of an array of bitmap animation frame indices
+* ImageAtlas.generate() has new optional param that allows you to specify total number of frames to generate
+* Geometry class has been removed and rolled into the Shape class
+* Added new property to Actor called clip_shape which enables the actor and its children to clip against arbitrary shapes
+* Added new property to Actor called self_clip which when set to true will clip the actor against its own clipping shape
+* If ParticleActor.onParticleLost() returns false then the particle will not be destroyed
+* All resources now contain parent container property
+* All resources now have destroy() method that removes them from their container and destroys them
+* Bitmap constructor now accepts optional 4th parameter that is a callback function that will be called when the image has been loaded
+* Scene.areResourcesLoaded() added to scene which will return true if all scene resources have been loaded
+* TheApp.areResourcesLoaded(include_scenes) added to TheApp which will return true if all scene resources have been loaded, if include_scenes is true then all scenes will also be checked
+
+v1.3.3
 ---------
 * Updated comments and added examples
 * Modified engine so that Box2D can be safely excluded if not needed
