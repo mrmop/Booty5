@@ -1,3 +1,7 @@
+v1.3.5
+------
+* Xoml.js now loads Actor.onLostTouchFocus event
+
 v1.3.4
 ------
 * Removed CanvasActor and rolled into Actor. To give an actor a virtual canvas call makeVirtual() on the actor
