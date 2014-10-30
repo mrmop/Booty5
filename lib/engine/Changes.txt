@@ -1,6 +1,8 @@
-v1.3.5
+v1.3.6
 ------
 * Xoml.js now loads Actor.onLostTouchFocus event
+* Fixed issue wtth actor clipping causing degradation and flickering
+* Fixed actor origins
 
 v1.3.4
 ------
