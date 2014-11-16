@@ -134,7 +134,6 @@ function SheepGame(app)
 			actor.frame = Math.random() * 2;
 			actor.frame_speed = 0.5 + Math.random() * 0.5;
 			actor.atlas = scene.findResource("sheep", "brush");
-			actor.use_transform = true;
 			scene.addActor(actor);
 			actor.initBody("dynamic");
 			actor.depth = depth;
@@ -153,7 +152,6 @@ function SheepGame(app)
 			actor.w = 86;
 			actor.h = 89;
 			actor.text = "Hello World";
-			actor.use_transform = true;
 			scene.addActor(actor);
 			actor.depth = depth;
 			depth += 0.1;
@@ -169,7 +167,6 @@ function SheepGame(app)
 		actor.frame = Math.random() * 2;
 		actor.frame_speed = 0.5 + Math.random() * 1.0;
 		actor.atlas = scene.findResource("sheep", "brush");
-		actor.use_transform = true;
 		actor.vr = 0;
 //		actor.vx = 500;
 //		actor.vy = 300;
@@ -188,7 +185,6 @@ function SheepGame(app)
 		actor2.frame = Math.random() * 2;
 		actor2.frame_speed = 0.5 + Math.random() * 1.0;
 		actor2.atlas = scene.findResource("sheep", "brush");
-		actor2.use_transform = true;
 		actor2.vr = -0.2;
 		actor.addActor(actor2);
 		
@@ -202,7 +198,6 @@ function SheepGame(app)
 		actor3.frame = Math.random() * 2;
 		actor3.frame_speed = 0.5 + Math.random() * 1.0;
 		actor3.atlas = scene.findResource("sheep", "brush");
-		actor3.use_transform = true;
 		actor3.vr = 2;
 		actor2.addActor(actor3);
 		
@@ -232,7 +227,6 @@ function SheepGame(app)
 //		actor4.oy = 89 / 2;
 		actor4.w = 86;
 		actor4.h = 89;
-		actor4.use_transform = true;
 		actor4.vr = 2;
 		scene.addActor(actor4);
 		
@@ -248,7 +242,6 @@ function SheepGame(app)
 //		actor5.oy = 89 / 2;
 		actor5.w = 86;
 		actor5.h = 89;
-		actor5.use_transform = true;
 		actor5.vr = 2;
 		scene.addActor(actor5);
 		
@@ -268,7 +261,6 @@ function SheepGame(app)
 //		actor6.oy = 89 / 2;
 		actor6.w = 86;
 		actor6.h = 89;
-		actor6.use_transform = true;
 //		actor6.vx = 100;
 		actor6.vr = 2;
 		scene.addActor(actor6);

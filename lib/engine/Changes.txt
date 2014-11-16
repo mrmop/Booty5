@@ -1,7 +1,13 @@
+v1.3.7
+------
+* Updated Xoml.loadJSON() to work without JQuery
+* Added support for storing concave polygons as separate convex polygons to shape
+* Updated Xoml loader and Actor.addFixture() to utilise multiple convex fixtures from a single shape
+
 v1.3.6
 ------
 * Xoml.js now loads Actor.onLostTouchFocus event
-* Fixed issue wtth actor clipping causing degradation and flickering
+* Fixed issue with actor clipping causing degradation and flickering
 * Fixed actor origins
 
 v1.3.4

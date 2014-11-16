@@ -82,5 +82,5 @@ Supports the following event handlers:
 
 Written by Mat Hopwood (http://www.drmop.com)
 
-Note that this engine utilises the following additional frameworks, please check the distribution rights of these frameworks if you use this engine:
+Note that this engine can utilise the following additional frameworks, please check the distribution rights of these frameworks if you use this engine:
 - Box2dWeb (http://code.google.com/p/box2dweb/)
