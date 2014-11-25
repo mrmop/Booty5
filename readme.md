@@ -1,17 +1,20 @@
 Booty5 is a free open source HTML5 game engine written using JavaScript. A full game editor / game maker application is also available from the [Booty5 website](http://booty5.com).
 
-For more in-depth information about the Booty5 engine and game ditor see the [Booty5 website](http://www.booty5.com/index.php/booty5). For API reference see the [Booty5 API reference](http://booty5.com/html5-game-engine/booty5-html5-game-engine-reference/)
+For more in-depth information about the Booty5 engine and game editor see the [Booty5 website](http://www.booty5.com/index.php/booty5). For API reference see the [Booty5 API reference](http://booty5.com/html5-game-engine/booty5-html5-game-engine-reference/)
 
 Currently supports:
 - Mobile and desktop
 - Resource management
 - Scene management
 - Actor (game object) management, image, text, shape and particle system based
+- Sprite, text and 2D polygon rendering
 - Box2D via Box2DWeb
-- Animation timeline / tweening
+- Animation timelines / tweening
+- Bitmap and gradient brushes
 - Sprite atlases
 - Frame based bitmap animation
 - Touch event handlers
+- Scene and actor clipping
 - 2D canvas
 - Audio play back
 - Dynamic scaling of canvas to fit display
@@ -41,6 +44,7 @@ A Scene is a container for game objects and has the following features:
 - Can detect when an actor in the scene has been touched
 - Clipping of child actors against scene, also supports clipping shapes
 - Scene wide opacity
+- Scene layer ordering
 
 Scenes support the following event handlers:
 - onCreate() - Called just after Scene has been created
@@ -53,20 +57,23 @@ Scenes support the following event handlers:
 ##Actors
 An Actor is a basic game object that carries our game logic and rendering. The base Actor has the following features:
 - Position, size, scale, rotation (set use_transform to true if using rotation or scaling, auto set if using Box2D)
+- Can be represented visually by arcs, rectangles (included rounded), polygons, bitmaps and labels
+- Support for a virtual canvas that can scroll content around
 - Absolute (pixel coordinate) and relative (based on size of Actor) origins
 - 3D depth (allows easy parallax scrolling)
 - Angular, linear and depth velocity
 - Box2D physics support (including multiple fixtures and joints)
 - Bitmap frame animation
-- Sprite atlas support
+- Sprite atlas and gradient brush support
 - Child actor hierarchy
 - Begin, end and move touch events (when touchable is true), also supports event bubbling
 - Canvas edge docking with dock margins
 - Can move in relation to camera or be locked in place
 - Can be made to wrap with scene extents on x and y axis
 - Clip child actors against the extents of the parent with margins and shapes
+- Layer ordering
 - Opacity
-- Actors can be arcs, rectangles, polygons, bitmaps, labels or UI canvases
+- Composite operations
 
 Supports the following event handlers:
 - onCreate() - Called just after Actor has been created
@@ -78,7 +85,6 @@ Supports the following event handlers:
 - onMoveTouch(touch_pos) - Called when a touch is moved over the Actor
 - onCollisionStart(contact) - Called when the Actor started colliding with another
 - onCollisionEnd(contact) - Called when the Actor stopped colliding with another
-
 
 Written by Mat Hopwood (http://www.drmop.com)
 

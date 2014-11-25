@@ -1,3 +1,18 @@
+v1.3.8
+------
+* Added support for wheel joint
+* Added panning property to Scene to determine when the scene is being touch panned
+* Box2D begin and end contact callbacks now call both objects that were affected
+* Added corner_radius property to rectActor to render rounded rects
+* Added support for stroke colour and thickness to rect, arc, polygon and label actors
+* Added support for scene and actor layer ordering. Set layer via _layer property and not layer variable to ensure that re-sorting takes place
+* Added new shadow properties all actor types (shadow, shadow_x, shadow_y, shadow_colour, shadow_blur)
+* Added support for composite operations to actors
+* Added support for Scene onKeyPres, onKeyDown and onKeyUp events
+* Added new demos keys, mouse joint and bitmap animation
+* Added new Gradient class that handles gradient brushes
+* Rect, Arc and Polygon actors can now render gradient brushes at any angle, angle is specified by new grad_rotation property
+
 v1.3.7
 ------
 * Updated Xoml.loadJSON() to work without JQuery
@@ -25,6 +40,7 @@ v1.3.4
 * Bitmap constructor now accepts optional 4th parameter that is a callback function that will be called when the image has been loaded
 * Scene.areResourcesLoaded() added to scene which will return true if all scene resources have been loaded
 * TheApp.areResourcesLoaded(include_scenes) added to TheApp which will return true if all scene resources have been loaded, if include_scenes is true then all scenes will also be checked
+
 
 v1.3.3
 ---------
