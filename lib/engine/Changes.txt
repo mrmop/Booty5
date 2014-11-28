@@ -1,3 +1,10 @@
+v1.3.9
+------
+* Added support for gradients to unfilled shapes
+* Removed gradient angle property and replaced with gradient start and gradient end points
+* Added support for text gradients
+* Moved gradient style creation out of Xoml class and into Gradient class
+
 v1.3.8
 ------
 * Added support for wheel joint
