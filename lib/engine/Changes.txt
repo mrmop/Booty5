@@ -1,3 +1,23 @@
+v1.4
+----
+* Added new Actor setPositionPhysics() and setRotationPhysics() to set associated physics body position and rotation directly
+* Added new utils class that contains utility functions
+* Fixed actor and scene sorting using new sorting method in Utils called sortLayers()
+* Added new property to TheApp called use_marm which should be set to true if deploying to mobile using the Marmalade SDK
+* Added new property to Sound constructor called reuse which can be used to force the sound effect to be reused (only useful for short sound effects at may not play if one is already playing)
+* Added new stop / pause methods to Sound class, only usable with reusable sounds
+* Sound class will now use the powerful Marmalade audio system instead of standard, if its available
+* Added new method TheApp.parseAndSetFocus(scene_name) which parses xoml JSON and sets the named scene as the current scene
+* TimelineManager.add() now returns the timeline that was added
+* Scene.addActor() now returns the added actor
+* Actor.addActor() now returns the added actor
+* TheApp.addScene() now returns the added scene
+* ParticleActor.addParticle() now returns the added particle
+* Main loop timer replaced with requestAnimationFrame for smoother rendering
+* TheApp now measures average frame rate via avg_fps property
+* TheApp has new property called adaptive_physics which will run physics update multiple times within a single frame if frame rate falls considerably outside target frame rate
+* Actors can now all be cached by setting cache property to true. When cached the actor will be rendered only once to an off screen canvas, subsequent rendering will be of the cached version. note that the Size of the actor as specified by its properties will determine the size of the cached canvas area. In the case of unfilled actors, the allocated size will be slightly larger to allow for stroke thickness. Note that shadows and composite operations are not cached
+
 v1.3.9
 ------
 * Added support for gradients to unfilled shapes
