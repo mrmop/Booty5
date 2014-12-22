@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="My First Project Booty5 Tutorial" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="False" JQuery="False" />
+  <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Image Name="crate" Location="E:\AppEasy\html5\tutorials\My First Project\crate.png" />
+  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Image="crate" />
+  <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Jumpy\Common.js" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="600,300" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WorldScale="10,10" PhysicsTimestep="0.0333333333333333">
+    <Icon Name="crate1" Position="-112.8,-79.2" Background="crate" Size="157,142" AlphaMode="4" Type="0" AngularVelocity="100" WrapPosition="False" />
+    <Icon Name="crate2" Position="171.4,-21.6" Background="crate" Size="157,142" AlphaMode="4" Type="0" AngularVelocity="-100" WrapPosition="False" />
+  </Scene>
+</xml>

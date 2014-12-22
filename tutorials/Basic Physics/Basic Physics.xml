@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" />
+  <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Image Name="ground" Location="E:\AppEasy\html5\tutorials\Basic Physics\ground.png" />
+  <Image Name="crate" Location="E:\AppEasy\html5\tutorials\Basic Physics\crate.png" />
+  <Brush Name="ground" Rect="0,0,512,125" ScaleArea="0,0,0,0" Image="ground" />
+  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="30,30,97,82" Image="crate" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WorldScale="10,10" PhysicsTimestep="0.0333333333333333">
+    <Material Name="static" MaterialType="0" Density="1" Friction="0.1" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
+    <Material Name="dynamic" MaterialType="1" Density="1" Friction="0.1" Restitution="0.5" GravityScale="1" IsBullet="false" FixedRotation="false" />
+    <Icon Name="ground1" Position="2.48000000000019,245.12" Background="ground" Size="512,125" AlphaMode="4" OnCollisionStart="call collided" Type="0" WrapPosition="False">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="crate1" Position="0,-80" Background="crate" Size="157,142" AlphaMode="4" Type="0" WrapPosition="False">
+      <Fixture Material="dynamic" />
+    </Icon>
+  </Scene>
+</xml>

@@ -16,9 +16,9 @@ Currently supports:
 - Touch event handlers
 - Scene and actor clipping
 - 2D canvas
-- Audio play back
+- Audio play back, including reliable audio via Marmalasde Web if available
 - Dynamic scaling of canvas to fit display
-- Game object cahcing to speed up rendering
+- Game object caching to speed up rendering
 - Support for Booty5 game HTML5 editor / maker
 
 #The Basics

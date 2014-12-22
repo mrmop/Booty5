@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" />
+  <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Brush Name="background" Rect="0,0,32,32" ScaleArea="0,0,0,0" BrushType="1">
+    <ColourStop a="255" r="100" g="149" b="237" selected="true" value="0" />
+    <ColourStop a="255" r="210" g="105" b="30" selected="false" value="0.5" />
+    <ColourStop a="255" r="184" g="134" b="11" selected="false" value="0.7" />
+    <ColourStop a="255" r="173" g="255" b="47" selected="false" value="1" />
+  </Brush>
+  <Brush Name="background2" Rect="0,0,32,32" ScaleArea="0,0,0,0" BrushType="1">
+    <ColourStop a="126" r="100" g="149" b="237" selected="false" value="0" />
+    <ColourStop a="170" r="210" g="105" b="30" selected="false" value="0.5" />
+    <ColourStop a="141" r="173" g="255" b="47" selected="false" value="1" />
+  </Brush>
+  <Brush Name="shine" Rect="0,0,32,32" ScaleArea="0,0,0,0" BrushType="1">
+    <ColourStop a="61" r="255" g="255" b="255" selected="false" value="0" />
+    <ColourStop a="125" r="100" g="149" b="237" selected="false" value="0.5" />
+    <ColourStop a="50" r="210" g="105" b="30" selected="false" value="1" />
+  </Brush>
+  <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Gradients\Common.js" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WorldScale="10,10" PhysicsTimestep="0.0333333333333333">
+    <Icon Name="sprite1" Position="0,0" GAngle="90" Background="background" Size="1024,768" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="sprite2" Position="0,0" Scale="2,2" GAngle="90" Background="background2" Size="1024,1024" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="bubble1" Position="30,0" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble4" Position="-69.9506560365732,0" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine3" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble5" Position="-169.901312073146,0" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine4" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble6" Position="-269.85196810972,0" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine5" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble2" Position="129.950656036573,0" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine1" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble8" Position="129.950656036573,-99.9506560365732" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine7" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble9" Position="30,-99.9506560365732" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine8" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble10" Position="-69.9506560365732,-99.9506560365732" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine9" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble11" Position="-169.901312073146,-99.9506560365732" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine10" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble12" Position="-269.85196810972,-99.9506560365732" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine11" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble3" Position="229.901312073146,0" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine2" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="bubble7" Position="229.901312073146,-99.9506560365732" Angle="45" GAngle="45" Layer="1" Background="background2" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="shine6" Position="-20,20.8" GAngle="45" Background="shine" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    </Icon>
+  </Scene>
+</xml>
