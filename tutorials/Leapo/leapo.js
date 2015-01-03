@@ -1,18 +1,48 @@
+var difficulty = 0;
 var game_time_left = 60;
 var game_in_progress = false;
-var max_round_time = 60;
-var max_rounds = 20;
+var max_round_time = 70;
+var max_rounds = 30;
 var current_round = 1;
 var lives_left = 9;
+var jump_timer = 0;
 var rounds_complete = [
-false, false, false, false, false, 
-false, false, false, false, false, 
-false, false, false, false, false, 
-false, false, false, false, false
+[
+	false, false, false, false, false, 
+	false, false, false, false, false, 
+	false, false, false, false, false, 
+	false, false, false, false, false,
+	false, false, false, false, false,
+	false, false, false, false, false
+],
+[
+	false, false, false, false, false, 
+	false, false, false, false, false, 
+	false, false, false, false, false, 
+	false, false, false, false, false,
+	false, false, false, false, false,
+	false, false, false, false, false
+]
 ];
+
+
+function gameLoaded()
+{
+	window.app.findResource('music', 'sound').play();
+	window.app.cocoonjs = typeof Cocoon != "undefined";
+	initAds();
+	loadAds();
+	showAds();
+}
 
 function startGame()
 {
+	loadGame();
+	updateLocks();
+	console.log(rounds_complete[0]);
+	console.log(rounds_complete[0][0]);
+	console.log(rounds_complete[1]);
+	console.log(rounds_complete[1][0]);
 	var app = window.app;
 	app.focus_scene = app.findScene("levelselect");
 	app.focus_scene.active = true;
@@ -31,6 +61,8 @@ function startGame()
 
 function startLevel(level)
 {
+	loadAds();
+	
 	var app = window.app;
 	
 	// Show hud
@@ -55,6 +87,7 @@ function startLevel(level)
 	game_in_progress = true;
 	current_round = level;
 	updateHud();
+	app.findScene("gamescene").min_panning = 2*2 * 2; // Prevents small touch pan movements from stopping jump
 }
 
 function restartRound()
@@ -64,12 +97,24 @@ function restartRound()
 
 function nextRound()
 {
+	if (isGameComplete())
+	{
+		var hud_scene = app.findScene("gamehud");
+		hud_scene.active = false;
+		hud_scene.visible = false;
+		var scene = window.app.findScene("gamecomplete");
+		scene.active = true;
+		scene.visible = true;
+		window.app.focus_scene = scene;
+		resetGame();
+		return;
+	}
 	current_round++;
 	if (current_round > max_rounds)
 	{
 		current_round = 1;
-		if (max_round_time > 40)
-			max_round_time -= 2;
+		if (difficulty < 1)
+			difficulty++;
 	}
 	else
 	{
@@ -92,6 +137,11 @@ function updateTime(clock, dt)
 
 	clock.text = (game_time_left << 0).toString();
 //	clock.text = window.app.avg_fps;
+}
+
+function updateSky(sky, dt)
+{
+	sky.y = -sky.scene.camera_y / 2 - 680;
 }
 
 function updatePlayer(player)
@@ -124,6 +174,28 @@ function updatePlayer(player)
 		updateHud();
 		animateLives();
 	}
+	
+	if (player.extra_life === true)
+	{
+		// Create explosion at player point
+		var particles = new ParticleActor();
+		player.scene.addActor(particles);
+		particles.generateExplosion(10, Actor, 1, 200, 1, 10, 1, {
+			atlas: player.scene.findResource("explosion", "frog_eye"),
+			w: 60,
+			h: 60,
+			x: player.x,
+			y: player.y,
+			vsx: 1.5,
+			vsy: 1.5,
+		});
+
+		window.app.findResource('extra', 'sound').play();
+		player.extra_life = false;
+		lives_left++;
+		updateHud();
+		animateLives();
+	}	
 }
 
 function sceneTapped(scene, touch_pos)
@@ -137,7 +209,7 @@ function sceneTapped(scene, touch_pos)
 	if (scene.panning)
 		return;
 	var player1 = scene.findActor("player1");
-	if (player1.allow_jump != 0)
+	if (player1.allow_jump != 0 || (Date.now() - jump_timer) > 3000)
 	{
 		var scene_x = touch_pos.x + scene.camera_x;
 		var scene_y = touch_pos.y + scene.camera_y;
@@ -146,38 +218,46 @@ function sceneTapped(scene, touch_pos)
 		var dx = scene_x - player1.x;
 		var dy = scene_y - player1.y;
 		var d = Math.sqrt(dx * dx + dy * dy);
-		var d2 = d > 900 ? 900 : d;
-		dx = (dx * d2) / d;
-		dy = (dy * d2) / d;
-		var b2Vec2 = Box2D.Common.Math.b2Vec2;
-		player1.body.SetLinearVelocity(new b2Vec2(dx / 8, dy / 8));
-		player1.body.SetAwake(true);
-		player1.allow_jump = 0;
-		
-		// Animate head
-		var head = player1.findActor("frog_head");
-		scene.timelines.add(new Timeline(head, "_scale", [1, 1.5, 1], [0, 0.5, 1], 1, [Ease.quartin, Ease.quartout]));
-		
-		// Create sparkle at tap point
-		var particles = new ParticleActor();
-		scene.addActor(particles);
-		particles.generateExplosion(10, Actor, 1, 200, 1, 10, 1, {
-			atlas: scene.findResource("ring", "brush"),
-			w: 60,
-			h: 60,
-			x: scene_x,
-			y: scene_y,
-			vsx: 1.5,
-			vsy: 1.5,
-		});
-		
-		// Update hud
-		updateHud();
-		
-		window.app.findResource('tap', 'sound').play();
+		if (d > 0)
+		{
+			var d2 = d > 900 ? 900 : d;
+			dx = (dx * d2) / d;
+			dy = (dy * d2) / d;
+			var b2Vec2 = Box2D.Common.Math.b2Vec2;
+			player1.body.SetLinearVelocity(new b2Vec2(dx / 8, dy / 8));
+			player1.body.SetAwake(true);
+			player1.allow_jump = 0;
+			
+			// Animate head
+			var head = player1.findActor("frog_head");
+			scene.timelines.add(new Timeline(head, "_scale", [1, 1.5, 1], [0, 0.5, 1], 1, [Ease.quartin, Ease.quartout]));
+			
+			// Create sparkle at tap point
+			var particles = new ParticleActor();
+			scene.addActor(particles);
+			particles.generateExplosion(10, Actor, 1, 200, 1, 10, 1, {
+				atlas: scene.findResource("ring", "brush"),
+				w: 60,
+				h: 60,
+				x: scene_x,
+				y: scene_y,
+				vsx: 1.5,
+				vsy: 1.5,
+			});
+			
+			// Update hud
+			updateHud();
+			
+			// Play show sound effect
+			window.app.findResource('shot', 'sound').play();
+			
+			// Sometimes colliion does not fire for very small movements so we need to set a max time before allow jump is reset
+			jump_timer = Date.now();
+		}
 	}
 	else
-		console.log("blocked");
+	{
+	}
 }
 
 function roundOver(failed, game_over)
@@ -192,7 +272,8 @@ function roundOver(failed, game_over)
 			showDialog("round_failed_dlg", true);
 		else
 		{
-			rounds_complete[current_round - 1] = true;
+			rounds_complete[difficulty][current_round - 1] = true;
+			saveGame();
 			updateLocks();
 			showDialog("round_completed_dlg", true);
 		}
@@ -208,6 +289,7 @@ function roundOver(failed, game_over)
 		scene.timelines.add(new Timeline(player1, "_x", [player1.x, wife.x - 80], [0, 2], 1, [Ease.quartout]));
 		scene.timelines.add(new Timeline(player1, "_y", [player1.y, wife.y], [0, 2], 1, [Ease.quartout]));
 	}
+	showAds();
 }
 
 function playerCollided(player, contact)
@@ -263,11 +345,152 @@ function playerCollided(player, contact)
 		if (a || b)
 		{
 			if (!a)
+			{
 				actorA.hurt = true;
+				if (difficulty == 0)
+					actorB.destroy();
+			}
 			else
-			if (!b)
+			{
 				actorB.hurt = true;
+				if (difficulty == 0)
+					actorA.destroy();
+			}
+		}
+		else
+		{
+			var a = actorA.otype === "life";
+			var b = actorB.otype === "life";
+			if (a || b)
+			{
+				if (!a)
+				{
+					actorA.extra_life = true;
+					actorB.destroy();
+				}
+				else
+				{
+					actorB.extra_life = true;
+					actorA.destroy();
+				}
+			}
 		}
 	}
+	window.app.findResource('hit', 'sound').play();
 	player.allow_jump = 1;
+}
+
+function isGameComplete()
+{
+	for (var t = 0; t < rounds_complete[difficulty].length; t++)
+	{
+		if (!rounds_complete[difficulty][t])
+			return false;
+	}
+	return true;
+}
+
+function resetGame()
+{
+	for (var t = 0; t < rounds_complete[0].length; t++)
+		rounds_complete[0][t] = false;
+	saveGame();
+}
+
+function isLocalStorageSupported()
+{
+	try
+	{
+		return 'localStorage' in window && window['localStorage'] !== null;
+	}
+	catch (e)
+	{
+		return false;
+	}
+}
+	
+function saveGame()
+{
+	try
+	{
+		if (isLocalStorageSupported())
+		{
+			var rounds = "";
+			for (var t = 0; t < rounds_complete[0].length; t++)
+			{
+				if (rounds_complete[0][t])
+					rounds += "1";
+				else
+					rounds += "0";
+			}
+			localStorage.setItem("rounds_complete", rounds);
+			rounds = "";
+			for (var t = 0; t < rounds_complete[1].length; t++)
+			{
+				if (rounds_complete[1][t])
+					rounds += "1";
+				else
+					rounds += "0";
+			}
+			localStorage.setItem("rounds_complete_hard", rounds);
+		}
+	}
+	catch (err) {}
+}
+
+function loadGame()
+{
+	try
+	{
+		if (isLocalStorageSupported())
+		{
+			var rc = localStorage.getItem("rounds_complete");
+			if (rc !== null)
+			{
+				for (var t = 0; t < rounds_complete[0].length; t++)
+					rounds_complete[0][t] = rc[t] == 1 ? true : false;
+			}
+			rc = localStorage.getItem("rounds_complete_hard");
+			if (rc !== null)
+			{
+				for (var t = 0; t < rounds_complete[1].length; t++)
+					rounds_complete[1][t] = rc[t] == 1 ? true : false;
+			}
+		}
+	}
+	catch (err) {}
+}
+
+function initAds()
+{
+	if (window.app.cocoonjs)
+	{
+		Cocoon.Ad.interstitial.on("ready", function(){
+			console.log("**** Ad ready");
+		});
+		Cocoon.Ad.interstitial.on("shown", function(){
+			console.log("**** Ad shown");
+		});
+		Cocoon.Ad.interstitial.on("hidden", function(){
+			console.log("**** Ad hidden");
+		});
+	}
+}
+
+function loadAds()
+{
+	if (window.app.cocoonjs)
+	{
+console.log("**** Loading ad");
+		Cocoon.Ad.loadInterstitial();
+	}
+}
+
+function showAds()
+{
+	if (window.app.cocoonjs)
+	{
+console.log("**** Showing ad");
+		Cocoon.Ad.showInterstitial();
+	}
 }

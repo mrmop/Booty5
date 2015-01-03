@@ -40,6 +40,41 @@ function showDialog(dlg_name, show)
 		timeline.add(dlg, "x", [0, -2000], [0, 2], 1, [Ease.sin]);
 		hud_scene.timelines.add(timeline);
 	}
+	
+	if (dlg_name == "round_completed_dlg")
+	{
+		var star1 = dlg.findActor("star1");
+		var star2 = dlg.findActor("star2");
+		var star3 = dlg.findActor("star3");
+		star1._scale = 0.1;
+		star2._scale = 0.1;
+		star3._scale = 0.1;
+		if (game_time_left >= 10)
+		{
+			star1.visible = true;
+			star2.visible = true;
+			star3.visible = true;
+			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+			timeline.add(star2, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+			timeline.add(star3, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+		}
+		else
+		if (game_time_left >= 5)
+		{
+			star1.visible = true;
+			star2.visible = true;
+			star3.visible = false;
+			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+			timeline.add(star2, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+		}
+		else
+		{
+			star1.visible = true;
+			star2.visible = false;
+			star3.visible = false;
+			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+		}
+	}
 }
 
 function showHud(show)
@@ -106,14 +141,21 @@ function updateLocks()
 {
 	var app = window.app;
 	var level_scene = app.findScene("levelselect");
-	var locks = [0,0,0,0];
+	var locks = [0,0,0,0,0,0];
 	
 	// Determine which rounds are locked / unlocked
 	for (var t = 0; t < max_rounds; t++)
 	{
+		var ac = level_scene.findActor("level" + (t + 1));
+		var tick = ac.findActor("tick1");
 		var index = (t / 5) << 0;
-		if (rounds_complete[t])
+		if (rounds_complete[difficulty][t])
+		{
 			locks[index]++;
+			tick.visible = true;
+		}
+		else
+			tick.visible = false;
 	}
 	
 	// Update level icons in level select screen
@@ -121,7 +163,7 @@ function updateLocks()
 	{
 		var ac = level_scene.findActor("level" + t);
 		var locked = locks[((t - 6) / 5) << 0] != 5;
-//locked = false;		
+//locked = false;
 		if (locked)
 			ac.opacity = 0.5;
 		else
@@ -132,13 +174,13 @@ function updateLocks()
 
 function isRoundUnlocked(round)
 {
-	var locks = [0,0,0,0];
+	var locks = [0,0,0,0,0,0];
 	
 	// Determine which rounds are locked / unlocked
 	for (var t = 0; t < max_rounds; t++)
 	{
 		var index = (t / 5) << 0;
-		if (rounds_complete[t])
+		if (rounds_complete[difficulty][t])
 			locks[index]++;
 	}
 	return locks[((round - 6) / 5) << 0] == 5;
@@ -148,7 +190,7 @@ function getFirstIncompleteRound()
 {
 	for (var t = 0; t < max_rounds; t++)
 	{
-		if (!rounds_complete[t])
+		if (!rounds_complete[difficulty][t])
 			return t + 1;
 	}
 	return 0;

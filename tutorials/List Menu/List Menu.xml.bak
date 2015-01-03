@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" />
+  <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Brush Name="grad1" Rect="0,0,32,32" ScaleArea="0,0,0,0" BrushType="1">
+    <ColourStop a="255" r="100" g="149" b="237" selected="false" value="0" />
+    <ColourStop a="255" r="65" g="105" b="225" selected="false" value="0.5" />
+    <ColourStop a="255" r="0" g="0" b="255" selected="false" value="1" />
+  </Brush>
+  <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Demo\Common.js" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" WorldScale="">
+    <Icon Name="menu" Position="0,0" GEnd="1,0" Colour="#936495ED" CornerRadius="20" Size="330,500" AlphaMode="4" CompositeOp="0" Virtual="True" UIType="1" RenderAs="2" ScrollRange="0,-500,0,500" Tappable="True" ClipChildren="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="button1" Position="-1,-203" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text1" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 1" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button2" Position="-1,-131" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text2" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 2" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button3" Position="-1,-59" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text3" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 3" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button4" Position="-1,13" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text4" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 4" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button5" Position="-1,85" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text5" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 5" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button6" Position="-1,157" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text6" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 6" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button7" Position="-1,229" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text7" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 7" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button8" Position="-1,301" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text8" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 8" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button9" Position="-1,373" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text9" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 9" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button10" Position="-1,445" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text10" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 10" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button11" Position="-1,517" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text11" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 11" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+      <Icon Name="button12" Position="-1,589" GEnd="1,1" CornerRadius="20" Background="grad1" Size="300,62" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" RenderAs="2" OnTapped="buttonPressed(this);" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Bubbling="True" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+        <Label Name="text12" Position="-3,-3" GEnd="1,0" Size="250,25" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Option 12" Font="24px Arial" AlignH="1" AlignV="1" />
+      </Icon>
+    </Icon>
+  </Scene>
+</xml>
