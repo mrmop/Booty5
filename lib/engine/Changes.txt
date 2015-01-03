@@ -1,3 +1,15 @@
+v1.4.1
+------
+* Added new property to Actor called merge_cache which when set to true will attempt to merge the actors rendering into a suitable parents cache. Note that once an actor has been merged into its parent its visual properties cannot be modified
+* Add new property to TheApp called focus_scene2 which sets a 2nd scene as focus, this scene will be used for touch events if the first main focus scene does not respond to them
+* Added support for fallback sound to Sound class via location2
+* Added new min_panning property to Scene. This will prevent panning being marked as true if the movement distance squared is below this value
+* Sound now supports looping via Sound.loop
+* All Xoml parse functions now return the created object
+* New Xoml.findResource() added which searched a Xoml resource collection for the named resource
+* Fixed issue where Actor.current_frame was going out of bounds
+* Fixed polygonActor gradient fill
+
 v1.4
 ----
 * Added new Actor setPositionPhysics() and setRotationPhysics() to set associated physics body position and rotation directly
