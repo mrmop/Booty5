@@ -1,3 +1,25 @@
+v1.4.2
+------
+* Actors now have their own local timelines manager, actor local animations should now be added here instead of the parent scenes timeline manager
+* TheApp has new property total_loaded which stacks total pre-loadable number of resources that have been loaded
+* TheApp has new property total_load_errors which denotes total number of resources that have not loaded due to error
+* TheApp has new event handler onResourceLoaded which can be used to detect when a file has been loaded. Note that by default this method calls onResourceLoadedBase(resource, error) which updates TheApp's internals. If you override this then ensure that you call TheApp.onResourceLoadedBase()
+* TheApp has new method countResourcesNeedLoading() which counts how many resources need loading
+* TheApp has new method waitForResources() which will delay start of the app until all global and loaded scene resources are loaded. It was also display a loading.png (if present) and display a percentage loading bar. TheApp.loading_screen define properties of the loading screen
+* TheApp areResourcesLoaded method removed
+* Sound class has preload property which when set will preload the sound
+* Sound and Bitmap classes now notify app when they have loaded or there was an error during load
+* Sound has new method load() which will load the sound effect
+* Timeline and TimelineManager classes now have find(name) method that allows searching for named animations and timelines
+* New property added to Animation called tween, when set to false frames will not be tweened. This also enables none numeric discreet values to be tweened
+* New name property added to Animation class
+* Xoml loader now loads timeline animations exported from Booty5 editor
+* Added new demo called Timeline Animations which demonstrates the use of timeline animation
+* Fix: Actor transform was being updated every frae
+* Fix: Actor children transforms were not getting updated correctly when parent transform was updating
+* Fix: Touch input now works on Windows Phone 8
+
+
 v1.4.1
 ------
 * Added new property to Actor called merge_cache which when set to true will attempt to merge the actors rendering into a suitable parents cache. Note that once an actor has been merged into its parent its visual properties cannot be modified
@@ -9,6 +31,8 @@ v1.4.1
 * New Xoml.findResource() added which searched a Xoml resource collection for the named resource
 * Fixed issue where Actor.current_frame was going out of bounds
 * Fixed polygonActor gradient fill
+* Examples updated
+* New "Create Objects from Template" and "List Menu" demos added
 
 v1.4
 ----

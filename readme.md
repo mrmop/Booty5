@@ -1,4 +1,4 @@
-Booty5 is a free open source HTML5 game engine written using JavaScript. A full game editor / game maker application is also available from the [Booty5 website](http://booty5.com).
+Booty5 is a free open source HTML5 game engine written using JavaScript. A full game editor / game maker / Flash style animation editor  is also available from the [Booty5 website](http://booty5.com).
 
 For more in-depth information about the Booty5 engine and game editor see the [Booty5 website](http://www.booty5.com/index.php/booty5). For API reference see the [Booty5 API reference](http://booty5.com/html5-game-engine/booty5-html5-game-engine-reference/)
 
@@ -47,7 +47,7 @@ A Scene is a container for game objects and has the following features:
 - Scene wide opacity
 - Scene layer ordering
 
-Scenes support the following event handlers:
+Scenes support event handlers such as:
 - onCreate() - Called just after Scene has been created
 - onDestroy() - Called just before Scene is destroyed
 - onTick(delta_time) - Called each time the Scene is updated (every frame)
@@ -76,7 +76,7 @@ An Actor is a basic game object that carries our game logic and rendering. The b
 - Opacity
 - Composite operations
 
-Supports the following event handlers:
+Supports the event handlers such as:
 - onCreate() - Called just after Actor has been created
 - onDestroy() - Called just before Actor is destroyed
 - onTick(delta_time) - Called each time the Actor is updated (every frame)

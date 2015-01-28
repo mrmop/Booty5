@@ -12,14 +12,6 @@ window.onload = function()
 	window.game = new SheepGame(app);
 	window.game.initGame();
 	
-    // Start game when resources have been loaded	
-    resource_check_interval = setInterval(function()
-    {
-        if (app.areResourcesLoaded(true))
-        {
-            // Start main loop
-            app.start();
-        }
-        clearInterval(resource_check_interval);
-    }, 500);
+    // Start main loop
+	app.start();
 };
