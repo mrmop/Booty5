@@ -2,7 +2,7 @@
 <xml>
   <Globals ImportPrecision="3" ExportPrecision="1" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="200" VirtualResolution="1024,768" VirtualScreenVisible="True" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="50971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="True" DisableShadows="True" ClearCanvas="False" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="True" DisableShadows="True" WaitResources="True" ClearCanvas="False" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FF87CEFA" LoadingBarBGColour="#FFFF0000" LoadingBarColour="#FFFFFF00" LoadingImage="assets/booty5_logo.png" />
   <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
   <Shape Name="circle1" ShapeType="1" Width="40" Height="40" Absolute="false" />
@@ -119,17 +119,82 @@
   </Brush>
   <Brush Name="bee2" Rect="290,1103,85,77" ScaleArea="0,0,0,0" Image="Textures" BrushType="0" />
   <Scene Name="mainmenu" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="-1000,-384,2000,768" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Physics="False" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnCreate="gameLoaded();">
-    <Icon Name="bg1" Position="0,0" GEnd="0,1" Background="grad4" Size="1700,1400" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="bg1" Position="161,-18" GEnd="0,1" Background="grad4" Size="1700,1400" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="sun2" Position="276.500000000001,-222.2" GEnd="1,0" Background="sun" Size="145,145" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-10" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="building8" Position="230.2,69.3" GEnd="1,0" Background="building4" Size="264,504" AlphaMode="4" CompositeOp="0" Depth="1.2" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="building7" Position="-144.8,156.3" GEnd="1,0" Background="building3" Size="286,329" AlphaMode="4" CompositeOp="0" Depth="1.2" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="building9" Position="593.4,160.1" GEnd="1,0" Background="building3" Size="286,329" AlphaMode="4" CompositeOp="0" Depth="1.2" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="building6" Position="-537.8,99.3" GEnd="1,0" Background="building1" Size="286,484" AlphaMode="4" CompositeOp="0" Depth="1.2" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
-    <Label Name="letter1" Position="-137.4,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1,1.5,1], [0, 0.5, 1], 0)).anims[0].time = 0;" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="L" Font="80pt Calibri" AlignH="1" AlignV="1" />
-    <Label Name="letter2" Position="-68.4,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1,1.5,1], [0, 0.5, 1], 0)).anims[0].time = -0.1;" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="E" Font="80pt Calibri" AlignH="1" AlignV="1" />
-    <Label Name="letter3" Position="0.6,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1,1.5,1], [0, 0.5, 1], 0)).anims[0].time = -0.2;" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="A" Font="80pt Calibri" AlignH="1" AlignV="1" />
-    <Label Name="letter4" Position="69.6,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1,1.5,1], [0, 0.5, 1], 0)).anims[0].time = -0.3;" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="P" Font="80pt Calibri" AlignH="1" AlignV="1" />
-    <Label Name="letter5" Position="138.6,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1,1.5,1], [0, 0.5, 1], 0)).anims[0].time = -0.4;" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="O" Font="80pt Calibri" AlignH="1" AlignV="1" />
+    <Label Name="letter1" Position="-137.4,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="L" Font="80pt Calibri" AlignH="1" AlignV="1">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Label>
+    <Label Name="letter2" Position="-68.4,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="E" Font="80pt Calibri" AlignH="1" AlignV="1">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.1">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.1">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Label>
+    <Label Name="letter3" Position="0.6,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="A" Font="80pt Calibri" AlignH="1" AlignV="1">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.2">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.2">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Label>
+    <Label Name="letter4" Position="69.6,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="P" Font="80pt Calibri" AlignH="1" AlignV="1">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.3">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.3">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Label>
+    <Label Name="letter5" Position="138.6,-307" GEnd="1,0" Background="grad2" Size="60,60" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1,1.5,1], [0, 0.5, 1], 0)).anims[0].time = -0.4;" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="10" ShadowColour="#FF000000" Text="O" Font="80pt Calibri" AlignH="1" AlignV="1">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.4">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="False" Tween="True" Repeat="0" TimeScale="1" Delay="0.4">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.5" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Label>
     <Icon Name="tree19" Position="378.4,183.399999999999" GEnd="1,0" Background="tree4" Size="144,211" AlphaMode="4" CompositeOp="0" Depth="1.1" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="tree18" Position="-684.399999999999,165" GEnd="1,0" Background="tree2" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.1" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="ground24" Position="-294,321" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
@@ -145,8 +210,34 @@
     <Icon Name="crate34" Position="-468,81" Scale="0.5,0.5" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="crate30" Position="562.3,187.899999999999" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
     <Icon Name="crate31" Position="562.3,45.8999999999992" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
-    <Icon Name="lives9" Position="58.2000000000003,80.8999999999992" GEnd="1,0" Background="lives" Size="80,72" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1, 1.3, 1], [0, 1, 2], 0, [Ease.quartin, Ease.quartout]));" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
-    <Icon Name="lives10" Position="-468.75,4.3999999999992" GEnd="1,0" Background="lives" Size="80,72" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_scale', [1, 1.3, 1], [0, 1, 2], 0, [Ease.quartin, Ease.quartout]));" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000" />
+    <Icon Name="lives10" Position="-464.75,6.3999999999992" GEnd="1,0" Background="lives" Size="80,72" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000">
+      <TimelineCollection Name="breath">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="5" V="1" />
+          <Kf T="1" D="0" E="6" V="1.3" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="5" V="1" />
+          <Kf T="1" D="0" E="6" V="1.3" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="lives11" Position="30.25,92.3999999999992" GEnd="1,0" Background="lives" Size="80,72" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="True" ShadowColour="#FF000000">
+      <TimelineCollection Name="breath">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.2">
+          <Kf T="0" D="0" E="5" V="1" />
+          <Kf T="1" D="0" E="6" V="1.3" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0.2">
+          <Kf T="0" D="0" E="5" V="1" />
+          <Kf T="1" D="0" E="6" V="1.3" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
     <Icon Name="start_button" Position="0,-80" GEnd="0,1" CornerRadius="30" Background="grad3" Size="300,80" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" OnTapped="difficulty=0;&#xD;&#xA;startGame();&#xD;&#xA;window.app.findResource('tap', 'sound').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Type="0" WrapPosition="False" ShadowColour="#FF000000">
       <Label Name="label" Position="0,-2.7" GEnd="1,0" Size="200,50" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="PLAY" Font="40pt Calibri" TextColour="#FFFFFF00" AlignH="1" AlignV="1" />
       <Icon Name="border" Position="0,0" GEnd="1,0" Filled="False" StrokeColour="#FFFFFF00" CornerRadius="30" StrokeThickness="5" Size="290,70" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" RenderAs="2" Type="0" AngularVelocity="50" WrapPosition="False" ShadowColour="#FF000000" />
@@ -162,7 +253,16 @@
     <Icon Name="booty5_logo1" Position="408,326" GEnd="1,0" Background="booty5_logo" Size="80,102" AlphaMode="4" CompositeOp="0" OnTapped="var win = window.open('http://booty5.com', '_blank'); win.focus();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
     <Label Name="madewith" Position="4.00000000000001,330" GEnd="1,0" Size="720,40" AlphaMode="4" CompositeOp="0" Cache="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Made with Booty5 the HTML5 Game Maker" Font="30pt Calibri" AlignH="1" AlignV="1" />
     <Icon Name="bee1" Position="-707.2,-189.8" GEnd="1,0" Background="bee1" Size="87,79" AlphaMode="4" CompositeOp="0" Frames="0,1" PlaybackSpeed="5" Type="0" Velocity="100,0" WrapPosition="True" ShadowColour="#FF000000" />
-    <Icon Name="frog_head2" Position="-6.20000000000121,-162.76" Scale="1.5,1.5" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [-0.5, 0.5, -0.5], [0,2,4], 0, [Ease.sin, Ease.sin,Ease.sin]));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+    <Icon Name="frog_head2" Position="-6.20000000000121,-162.76" Scale="1.5,1.5" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <TimelineCollection Name="rock">
+        <Timeline Prop="angle" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0" OnEnd="" OnRepeat="">
+          <Kf T="0" D="0" V="0" />
+          <Kf T="1" D="0" V="27" />
+          <Kf T="2" D="0" V="0" />
+          <Kf T="3" D="0" V="-26" />
+          <Kf T="4" D="0" V="0" />
+        </Timeline>
+      </TimelineCollection>
       <Icon Name="lfrog_eye2" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
       <Icon Name="rfrog_eye2" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
     </Icon>
@@ -171,8 +271,8 @@
     <Icon Name="background" Position="0,0" GAngle="45" GEnd="0,1" Colour="#FFADD8E6" Background="grad4" Size="1700,1400" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="header" Position="0,-283.2" GAngle="90" GEnd="0,1" Layer="1" Colour="#FFADD8E6" CornerRadius="40" Background="grad2" Size="512,70" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="True" ShadowColour="#FF000000">
       <Label Name="label" Position="0,-2.99999999999999" GEnd="0,2" StrokeColour="#FF008000" StrokeThickness="2" Size="300,50" AlphaMode="4" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="4,4" ShadowBlur="1" ShadowColour="#FF000000" Text="Select Level" Font="32pt Calibri" TextColour="#FF006400" AlignH="1" AlignV="1" />
-      <Icon Name="leaf_roap2" Position="-214.2,26.3" GEnd="1,1" Origin="0,80" Background="leaf_roap" Size="23,161" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [-0.5, 0, 0.5, 0, -0.5], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-      <Icon Name="leaf_roap1" Position="208.8,26.8" GEnd="1,1" Origin="0,80" Background="leaf_roap" Size="23,161" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.5, 0, -0.5, 0, 0.5], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowOffset="2,2" ShadowBlur="10" ShadowColour="#FF2E8B57" />
+      <Icon Name="leaf_roap2" Position="-214.2,26.3" GEnd="1,1" Origin="0,80" Background="leaf_roap" Size="23,161" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [-0.5, 0, 0.5, 0, -0.5], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+      <Icon Name="leaf_roap1" Position="208.8,26.8" GEnd="1,1" Origin="0,80" Background="leaf_roap" Size="23,161" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.5, 0, -0.5, 0, 0.5], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowOffset="2,2" ShadowBlur="10" ShadowColour="#FF2E8B57" />
     </Icon>
     <Icon Name="level1" Position="-200,-176" GAngle="90" GEnd="1,1" CornerRadius="20" Background="LevelButton" Size="99,96" AlphaMode="4" CompositeOp="0" OnTapped="startLevel(1);" OnBeginTouch="this.opacity=0.5;" OnLostTouchFocus="this.opacity=1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowOffset="5,5" ShadowBlur="5" ShadowColour="#FF000000">
       <Label Name="label" Position="0,0" Angle="12" GEnd="1,1" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowOffset="1,1" ShadowBlur="2" ShadowColour="#FF000000" Text="1" Font="30pt Calibri" TextColour="#FF000000" AlignH="1" AlignV="1" />
@@ -370,7 +470,7 @@
       <Icon Name="border2" Position="0,0" GEnd="1,0" Filled="False" CornerRadius="20" StrokeThickness="5" Size="200,50" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
       <Label Name="label3" Position="0,0" GEnd="1,0" Size="180,32" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="1,1" ShadowBlur="1" ShadowColour="#FF000000" Text="Win her heart" Font="18pt Calibri" AlignH="1" AlignV="1" />
     </Icon>
-    <Icon Name="qrrow1" Position="-1535.2,-65.5999999999997" Angle="90" GEnd="1,0" Colour="#FFFFFF00" Size="32,32" Geometry="arrow" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'x', [this.x, this.x + 20, this.x], [0, 0.5, 1], 0));" Type="0" WrapPosition="False" ShadowOffset="2,2" ShadowColour="#FF000000" />
+    <Icon Name="qrrow1" Position="-1535.2,-65.5999999999997" Angle="90" GEnd="1,0" Colour="#FFFFFF00" Size="32,32" Geometry="arrow" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_x', [this.x, this.x + 20, this.x], [0, 0.5, 1], 0));" Type="0" WrapPosition="False" ShadowOffset="2,2" ShadowColour="#FF000000" />
     <Icon Name="star" Position="-1484,-64" GEnd="1,0" Colour="#FFFFFF00" Size="100,100" Geometry="star" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-50" WrapPosition="False" ShadowColour="#FF000000">
       <Icon Name="star1" Position="0,0" Angle="45" GEnd="1,0" Colour="#9BFFFF00" Size="100,100" Geometry="star" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
     </Icon>
@@ -399,7 +499,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="-665.676,160.22" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -522,7 +622,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="-40.416,18.46" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -609,7 +709,7 @@
       <Icon Name="border3" Position="0,0" GEnd="1,0" Filled="False" CornerRadius="20" StrokeThickness="10" Size="350,70" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
       <Label Name="label4" Position="0,0" GEnd="1,0" Size="280,32" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="1,1" ShadowBlur="1" ShadowColour="#FF000000" Text="Pick up for extra life" Font="18pt Calibri" AlignH="1" AlignV="1" />
     </Icon>
-    <Icon Name="qrrow2" Position="-1061.4,120.8" GEnd="1,0" Colour="#FFFFFF00" Size="32,32" Geometry="arrow" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'y', [this.y, this.y + 20, this.y], [0, 0.5, 1], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="qrrow2" Position="-1061.4,120.8" GEnd="1,0" Colour="#FFFFFF00" Size="32,32" Geometry="arrow" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_y', [this.y, this.y + 20, this.y], [0, 0.5, 1], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="crate10" Position="-799.276,125.22" GEnd="1,1" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
       <Fixture Material="dynamic" />
     </Icon>
@@ -670,7 +770,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -828,7 +928,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -982,7 +1082,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -1149,7 +1249,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -1288,7 +1388,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -1434,7 +1534,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -1609,7 +1709,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -1693,7 +1793,7 @@
       <Icon Name="border4" Position="0,0" GEnd="1,0" Filled="False" CornerRadius="20" StrokeThickness="10" Size="300,70" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
       <Label Name="label5" Position="0,0" GEnd="1,0" Size="280,32" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" Type="0" WrapPosition="False" Shadow="True" ShadowOffset="1,1" ShadowBlur="1" ShadowColour="#FF000000" Text="Avoid the hazards" Font="18pt Calibri" AlignH="1" AlignV="1" />
     </Icon>
-    <Icon Name="qrrow1" Position="-1086.4,110.8" GEnd="1,0" Colour="#FFFFFF00" Size="32,32" Geometry="arrow" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'y', [this.y, this.y + 20, this.y], [0, 0.5, 1], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="qrrow1" Position="-1086.4,110.8" GEnd="1,0" Colour="#FFFFFF00" Size="32,32" Geometry="arrow" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_y', [this.y, this.y + 20, this.y], [0, 0.5, 1], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="crate1" Position="-1340.736,125.22" GEnd="1,1" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
       <Fixture Material="dynamic" />
     </Icon>
@@ -1750,7 +1850,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -1898,7 +1998,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -2058,7 +2158,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -2265,7 +2365,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -2434,7 +2534,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -2619,7 +2719,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -2848,7 +2948,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -3035,7 +3135,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -3263,7 +3363,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -3495,7 +3595,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -3662,7 +3762,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -3840,7 +3940,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -4012,7 +4112,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -4203,7 +4303,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -4477,7 +4577,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -4783,7 +4883,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -4992,7 +5092,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -5282,7 +5382,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -5509,7 +5609,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -5735,7 +5835,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head1" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye3" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye3" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -5976,7 +6076,7 @@
       <UserProp Name="otype" Value="heart" />
     </Icon>
     <Icon Name="wife" Position="1818.224,158.72" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head2" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye4" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye4" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
@@ -6147,7 +6247,7 @@
       </Icon>
     </Icon>
     <Icon Name="wife1" Position="49.424000000001,12.32" GEnd="1,1" Background="frog_yellow" Size="116,75" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="head3" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, 'rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Icon Name="head3" Position="-1.20000000000122,-37.76" GEnd="1,1" Background="frog_head" Size="82,64" AlphaMode="4" CompositeOp="0" OnCreate="this.scene.timelines.add(new Timeline(this, '_rotation', [0.2, 0, -0.2, 0, 0.2], [0, 1, 2, 3, 4], 0));" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="eye5" Position="-21.0400000000014,-22.5600000000001" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
         <Icon Name="eye5" Position="19.5999999999983,-24.3200000000002" GEnd="1,1" Background="frog_eye" Size="33,31" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="-100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>

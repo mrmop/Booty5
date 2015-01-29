@@ -29,15 +29,15 @@ function showDialog(dlg_name, show)
 	if (show)
 	{
 		app.focus_scene = hud_scene;
-		timeline.add(dlg, "rotation", [10, 0], [0, 2], 1, [Ease.sin]);
-		timeline.add(dlg, "x", [-2000, 0], [0, 2], 1, [Ease.sin]);
+		timeline.add(dlg, "_rotation", [10, 0], [0, 2], 1, [Ease.sin]);
+		timeline.add(dlg, "_x", [-2000, 0], [0, 2], 1, [Ease.sin]);
 		hud_scene.timelines.add(timeline);
 	}
 	else
 	{
 		app.focus_scene = game_scene;
-		timeline.add(dlg, "rotation", [0, 10], [0, 2], 1, [Ease.sin]);
-		timeline.add(dlg, "x", [0, -2000], [0, 2], 1, [Ease.sin]);
+		timeline.add(dlg, "_rotation", [0, 10], [0, 2], 1, [Ease.sin]);
+		timeline.add(dlg, "_x", [0, -2000], [0, 2], 1, [Ease.sin]);
 		hud_scene.timelines.add(timeline);
 	}
 	
@@ -87,7 +87,7 @@ function showHud(show)
 	if (show)
 	{
 		var hud = hud_scene.findActor("hud");
-		hud_scene.timelines.add(new Timeline(hud, "y", [-420, -420 + 80], [0, 1], 1, [Ease.quartin]));
+		hud_scene.timelines.add(new Timeline(hud, "_y", [-420, -420 + 80], [0, 1], 1, [Ease.quartin]));
 	}
 }
 

@@ -25,7 +25,6 @@ var rounds_complete = [
 ]
 ];
 
-
 function gameLoaded()
 {
 	window.app.findResource('music', 'sound').play();
@@ -141,7 +140,7 @@ function updateTime(clock, dt)
 
 function updateSky(sky, dt)
 {
-	sky.y = -sky.scene.camera_y / 2 - 680;
+	sky.y = -sky.scene.camera_y / 2 - 580;
 }
 
 function updatePlayer(player)
