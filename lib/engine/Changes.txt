@@ -1,3 +1,8 @@
+v1.4.3
+------
+* Colour used instead of TextColour in Xoml loader for loadig text fill style
+* Fix: Object origins
+
 v1.4.2
 ------
 * Actors now have their own local timelines manager, actor local animations should now be added here instead of the parent scenes timeline manager
@@ -15,7 +20,7 @@ v1.4.2
 * New name property added to Animation class
 * Xoml loader now loads timeline animations exported from Booty5 editor
 * Added new demo called Timeline Animations which demonstrates the use of timeline animation
-* Fix: Actor transform was being updated every frae
+* Fix: Actor transform was being updated every frame
 * Fix: Actor children transforms were not getting updated correctly when parent transform was updating
 * Fix: Touch input now works on Windows Phone 8
 

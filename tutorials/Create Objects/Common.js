@@ -5,7 +5,7 @@ function createNewBalls()
 	// This scene will receive a copy of ball object
 	var game_scene = app.findScene("gamescene");
 
-	// Seatch Xoml gamescene for ball icon actor resource
+	// Search Xoml gamescene for ball icon actor resource
 	var ball_template = Xoml.findResource(window.gamescene, "ball", "icon");
 	
 	// Create ball from the Xoml template and add it to game_scene

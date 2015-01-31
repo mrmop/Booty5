@@ -2,26 +2,26 @@
 <xml>
   <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" WaitResources="True" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
   <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
   <Image Name="rope" Location="E:\AppEasy\html5\tutorials\Swinging Barrel\rope.png" />
   <Image Name="barrel" Location="E:\AppEasy\html5\tutorials\Swinging Barrel\barrel.png" />
   <Image Name="crate" Location="E:\AppEasy\html5\tutorials\Swinging Barrel\crate.png" />
-  <Brush Name="rope" Rect="0,0,9,152" ScaleArea="0,0,0,0" Image="rope" />
-  <Brush Name="barrel" Rect="0,0,105,104" ScaleArea="0,0,0,0" Image="barrel" />
-  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Image="crate" />
-  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WorldScale="10,10" PhysicsTimestep="0.0333333333333333">
+  <Brush Name="rope" Rect="0,0,9,152" ScaleArea="0,0,0,0" Image="rope" BrushType="0" />
+  <Brush Name="barrel" Rect="0,0,105,104" ScaleArea="0,0,0,0" Image="barrel" BrushType="0" />
+  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Image="crate" BrushType="0" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" WorldScale="">
     <Material Name="static" MaterialType="0" Density="1" Friction="0.1" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
     <Material Name="dynamic" MaterialType="1" Density="1" Friction="0.1" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
-    <Icon Name="barrel1" Position="0,-48.4" Origin="0,51" Background="barrel" Size="105,104" AlphaMode="4" Type="0" Velocity="50,0" WrapPosition="False">
+    <Icon Name="barrel1" Position="-2.4,5.99999999999998" GEnd="1,0" Origin="0,-51" Background="barrel" Size="105,104" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,0" WrapPosition="False" ShadowColour="#FF000000">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="rope1" Position="0,-196.08" Origin="0,76" Background="rope" Size="9,152" AlphaMode="4" Type="0" AngularVelocity="100" WrapPosition="False">
+    <Icon Name="rope1" Position="-3.2,-118.48" GEnd="1,0" Origin="0,-76" Background="rope" Size="9,152" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000">
       <Fixture Material="dynamic" />
       <Joint ActorB="barrel1" OffsetA="0,152" Axis="0,1" />
     </Icon>
-    <Icon Name="crate1" Position="0,-264.72" Background="crate" Size="157,142" AlphaMode="4" Type="0" WrapPosition="False">
+    <Icon Name="crate1" Position="0,-264.72" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
       <Fixture Material="static" />
       <Joint Type="2" ActorB="rope1" OffsetA="0,71" Axis="0,1" />
     </Icon>
