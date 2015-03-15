@@ -1,6 +1,70 @@
+v1.4.4
+------
+* Code restructured
+* All classes moved into the b5 namespace
+* TheApp class renamed to App
+* window.app replaced with b5.app
+* Added new property to App called canvas_fill_window which when set to false will prevent the canvas from being resized to fit window
+* Added support for sequential and concurrent actions to app, actors and scenes via ActionsListManager and ActionsList classes
+* Large collection of pre-defined actions added:
+  * A_ChangeActions
+  * A_CreateExplosion
+  * A_CreatePlume
+  * A_ChangeTimeline
+  * A_AttractX
+  * A_AttractY
+  * A_Attract
+  * A_Sound
+  * A_CamStopMove
+  * A_CamGravity
+  * A_CamMove
+  * A_CamMoveTo
+  * A_CamFollow
+  * A_CamFollowPath
+  * A_CamFollowPathVel
+  * A_CamLimitMove
+  * A_Wait
+  * A_SetProps
+  * A_AddProps
+  * A_TweenProps
+  * A_Call
+  * A_Create
+  * A_Destroy
+  * A_FocusScene
+  * A_StopMove
+  * A_Gravity
+  * A_Move
+  * A_MoveTo
+  * A_MoveWithSpeed
+  * A_Follow
+  * A_LookAt
+  * A_FollowPath
+  * A_FollowPathVel
+  * A_LimitMove
+  * A_SetLinearVelocity
+  * A_SetAngularVelocity
+  * A_ApplyForce
+  * A_ApplyImpulse
+  * A_ApplyTorque
+* Actor.setPositionPhysics() deprecated, use setPosition instead
+* Actor.setRotationPhysics deprecated, use setRotation instead
+* Moved getResFromType() out of App and Scene classes into common Utils class
+* Added new Utils.findObjectFromPath() and Utils.resolveObject() which can be used to find actors, scenes, action lists and timelines from a path such as gamescene.actor1.timeline1
+* Added new Utils.findResourceFromPath() and Utils.resolveResource() which can be used to find resources from a path such as gamescene.sound1
+* Added new _atlas, _bitmap, _clip_shape properties to Actor that can use resource paths as well as instances of resources
+* Added new _clip_shape property to Scene that can use resource paths as well as instances of resources
+* Added new _focus_scene and _focus_scene2 properties to App that can use resource paths as well as instances of resources
+* Added vx_damping and vy_damping to scene camera
+* Updated Xoml.js to load new actions lists from Booty5 editor exported JSON format
+* generateExplosion, generatePlume and generateRain now also accept string version of type
+* Logic and rendering decoupled. Logic (app.mainLogic) now ran on timer at default 60 fps whilst and rendering (app.mainDraw) at max frame rate
+* Fix: Animation.Update() locks up when only a single key frame is specified
+* Fix: "none" rescaling method was not working correctly
+* Fix: Box2D forces applied in Actor OnTick were not being applied
+
 v1.4.3
 ------
-* Colour used instead of TextColour in Xoml loader for loadig text fill style
+* Colour used instead of TextColour in Xoml loader for loading text fill style
 * Fix: Object origins
 
 v1.4.2

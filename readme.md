@@ -8,7 +8,8 @@ Currently supports:
 - Scene management
 - Actor (game object) management, image, text, shape and particle system based
 - Sprite, text and 2D polygon rendering
-- Box2D via Box2DWeb
+- Actions system
+- Box2D physics via Box2DWeb
 - Animation timelines / tweening
 - Bitmap and gradient brushes
 - Sprite atlases
@@ -22,8 +23,8 @@ Currently supports:
 - Support for Booty5 game HTML5 editor / maker
 
 #The Basics
-##TheApp
-TheApp is the main app controller and is responsible for general housekeeping and Scene processing, TheApp has the following features:
+##App
+The App is the main app controller and is responsible for general housekeeping and Scene processing, The App has the following features:
 - Manages global resources
 - Manages global animation timelines
 - Manages a collection of Scenes
@@ -36,6 +37,7 @@ TheApp is the main app controller and is responsible for general housekeeping an
 A Scene is a container for game objects and has the following features:
 - Manages scene local resources
 - Manages scene local timeline animations
+- Manages scene local action lists
 - Manages a collection of Actors
 - Supports a camera
 - Camera can target actors and follow them on x and y axis
@@ -47,7 +49,7 @@ A Scene is a container for game objects and has the following features:
 - Scene wide opacity
 - Scene layer ordering
 
-Scenes support event handlers such as:
+Scenes support a variety of event handlers such as:
 - onCreate() - Called just after Scene has been created
 - onDestroy() - Called just before Scene is destroyed
 - onTick(delta_time) - Called each time the Scene is updated (every frame)
@@ -75,8 +77,9 @@ An Actor is a basic game object that carries our game logic and rendering. The b
 - Layer ordering
 - Opacity
 - Composite operations
+- Action lists
 
-Supports the event handlers such as:
+Supports various event handlers such as:
 - onCreate() - Called just after Actor has been created
 - onDestroy() - Called just before Actor is destroyed
 - onTick(delta_time) - Called each time the Actor is updated (every frame)

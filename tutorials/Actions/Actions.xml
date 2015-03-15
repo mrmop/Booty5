@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="30" AdaptivePhysics="False" DisableShadows="True" WaitResources="True" ClearCanvas="True" FillWindow="False" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Sound Name="explosion" Location="E:\AppEasy\html5\tutorials\Actions\explosion.ogg" FallbackLocation="E:\AppEasy\html5\tutorials\Actions\explosion.mp3" Preload="False" Reuse="True" />
+  <Script Name="common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Actions\common.js" />
+  <Image Name="sheep" Location="E:\AppEasy\html5\tutorials\Actions\sheep.png" />
+  <Image Name="textures" Location="E:\AppEasy\html5\tutorials\Actions\textures.png" />
+  <Image Name="ground" Location="E:\AppEasy\html5\tutorials\Actions\ground.png" />
+  <Brush Name="sheep" Rect="0,0,172,89" ScaleArea="0,0,0,0" Image="sheep" BrushType="0">
+    <Frame x="0" y="0" w="86" h="89" selected="false" />
+    <Frame x="86" y="0" w="86" h="89" selected="false" />
+  </Brush>
+  <Brush Name="balloon" Rect="575,604,281,507" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="building1" Rect="1427,622,190,306" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="building2" Rect="1825,828,190,281" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="building3" Rect="1429,930,190,306" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="building4" Rect="1621,828,202,297" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="cloud1" Rect="2,1140,419,188" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="cloud2" Rect="857,1191,311,170" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="cloud3" Rect="858,1007,341,182" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="fence" Rect="1597,348,355,249" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="floer3" Rect="1858,1111,143,142" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="floer4" Rect="1315,1238,134,130" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="flower1" Rect="1170,1218,143,142" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="flower2" Rect="1451,1238,134,130" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="grass1" Rect="1201,1003,226,213" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="grass2" Rect="423,1140,211,197" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="iceball" Rect="1621,1127,235,235" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="mushroom" Rect="636,1113,219,188" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="plane" Rect="1005,2,649,311" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="rock" Rect="1619,599,299,227" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="spaceship" Rect="1005,315,590,305" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="sun" Rect="1656,2,338,344" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="tree1" Rect="591,2,412,600" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="tree2" Rect="858,622,323,383" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="tree3" Rect="1183,622,242,379" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="tree4" Rect="2,2,587,563" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="world" Rect="2,567,571,571" ScaleArea="0,0,0,0" Image="textures" BrushType="0" />
+  <Brush Name="ground" Rect="0,0,512,125" ScaleArea="0,0,0,0" Image="ground" BrushType="0" />
+  <Scene Name="scene1" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="-1024,-1024,2048,2048" ClipChildren="True" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Physics="False" Gravity="0,10" WScale="20" DoSleep="False" PhysicsTimestep="0.0333333333333333">
+    <ActionList Name="scroll_in" Repeat="1">
+      <Action Data="FocusScene|this|False" />
+      <Action Data="SetProps|this|visible=true" />
+      <Action Data="MoveTo|this|0,0|1|0|0" />
+    </ActionList>
+    <ActionList Name="scroll_out" Repeat="1">
+      <Action Data="MoveTo|this|0,-768|1|0|0" />
+      <Action Data="SetProps|this|visible=false" />
+    </ActionList>
+    <ActionList Name="follow_cam" Play="True">
+      <Action Data="CamFollow|this|scene1.mushroom2|1|1" />
+    </ActionList>
+    <Shape Name="path1" ShapeType="2" Width="32" Height="32" Absolute="true" IsPath="true" Vertices="551.666666666667,131.666666666667,466.666666666667,-343.333333333333,171.666666666666,-253.333333333333,-180,-326.666666666666,-351.666666666667,426.666666666666,-498.333333333333,125,-475,-190,-36.6666666666666,108.333333333333,201.666666666667,336.666666666667," />
+    <Icon Name="background" Position="0,0" GEnd="1,0" Colour="#FF00BFFF" Size="1024,768" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="move_sun" Position="-408.4,-352" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.sun1.move_sun', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Move Sun" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="next" Position="403.6,346" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.scroll_out', 'actions').play();&#xD;&#xA;b5.Utils.resolveObject('scene2.scroll_in', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label6" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Next" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="follow_path" Position="-408.4,-290" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.mushroom1.move_mushroom', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label1" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Follow Path" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="follow_path2" Position="-408.4,-230" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.mushroom2.move_mushroom', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label2" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Follow Path Vel" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="tree_anim" Position="-408.4,-166" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.tree1.animate', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label3" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Tree Anim" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="tween_tree" Position="-407,-102" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.tree2.tween', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label4" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Tween Tree" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="particles" Position="-407,-40.3999999999999" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.particles.create', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="create" Repeat="1">
+        <Action Data="Sound|explosion|0" />
+        <Action Data="CreateExplosion|scene1|10|1|2|100|1|1|1|radius=20,fill_style=&quot;#ffff00&quot;" />
+        <Action Data="CreatePlume|scene1|20|1|3|100|1|1|1|radius=20,fill_style=&quot;#ff00ff&quot;" />
+      </ActionList>
+      <Label Name="label5" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Create Particles" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="create" Position="-407,23.6000000000001" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.create.create', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="create" Repeat="1">
+        <Action Data="Create|scene1|scene1|tree3|icon|vr=1,vx=100,x=0" />
+      </ActionList>
+      <Label Name="label7" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Create Object" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="delete" Position="-407,85.6000000000001" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene1.flower2.destroy', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label8" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Destroy Object" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="sun1" Position="343,-220" Scale="0.5,0.5" GEnd="1,0" Background="sun" Size="338,344" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="move_sun" Repeat="1">
+        <Action Data="SetProps|this|_x=343,_y=-220" />
+        <Action Data="MoveTo|this|0,0|2|1|1" />
+        <Action Data="Move|this|-100,-100|2" />
+        <Action Data="StopMove|this|True|True|False|1" />
+        <Action Data="TweenProps|this|opacity|1|0|1|0" />
+        <Action Data="TweenProps|this|opacity|0|1|1|0" />
+        <Action Data="MoveTo|this|400,400|2|0|0" />
+      </ActionList>
+    </Icon>
+    <Icon Name="mushroom1" Position="-586.8,-87.6" Scale="0.5,0.5" GEnd="1,0" Background="mushroom" Size="219,188" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="move_mushroom" Repeat="1">
+        <Action Data="FollowPath|this|scene1.path1|0|5|True" />
+      </ActionList>
+    </Icon>
+    <Icon Name="mushroom2" Position="-3.60000000000002,-4.39999999999999" Scale="0.5,0.5" GEnd="1,0" Background="mushroom" Size="219,188" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="move_mushroom" Repeat="1">
+        <Action Data="ChangeActions|scene1.flower1.follow|0" />
+        <Action Data="FollowPathVel|this|scene1.path1|0|5|1|True" />
+      </ActionList>
+    </Icon>
+    <Icon Name="flower1" Position="-582,99" Scale="0.5,0.5" GEnd="1,0" Background="flower1" Size="143,142" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="follow" Repeat="1">
+        <Action Data="Follow|this|scene1.mushroom2|2|60" />
+      </ActionList>
+    </Icon>
+    <Icon Name="cloud1" Position="-0.60000000000019,-5.59999999999986" Scale="0.5,0.5" GEnd="1,0" Background="cloud1" Size="419,188" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="move_cloud" Play="True">
+        <Action Data="AddProps|this|_x=5,_rotation=0.05" />
+        <Action Data="LimitMove|this|-100,-100,200,200|2|0" />
+      </ActionList>
+    </Icon>
+    <Icon Name="tree1" Position="-407,84.1999999999994" Scale="0.5,0.5" GEnd="1,0" Origin="0,300" Background="tree1" Size="412,600" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="animate" Repeat="1">
+        <Action Data="ChangeTimeline|scene1.tree1.anim1|2" />
+      </ActionList>
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="False" AutoPlay="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="0.5" />
+          <Kf T="1" D="0" V="0.5" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" AutoPlay="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="0.5" />
+          <Kf T="1" D="0" V="0.6" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="tree2" Position="-206.4,189.6" Scale="0.5,0.5" GEnd="1,0" Origin="0,190" Background="tree2" Size="323,383" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="tween" Repeat="2">
+        <Action Data="TweenProps|this|_scale_x,_scale_y|0.5,0.5|1.0,1.0|2|1,1" />
+        <Action Data="TweenProps|this|_scale_x,_scale_y|1.0,1.0|0.5,0.5|2|2,2" />
+        <Action Data="Wait|2" />
+      </ActionList>
+    </Icon>
+    <Icon Name="flower2" Position="350.4,-12.2" GEnd="1,0" Background="floer3" Size="143,142" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="destroy" Repeat="1">
+        <Action Data="Destroy|this" />
+      </ActionList>
+    </Icon>
+    <Icon Name="balloon2" Position="156.200000000001,255.2" Scale="0.5,0.5" GEnd="1,0" Background="balloon" Size="281,507" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="lookat" Play="True">
+        <Action Data="LookAt|this|scene1.mushroom2|-180|180" />
+      </ActionList>
+    </Icon>
+    <Icon Name="tree3" Position="-647.6,246" Scale="0.5,0.5" GEnd="1,0" Background="tree3" Size="242,379" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="True" ShadowColour="#FF000000" />
+  </Scene>
+  <Scene Name="scene2" Position="0,768" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" Current="False" ClipChildren="True" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <ActionList Name="scroll_in" Repeat="1">
+      <Action Data="FocusScene|this|False" />
+      <Action Data="SetProps|this|visible=true" />
+      <Action Data="MoveTo|this|0,0|1|0|0" />
+    </ActionList>
+    <ActionList Name="scroll_out" Repeat="1">
+      <Action Data="MoveTo|this|0,768|1|0|0" />
+      <Action Data="SetProps|this|visible=false" />
+    </ActionList>
+    <Shape Name="iceball" ShapeType="1" Width="117" Height="117" Absolute="false" IsPath="false" />
+    <Material Name="dynamic" MaterialType="1" Density="1" Friction="0.8" Restitution="0.5" GravityScale="1" IsBullet="false" FixedRotation="false" />
+    <Material Name="static" MaterialType="0" Density="1" Friction="0.8" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
+    <Icon Name="background1" Position="0,0" GEnd="1,0" Colour="#FF00BFFF" Size="1024,768" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="ground1" Position="-256,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="ground3" Position="-768,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="ground2" Position="256,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="ground4" Position="768,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="iceball1" Position="-4.90000000000002,-159.4" GEnd="1,0" Background="iceball" Size="235,235" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Shape="iceball" Material="dynamic" />
+      <ActionList Name="jump" Repeat="1">
+        <Action Data="ApplyForce|this|0,-3000|0,0|1" />
+        <Action Data="Call|displayText|&quot;Jumped&quot;" />
+      </ActionList>
+      <ActionList Name="torque" Repeat="1">
+        <Action Data="ApplyTorque|this|10000|2" />
+      </ActionList>
+      <ActionList Name="impulse" Repeat="1">
+        <Action Data="ApplyImpulse|this|-1000,-100|50,0" />
+      </ActionList>
+      <ActionList Name="velocity" Repeat="1">
+        <Action Data="SetLinearVelocity|this|-1,-2|2" />
+        <Action Data="SetAngularVelocity|this|1|1" />
+      </ActionList>
+    </Icon>
+    <Icon Name="building2" Position="-490.6,106" GEnd="1,0" Background="building1" Size="190,306" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="building3" Position="485.9,106" GEnd="1,0" Background="building1" Size="190,306" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="jump" Position="-412,-360" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,40" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene2.iceball1.jump', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label1" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Apply Force" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="torque" Position="-412,-309.4" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,40" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene2.iceball1.torque', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label8" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Apply Torque" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="impulse" Position="-412,-258.4" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,40" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene2.iceball1.impulse', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label9" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Apply Impulse" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="velocity" Position="-412,-207.4" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,40" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene2.iceball1.velocity', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label10" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Set Velocity" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="next" Position="403.6,346" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene2.scroll_out', 'actions').play();&#xD;&#xA;b5.Utils.resolveObject('scene3.scroll_in', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label7" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Next" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="balloon1" Position="-2.29999999999989,-54" Scale="0.5,0.5" GEnd="1,0" Background="balloon" Size="281,507" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="move" Play="True">
+        <Action Data="MoveWithSpeed|this|400|1|1" />
+        <Action Data="AddProps|this|_rotation=1" />
+      </ActionList>
+    </Icon>
+  </Scene>
+  <Scene Name="scene3" Position="0,768" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="-512,-384,1024,768" Current="False" ClipChildren="True" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <ActionList Name="scroll_in" Repeat="1">
+      <Action Data="FocusScene|this|False" />
+      <Action Data="SetProps|this|visible=true" />
+      <Action Data="MoveTo|this|0,0|1|0|0" />
+    </ActionList>
+    <ActionList Name="scroll_out" Repeat="1">
+      <Action Data="MoveTo|this|0,768|1|0|0" />
+      <Action Data="SetProps|this|visible=false" />
+    </ActionList>
+    <Icon Name="background1" Position="0,0" GEnd="1,0" Colour="#FF00BFFF" Size="1024,768" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="next" Position="403.6,346" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene3.scroll_out', 'actions').play();&#xD;&#xA;b5.Utils.resolveObject('scene1.scroll_in', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="label7" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Next" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="rock1" Position="11.25,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock12" Position="11.25,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock19" Position="11.25,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock26" Position="11.25,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock33" Position="11.25,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock40" Position="11.25,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock6" Position="160.75,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock13" Position="160.75,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock20" Position="160.75,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock27" Position="160.75,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock34" Position="160.75,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock41" Position="160.75,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock7" Position="310.25,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock14" Position="310.25,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock21" Position="310.25,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock28" Position="310.25,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock35" Position="310.25,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock42" Position="310.25,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock8" Position="459.75,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock15" Position="459.75,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock22" Position="459.75,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock29" Position="459.75,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock36" Position="459.75,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock43" Position="459.75,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock2" Position="-287.75,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock10" Position="-287.75,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock17" Position="-287.75,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock24" Position="-287.75,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock31" Position="-287.75,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock38" Position="-287.75,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock5" Position="-138.25,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock11" Position="-138.25,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock18" Position="-138.25,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock25" Position="-138.25,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock32" Position="-138.25,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock39" Position="-138.25,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock3" Position="-437.25,-327.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock9" Position="-437.25,-213.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock16" Position="-437.25,-100.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock23" Position="-437.25,13.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock30" Position="-437.25,126.75" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="rock37" Position="-437.25,240.25" Scale="0.5,0.5" GEnd="1,0" Background="rock" Size="299,227" AlphaMode="4" CompositeOp="0" Type="0" Velocity="10,10" WrapPosition="True" ShadowColour="#FF000000">
+      <UserProp Name="attract" Value="1" Type="3" />
+    </Icon>
+    <Icon Name="jump1" Position="-412,-360" GEnd="1,0" Layer="1" Colour="#FFFF0000" CornerRadius="20" Size="200,40" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="b5.Utils.resolveObject('scene3.world1.attract', 'actions').play();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Label Name="attract" Position="0,0" GEnd="1,0" Size="32,32" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Repel" Font="20pt Calibri" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="world1" Position="-15.3999999999995,-58.9999999999997" Scale="0.25,0.25" GEnd="1,0" Background="world" Size="571,571" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <ActionList Name="attract">
+        <Action Data="Attract|this|scene3|20000|20000|-1|True|True" />
+      </ActionList>
+      <ActionList Name="follow" Play="True">
+        <Action Data="FollowPathVel|this|scene1.path1|0|2|1|False" />
+      </ActionList>
+    </Icon>
+  </Scene>
+</xml>
