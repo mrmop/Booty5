@@ -1,6 +1,7 @@
 Booty5 is a free open source HTML5 game engine written using JavaScript. A full game editor / game maker / Flash style animation editor  is also available from the [Booty5 website](http://booty5.com).
 
 For more in-depth information about the Booty5 engine and game editor see the [Booty5 website](http://www.booty5.com/index.php/booty5). For API reference see the [Booty5 API reference](http://booty5.com/html5-game-engine/booty5-html5-game-engine-reference/)
+The Booty5 manual is available in e-book format from [here](http://booty5.com/booty5-free-html-game-maker-e-book-manual/)
 
 Currently supports:
 - Mobile and desktop

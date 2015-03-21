@@ -1,3 +1,14 @@
+v1.4.5
+------
+* Bitmap.onload callback now passed the bitmap as the first parameter to the callback
+* Actor.addFixture() now also accepts an options object that contains a material and a shape
+* points, convexPoints abd radius passed to Actor.addFixture() options renamed to vertices, convexVertices and width respectively
+* Timeline.add() can now accept single parameter which is animation instance to add
+* Fix: Actor docking
+* Fix: Scene.removeResource() and App.removeResource()
+* Fix: Scene.addResource() and App.addResource() was not storing parent container
+* Fix: Removed duplicate TimelineManager code from Timeline, school boy type error!
+
 v1.4.4
 ------
 * Code restructured
