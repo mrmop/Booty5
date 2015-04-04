@@ -7,7 +7,7 @@ Currently supports:
 - Mobile and desktop
 - Resource management
 - Scene management
-- Actor (game object) management, image, text, shape and particle system based
+- Actor (game object) management, image, text, shape, tile map and particle system based
 - Sprite, text and 2D polygon rendering
 - Actions system
 - Box2D physics via Box2DWeb
