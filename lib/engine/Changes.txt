@@ -1,3 +1,8 @@
+v1.4.6
+------
+* Added new actor type called MapActor which can render tiled maps
+* Fix: Actor.vr wasn't updating transform
+
 v1.4.5
 ------
 * Bitmap.onload callback now passed the bitmap as the first parameter to the callback

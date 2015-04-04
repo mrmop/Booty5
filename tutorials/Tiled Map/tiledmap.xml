@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="TiledMap" TargetFrameRate="30" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="False" FillWindow="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <Image Name="testmap_collision" Location="E:\AppEasy\html5\tutorials\Tiled Map\testmap_collision.png" />
+  <Image Name="testmap" Location="E:\AppEasy\html5\tutorials\Tiled Map\testmap.png" />
+  <Image Name="sheep" Location="E:\AppEasy\html5\tutorials\Tiled Map\sheep.png" />
+  <Image Name="star" Location="E:\AppEasy\html5\tutorials\Tiled Map\star.png" />
+  <Image Name="stone" Location="E:\AppEasy\html5\tutorials\Tiled Map\stone.png" />
+  <Image Name="chest_closed" Location="E:\AppEasy\html5\tutorials\Tiled Map\chest_closed.png" />
+  <Image Name="coin" Location="E:\AppEasy\html5\tutorials\Tiled Map\coin.png" />
+  <Image Name="key" Location="E:\AppEasy\html5\tutorials\Tiled Map\key.png" />
+  <Image Name="sign_exclamation" Location="E:\AppEasy\html5\tutorials\Tiled Map\sign_exclamation.png" />
+  <Image Name="mrmop" Location="E:\AppEasy\html5\tutorials\Tiled Map\mrmop.png" />
+  <Brush Name="testmap" Rect="0,0,256,960" ScaleArea="0,0,0,0" Image="testmap" BrushType="0" />
+  <Brush Name="testmap_collision" Rect="0,0,256,64" ScaleArea="0,0,0,0" Image="testmap_collision" BrushType="0" />
+  <Brush Name="sheep" Rect="0,0,172,89" ScaleArea="0,0,0,0" Image="sheep" BrushType="0">
+    <Frame x="0" y="0" w="86" h="89" selected="false" />
+    <Frame x="86" y="0" w="86" h="89" selected="false" />
+  </Brush>
+  <Brush Name="star" Rect="0,0,64,64" ScaleArea="0,0,0,0" Image="star" BrushType="0" />
+  <Brush Name="stone" Rect="0,0,64,64" ScaleArea="0,0,0,0" Image="stone" BrushType="0" />
+  <Brush Name="chest_closed" Rect="0,0,64,64" ScaleArea="0,0,0,0" Image="chest_closed" BrushType="0" />
+  <Brush Name="coin" Rect="0,0,40,40" ScaleArea="0,0,0,0" Image="coin" BrushType="0" />
+  <Brush Name="key" Rect="0,0,64,31" ScaleArea="0,0,0,0" Image="key" BrushType="0" />
+  <Brush Name="sign_exclamation" Rect="0,0,64,64" ScaleArea="0,0,0,0" Image="sign_exclamation" BrushType="0" />
+  <Brush Name="mrmop" Rect="0,0,64,64" ScaleArea="0,0,0,0" Image="mrmop" BrushType="0" />
+  <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Tiled Map\Common.js" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="3" Extents="-2048,-2048,4096,4096" TargetX="sheep1" TargetY="sheep1" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Physics="False" Gravity="0,10" WScale="20" DoSleep="False" PhysicsTimestep="0.0333333333333333" OnKeyDown="keyDown(e);" OnKeyUp="keyUp(e);">
+    <Icon Name="map2" Position="0,0" GEnd="1,0" Background="testmap" Size="256,922" AlphaMode="4" CompositeOp="0" RenderAs="3" Depth="1.1" Type="0" WrapPosition="False" ShadowColour="#FF000000" MapSize="32,16" TileSize="64,64" DisplaySize="26,18" ExportCollision="False" Tiles="24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24" CollisionTiles="1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" />
+    <Icon Name="map1" Position="0,0" GEnd="1,0" Background="testmap" CollisionBackground="testmap_collision" Size="256,922" AlphaMode="4" CompositeOp="0" RenderAs="3" Type="0" WrapPosition="False" ShadowColour="#FF000000" MapSize="32,16" TileSize="64,64" DisplaySize="24,16" Tiles="9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0,0,0,54,0,0,0,0,0,0,0,0,0,0,0,0,0,54,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0,0,54,51,0,0,0,44,0,0,0,0,0,2,9,9,9,9,3,0,0,0,0,0,0,9,9,0,0,0,0,0,0,0,11,9,9,9,12,43,0,0,0,0,0,0,0,0,47,0,0,0,0,0,0,0,0,9,9,0,0,54,0,0,0,0,0,0,0,0,0,43,0,0,0,0,0,0,54,0,46,0,54,0,0,0,0,0,0,9,9,0,11,9,9,12,0,0,0,0,0,0,0,43,0,0,0,0,0,0,51,0,45,0,51,0,0,0,0,0,0,9,9,0,0,0,47,0,0,0,0,0,54,0,0,43,0,0,0,0,0,0,11,9,9,9,9,12,0,0,0,0,0,9,9,0,0,0,46,0,0,0,0,2,10,10,10,10,10,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,0,0,0,46,0,0,0,0,0,0,0,0,0,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,0,0,0,46,0,0,0,0,0,0,0,0,0,46,0,0,0,50,50,50,0,0,0,0,0,0,0,54,0,0,9,9,0,0,0,45,0,0,0,0,0,0,54,0,0,46,0,0,13,10,10,10,14,0,0,0,44,0,0,51,0,0,9,9,9,9,0,0,0,0,0,0,0,2,9,3,0,46,0,0,8,8,10,8,8,0,0,0,43,2,9,9,9,9,9,9,9,12,0,0,0,11,12,0,0,0,0,0,0,45,0,13,8,8,8,8,8,14,0,0,43,0,0,47,0,0,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,8,8,8,8,8,8,0,0,43,0,0,45,0,0,9,9,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,8,8,8,8,8,8,8,0,0,43,0,0,0,0,0,9,8,9,10,8,9,10,8,9,10,8,9,10,8,9,10,8,9,10,8,9,10,8,9,10,8,9,10,8,9,10,8,9" CollisionTiles="1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" />
+    <Icon Name="sheep1" Position="-288.999999999999,60.800000000001" GEnd="1,0" Background="sheep" Size="86,89" AlphaMode="4" CompositeOp="0" Frames="0,1,00,1,0,1,0,0,0,1" OnTick="updatePlayer(this, dt);" PlaybackSpeed="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="star1" Position="-701.8,-242" GEnd="1,0" Background="star" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="star2" Position="871.000000000001,382" GEnd="1,0" Background="star" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="stone1" Position="-226.6,-94.6000000000001" GEnd="1,0" Background="stone" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="chest_closed1" Position="-558.8,224.4" GEnd="1,0" Origin="0,32" Background="chest_closed" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="coin1" Position="260.8,-420.8" GEnd="1,0" Background="coin" Size="40,40" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="coin2" Position="-332.8,-372.799999999999" GEnd="1,0" Background="coin" Size="40,40" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="coin3" Position="-249.6,-374.399999999999" GEnd="1,0" Background="coin" Size="40,40" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="coin4" Position="699.2,382.4" GEnd="1,0" Background="coin" Size="40,40" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="sx" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1.2" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="key1" Position="895.400000000001,145.2" GEnd="1,0" Background="key" Size="64,31" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="angle" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="0" />
+          <Kf T="1" D="0" V="-86" />
+          <Kf T="2" D="0" V="0" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="sign_exclamation1" Position="-66.0000000000001,-96.8000000000001" GEnd="1,0" Background="sign_exclamation" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="mrmop1" Position="-465.600000000001,-356.8" GEnd="1,0" Background="mrmop" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="-465.60000000000076" />
+          <Kf T="1" D="0" V="-225.60000000000076" />
+          <Kf T="2" D="0" V="-465.60000000000076" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="mrmop2" Position="294.399999999999,-160" GEnd="1,0" Background="mrmop" Size="64,64" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" AutoPlay="True" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="289.59999999999928" />
+          <Kf T="1" D="0" V="601.5999999999998" />
+          <Kf T="2" D="0" V="289.6" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+  </Scene>
+</xml>
