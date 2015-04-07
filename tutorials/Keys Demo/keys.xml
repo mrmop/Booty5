@@ -2,13 +2,13 @@
 <xml>
   <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
   <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
   <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Keys demo\Common.js" />
   <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnKeyDown="processKeys(e);" WorldScale="">
     <Icon Name="bg" Position="0,0" GEnd="1,0" Colour="#FFFFFF00" Size="1024,768" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="player" Position="0,0" GEnd="1,0" Colour="#FF20B2AA" Size="100,100" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Label Name="noname" Position="0,-250" GEnd="1,0" Size="800,70" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Move around with arrow keys" Font="40pt Calibri" TextColour="#FF000000" AlignH="1" AlignV="1" />
+    <Label Name="noname" Position="0,-250" GEnd="1,0" Size="800,70" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Move around with arrow keys" Font="40pt Calibri" AlignH="1" AlignV="1" TextColour="" />
   </Scene>
 </xml>

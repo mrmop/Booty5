@@ -1,6 +1,6 @@
 function ShuffleMatch()
 {
-	var app = window.app;
+	var app = b5.app;
 
 	// Game states
 	ShuffleMatch.GS_VIEWING = 0;
@@ -34,17 +34,17 @@ function ShuffleMatch()
 	this.guess_timer = this.max_guess_timer;		// guess time
 
 	// Parse scenes that make up the game because these scenes are not automatically loaded like the loading scene
-	var xoml = new Xoml(app);
+	var xoml = new b5.Xoml(app);
 	xoml.parseResources(app, [window.viewarea]);
 	xoml.parseResources(app, [window.guessarea]);
 	xoml.parseResources(app, [window.gameover]);
 	xoml.parseResources(app, [window.mainmenu]);
 
 	// Make main menu the focus scene
-	this.menuscene = window.app.findScene("mainmenu");
-	app.focus_scene = this.menuscene;
-	this.viewscene = window.app.findScene("viewarea");
-	this.guessscene = window.app.findScene("guessarea");
+	this.menuscene = b5.app.findScene("mainmenu");
+	b5.app.focus_scene = this.menuscene;
+	this.viewscene = b5.app.findScene("viewarea");
+	this.guessscene = b5.app.findScene("guessarea");
 }
 
 ShuffleMatch.prototype.newGame = function()
@@ -65,13 +65,13 @@ ShuffleMatch.prototype.newGame = function()
 	this.menuscene.findActor("continue_button").visible = true;
 	
 	// Play music
-	window.app.findResource("music", "sound").play();
+	b5.app.findResource("music", "sound").play();
 };
 
 ShuffleMatch.prototype.nextRound = function()
 {
 	this.round++;
-	app.focus_scene = this.viewscene;
+	b5.app.focus_scene = this.viewscene;
 	// Generate board;
 	var size = this.round + 3;
 	if (size > 10) size = 10;
@@ -103,9 +103,9 @@ ShuffleMatch.prototype.nextRound = function()
 
 ShuffleMatch.prototype.gameOver = function()
 {
-	var gameover_scene = window.app.findScene("gameover");
-	gameover_scene.timelines.add(new Timeline(gameover_scene, "y", [1024, 0], [0, 0.5], 1, [Ease.cubicout]));
-	window.app.focus_scene = gameover_scene;
+	var gameover_scene = b5.app.findScene("gameover");
+	gameover_scene.timelines.add(new b5.Timeline(gameover_scene, "y", [1024, 0], [0, 0.5], 1, [b5.Ease.cubicout]));
+	b5.app.focus_scene = gameover_scene;
 
 	this.state = ShuffleMatch.GS_GAME_OVER;
 
@@ -126,7 +126,7 @@ ShuffleMatch.prototype.continueGame = function()
 ShuffleMatch.prototype.chooseNumber = function()
 {
 	this.target_number = this.board.chooseRandomTile();
-	var brush = window.app.findResource("d" + this.target_number, "brush");
+	var brush = b5.app.findResource("d" + this.target_number, "brush");
 	var chosen_value = this.viewscene.findActor("ChosenValue");
 	chosen_value.atlas = brush;
 	var remember_value = this.guessscene.findActor("RememberValue");
@@ -150,8 +150,8 @@ ShuffleMatch.prototype.correct = function(tile)
 	// Blank view tile and show guess tile
 	var type = tile.type;
 	tile.type = -1;
-	tile.view_actor.atlas = window.app.findResource("empty", "brush");
-	tile.guess_actor.atlas = window.app.findResource("d" + type, "brush");
+	tile.view_actor.atlas = b5.app.findResource("empty", "brush");
+	tile.guess_actor.atlas = b5.app.findResource("d" + type, "brush");
 
 	// If no tiles of this type left them shuffle
 	if (this.board.countTilesOfType(type) == 0)
@@ -161,11 +161,11 @@ ShuffleMatch.prototype.correct = function(tile)
 	}
 
 	// Create score floater
-	var actor = new Actor();
+	var actor = new b5.Actor();
 	actor.x = tile.guess_actor.x;
 	actor.y = tile.guess_actor.y;
 	actor.vy = -500;
-	actor.atlas = window.app.findResource("s" + this.score_multiplier * 10, "brush");
+	actor.atlas = b5.app.findResource("s" + this.score_multiplier * 10, "brush");
 	actor.w = actor.atlas.frames[0].w;
 	actor.h = actor.atlas.frames[0].h;
 	actor.onTick = function(dt) {
@@ -183,17 +183,17 @@ ShuffleMatch.prototype.correct = function(tile)
 
 	// Animate score indicator to show added score
 	var score_icon = this.viewscene.findActor("score_icon");
-	score_icon.scene.timelines.add(new Timeline(score_icon, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [Ease.quadout, Ease.quadin]));
+	score_icon.scene.timelines.add(new b5.Timeline(score_icon, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [b5.Ease.quadout, b5.Ease.quadin]));
 
 	// Reduce number of tiles left to find
 	this.tiles_left--;
 	if (this.tiles_left <= 0)
 	{
 		this.nextRound();
-		window.app.findResource("win", "sound").play();
+		b5.app.findResource("win", "sound").play();
 	}
 
-	window.app.findResource("correct", "sound").play();
+	b5.app.findResource("correct", "sound").play();
 };
 
 ShuffleMatch.prototype.incorrect = function(type)
@@ -205,18 +205,18 @@ ShuffleMatch.prototype.incorrect = function(type)
 	if (this.lives_left <= 0)
 	{
 		this.gameOver();
-		window.app.findResource("lose", "sound").play();
+		b5.app.findResource("lose", "sound").play();
 	}
 	this.updateHUD();
 
 	// Animate life indicator to show life lost
 	var lives_icon = this.viewscene.findActor("lives_icon");
-	lives_icon.scene.timelines.add(new Timeline(lives_icon, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [Ease.quadout, Ease.quadin]));
+	lives_icon.scene.timelines.add(new b5.Timeline(lives_icon, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [b5.Ease.quadout, b5.Ease.quadin]));
 
 	// Do next shuffle
 	this.shuffle();
 
-	window.app.findResource("wrong", "sound").play();
+	b5.app.findResource("wrong", "sound").play();
 };
 
 ShuffleMatch.prototype.shuffle = function()
@@ -228,11 +228,11 @@ ShuffleMatch.prototype.shuffle = function()
 	{
 		// Currently in viewing mode so shuffle to guessing mode
 		this.state = ShuffleMatch.GS_GUESSING;
-		var timeline = new Timeline(this.viewscene, "camera_y", [0, 1024], [0, 0.5], 1, [Ease.quadout]);
+		var timeline = new b5.Timeline(this.viewscene, "camera_y", [0, 1024], [0, 0.5], 1, [b5.Ease.quadout]);
 		this.viewscene.timelines.add(timeline);
 		timeline.anims[0].onEnd = function() {window.shuffle_match.allow_shuffle = true;};
-		this.guessscene.timelines.add(new Timeline(this.guessscene, "camera_y", [0, 1024], [0, 0.5], 1, [Ease.quadout]));
-		app.focus_scene = this.guessscene;
+		this.guessscene.timelines.add(new b5.Timeline(this.guessscene, "camera_y", [0, 1024], [0, 0.5], 1, [b5.Ease.quadout]));
+		b5.app.focus_scene = this.guessscene;
 		this.shuffles++;
 	}
 	else
@@ -240,14 +240,14 @@ ShuffleMatch.prototype.shuffle = function()
 	{
 		// Currently in guessing mode so shuffle to viewing mode
 		this.state = ShuffleMatch.GS_VIEWING;
-		var timeline = new Timeline(this.viewscene, "camera_y", [1024, 0], [0, 0.5], 1, [Ease.quadout]);
+		var timeline = new b5.Timeline(this.viewscene, "camera_y", [1024, 0], [0, 0.5], 1, [b5.Ease.quadout]);
 		this.viewscene.timelines.add(timeline);
 		timeline.anims[0].onEnd = function() {window.shuffle_match.allow_shuffle = true;};
-		this.guessscene.timelines.add(new Timeline(this.guessscene, "camera_y", [1024, 0], [0, 0.5], 1, [Ease.quadout]));
-		app.focus_scene = this.viewscene;
+		this.guessscene.timelines.add(new b5.Timeline(this.guessscene, "camera_y", [1024, 0], [0, 0.5], 1, [b5.Ease.quadout]));
+		b5.app.focus_scene = this.viewscene;
 		this.chooseNumber();
 	}
-	window.app.findResource("swap", "sound").play();
+	b5.app.findResource("swap", "sound").play();
 };
 
 ShuffleMatch.prototype.updateGuessArea = function(actor)
@@ -255,7 +255,7 @@ ShuffleMatch.prototype.updateGuessArea = function(actor)
 	if (this.state == ShuffleMatch.GS_GUESSING)
 	{
 		// If player runs out of time then they get an incorrect
-		this.guess_timer -= window.app.dt;
+		this.guess_timer -= b5.app.dt;
 		if (this.guess_timer <= 0)
 		{
 			this.guess_timer = 0;
@@ -277,7 +277,7 @@ ShuffleMatch.prototype.updateGuessArea = function(actor)
 
 ShuffleMatch.prototype.updateHUD = function()
 {
-	var app = window.app;
+	var app = b5.app;
 
 	// Update lives left
 	var lives_actor = this.viewscene.findActor("lives");
@@ -308,7 +308,7 @@ ShuffleMatch.prototype.updateHUD = function()
 
 ShuffleMatch.prototype.updateGameOver = function()
 {
-	var app = window.app;
+	var app = b5.app;
 	var gameover = app.findScene("gameover");
 
 	// Update score

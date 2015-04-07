@@ -54,9 +54,9 @@ function UpdateGame(scene)
 	{
 		var dx = ball.x - player2.x ;
 		if (dx < -10)
-			player2.x  -=  difficulty;
+			player2._x  -=  difficulty;
 		else if (dx >  10)
-			player2.x  +=  difficulty;
+			player2._x  +=  difficulty;
 	}
 	
 	// Keep ball within screen boundaries
@@ -65,5 +65,5 @@ function UpdateGame(scene)
 	
 	// Reset ball if it gets by a player
 	if (ball.y < -350 || ball.y > 350)
-		ball.y = 0;
+		ball._y = 0;
 }

@@ -1,6 +1,6 @@
 function updateHud()
 {
-	var app = window.app;
+	var app = b5.app;
 	var hud_scene = app.findScene("gamehud");
 	var hud_actor = hud_scene.findActor("hud");
 	var game_scene = app.findScene("gamescene");
@@ -12,32 +12,32 @@ function updateHud()
 
 function animateLives()
 {
-	var hud_scene = app.findScene("gamehud");
+	var hud_scene = b5.app.findScene("gamehud");
 	var hud_actor = hud_scene.findActor("hud");
 	var lives = hud_actor.findActor("lives_icon");
-	hud_scene.timelines.add(new Timeline(lives, "_scale", [1, 1.5, 1], [0, 0.5, 1], 1, [Ease.quartin, Ease.quartout]));
+	hud_scene.timelines.add(new b5.Timeline(lives, "_scale", [1, 1.5, 1], [0, 0.5, 1], 1, [b5.Ease.quartin, b5.Ease.quartout]));
 }
 
 function showDialog(dlg_name, show)
 {
-	var app = window.app;
+	var app = b5.app;
 	var hud_scene = app.findScene("gamehud");
 	var dlg = hud_scene.findActor(dlg_name);
 	var game_scene = app.findScene("gamescene");
 	
-	var timeline = new Timeline();
+	var timeline = new b5.Timeline();
 	if (show)
 	{
 		app.focus_scene = hud_scene;
-		timeline.add(dlg, "_rotation", [10, 0], [0, 2], 1, [Ease.sin]);
-		timeline.add(dlg, "_x", [-2000, 0], [0, 2], 1, [Ease.sin]);
+		timeline.add(dlg, "_rotation", [10, 0], [0, 2], 1, [b5.Ease.sin]);
+		timeline.add(dlg, "_x", [-2000, 0], [0, 2], 1, [b5.Ease.sin]);
 		hud_scene.timelines.add(timeline);
 	}
 	else
 	{
 		app.focus_scene = game_scene;
-		timeline.add(dlg, "_rotation", [0, 10], [0, 2], 1, [Ease.sin]);
-		timeline.add(dlg, "_x", [0, -2000], [0, 2], 1, [Ease.sin]);
+		timeline.add(dlg, "_rotation", [0, 10], [0, 2], 1, [b5.Ease.sin]);
+		timeline.add(dlg, "_x", [0, -2000], [0, 2], 1, [b5.Ease.sin]);
 		hud_scene.timelines.add(timeline);
 	}
 	
@@ -54,9 +54,9 @@ function showDialog(dlg_name, show)
 			star1.visible = true;
 			star2.visible = true;
 			star3.visible = true;
-			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
-			timeline.add(star2, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
-			timeline.add(star3, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [b5.Ease.sin, b5.Ease.sin, b5.Ease.sin]);
+			timeline.add(star2, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [b5.Ease.sin, b5.Ease.sin, b5.Ease.sin]);
+			timeline.add(star3, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [b5.Ease.sin, b5.Ease.sin, b5.Ease.sin]);
 		}
 		else
 		if (game_time_left >= 5)
@@ -64,22 +64,22 @@ function showDialog(dlg_name, show)
 			star1.visible = true;
 			star2.visible = true;
 			star3.visible = false;
-			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
-			timeline.add(star2, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [b5.Ease.sin, b5.Ease.sin, b5.Ease.sin]);
+			timeline.add(star2, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [b5.Ease.sin, b5.Ease.sin, b5.Ease.sin]);
 		}
 		else
 		{
 			star1.visible = true;
 			star2.visible = false;
 			star3.visible = false;
-			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [Ease.sin, Ease.sin, Ease.sin]);
+			timeline.add(star1, "_scale", [0.1, 1.25, 1], [2, 2.5, 3], 1, [b5.Ease.sin, b5.Ease.sin, b5.Ease.sin]);
 		}
 	}
 }
 
 function showHud(show)
 {
-	var hud_scene = app.findScene("gamehud");
+	var hud_scene = b5.app.findScene("gamehud");
 	if (hud_scene.visible)
 		return;
 	hud_scene.visible = show;
@@ -87,13 +87,13 @@ function showHud(show)
 	if (show)
 	{
 		var hud = hud_scene.findActor("hud");
-		hud_scene.timelines.add(new Timeline(hud, "_y", [-420, -420 + 80], [0, 1], 1, [Ease.quartin]));
+		hud_scene.timelines.add(new b5.Timeline(hud, "_y", [-420, -420 + 80], [0, 1], 1, [b5.Ease.quartin]));
 	}
 }
 
 function pauseGame()
 {
-	var app = window.app;
+	var app = b5.app;
 	var game_scene = app.findScene("gamescene");
 	game_scene.active = false;
 	game_scene.visible = false;
@@ -104,11 +104,12 @@ function pauseGame()
 	var hud_scene = app.findScene("gamehud");
 	hud_scene.active = false;
 	hud_scene.visible = false;
-	window.app.focus_scene = menu_scene;
+	b5.app.focus_scene = menu_scene;
 }
 
 function resumeGame()
 {
+	var app = b5.app;
 	var game_scene = app.findScene("gamescene");
 	game_scene.active = true;
 	game_scene.visible = true;
@@ -118,12 +119,12 @@ function resumeGame()
 	var hud_scene = app.findScene("gamehud");
 	hud_scene.active = true;
 	hud_scene.visible = true;
-	window.app.focus_scene = game_scene;
+	b5.app.focus_scene = game_scene;
 }
 
 function goBackToMainMenu()
 {
-	var app = window.app;
+	var app = b5.app;
 	var game_scene = app.findScene("gamescene");
 	game_scene.active = false;
 	game_scene.visible = false;
@@ -134,12 +135,12 @@ function goBackToMainMenu()
 	var hud_scene = app.findScene("gamehud");
 	hud_scene.active = false;
 	hud_scene.visible = false;
-	window.app.focus_scene = menu_scene;
+	b5.app.focus_scene = menu_scene;
 }
 
 function updateLocks()
 {
-	var app = window.app;
+	var app = b5.app;
 	var level_scene = app.findScene("levelselect");
 	var locks = [0,0,0,0,0,0];
 	

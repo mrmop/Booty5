@@ -1,15 +1,16 @@
 function processKeys(e)
 {
-	var app = window.app;
+	console.log(e);
+	var app = b5.app;
 	var scene = app.focus_scene;
 	var ac = scene.findActor("player");
 	var speed = 5;
 	if (e.keyCode == 38)
-		ac.y -= speed;
+		ac._y -= speed;
 	if (e.keyCode == 40)
-		ac.y += speed;
+		ac._y += speed;
 	if (e.keyCode == 37)
-		ac.x -= speed;
+		ac._x -= speed;
 	if (e.keyCode == 39)
-		ac.x += speed;
+		ac._x += speed;
 }

@@ -18,8 +18,8 @@ var index = 0;
 
 function createQuote()
 {
-	var scene = window.app.findScene("gamescene");
-	var label = new LabelActor();
+	var scene = b5.app.findScene("gamescene");
+	var label = new b5.LabelActor();
 	label.font = "32pt Calibri";
 	label.text_align = "center";
 	label.text_baseline = "middle";

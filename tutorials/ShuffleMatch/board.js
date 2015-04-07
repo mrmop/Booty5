@@ -1,15 +1,15 @@
 function Tile(type)
 {
 	this.type = type;
-	this.view_actor = new Actor();
-	this.guess_actor = new Actor();
+	this.view_actor = new b5.Actor();
+	this.guess_actor = new b5.Actor();
 }
 
 function Board(x_count, y_count)
 {
 	Board.MAX_TILE_TYPES = 9;
 
-	var app = window.app;
+	var app = b5.app;
 	this.x_count = x_count;     // Horizontal tile count
 	this.y_count = y_count;     // Vertical tile count
 	this.tiles = [];
@@ -54,7 +54,7 @@ function Board(x_count, y_count)
 							window.shuffle_match.correct(sm_tile);
 						else
 							window.shuffle_match.incorrect();
-						sm_tile.guess_actor.scene.timelines.add(new Timeline(sm_tile.guess_actor, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [Ease.quadout, Ease.quadin]));
+						sm_tile.guess_actor.scene.timelines.add(new b5.Timeline(sm_tile.guess_actor, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [b5.Ease.quadout, b5.Ease.quadin]));
 					}
 				}
 			};
@@ -70,6 +70,7 @@ function Board(x_count, y_count)
 
 Board.prototype.destroy = function()
 {
+	var app = b5.app;
 	var view_area = app.findScene("viewarea");
 	var guess_area = app.findScene("guessarea");
 	view_area.removeActorsWithTag("tile");

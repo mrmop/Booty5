@@ -27,8 +27,8 @@ var rounds_complete = [
 
 function gameLoaded()
 {
-	window.app.findResource('music', 'sound').play();
-	window.app.cocoonjs = typeof Cocoon != "undefined";
+	b5.app.findResource('music', 'sound').play();
+	b5.app.cocoonjs = typeof Cocoon != "undefined";
 	initAds();
 	loadAds();
 	showAds();
@@ -42,7 +42,7 @@ function startGame()
 	console.log(rounds_complete[0][0]);
 	console.log(rounds_complete[1]);
 	console.log(rounds_complete[1][0]);
-	var app = window.app;
+	var app = b5.app;
 	app.focus_scene = app.findScene("levelselect");
 	app.focus_scene.active = true;
 	app.focus_scene.visible = true;
@@ -62,7 +62,7 @@ function startLevel(level)
 {
 	loadAds();
 	
-	var app = window.app;
+	var app = b5.app;
 	
 	// Show hud
 	showHud(true);
@@ -76,7 +76,7 @@ function startLevel(level)
 	}
 
 	// Load new scene
-	new Xoml(app).parseResources(app, [window["level" + level]]);
+	new b5.Xoml(app).parseResources(app, [window["level" + level]]);
 	app.order_changed = true;
 	// Disable main menu
 	var select_scene = app.findScene("levelselect");
@@ -98,13 +98,13 @@ function nextRound()
 {
 	if (isGameComplete())
 	{
-		var hud_scene = app.findScene("gamehud");
+		var hud_scene = b5.app.findScene("gamehud");
 		hud_scene.active = false;
 		hud_scene.visible = false;
-		var scene = window.app.findScene("gamecomplete");
+		var scene = b5.app.findScene("gamecomplete");
 		scene.active = true;
 		scene.visible = true;
-		window.app.focus_scene = scene;
+		b5.app.focus_scene = scene;
 		resetGame();
 		return;
 	}
@@ -135,7 +135,7 @@ function updateTime(clock, dt)
 	}
 
 	clock.text = (game_time_left << 0).toString();
-//	clock.text = window.app.avg_fps;
+//	clock.text = b5.app.avg_fps;
 }
 
 function updateSky(sky, dt)
@@ -148,9 +148,9 @@ function updatePlayer(player)
 	if (player.hurt === true)
 	{
 		// Create explosion at player point
-		var particles = new ParticleActor();
+		var particles = new b5.ParticleActor();
 		player.scene.addActor(particles);
-		particles.generateExplosion(10, Actor, 1, 200, 1, 10, 1, {
+		particles.generateExplosion(10, b5.Actor, 1, 200, 1, 10, 1, {
 			atlas: player.scene.findResource("explosion", "brush"),
 			w: 60,
 			h: 60,
@@ -165,7 +165,7 @@ function updatePlayer(player)
 		player.vy = 0;
 		player.vr = 0;
 		player.updateToPhysics();
-		window.app.findResource('explosion', 'sound').play();
+		b5.app.findResource('explosion', 'sound').play();
 		player.hurt = false;
 		lives_left--;
 		if (lives_left <= 0)
@@ -177,9 +177,9 @@ function updatePlayer(player)
 	if (player.extra_life === true)
 	{
 		// Create explosion at player point
-		var particles = new ParticleActor();
+		var particles = new b5.ParticleActor();
 		player.scene.addActor(particles);
-		particles.generateExplosion(10, Actor, 1, 200, 1, 10, 1, {
+		particles.generateExplosion(10, b5.Actor, 1, 200, 1, 10, 1, {
 			atlas: player.scene.findResource("explosion", "frog_eye"),
 			w: 60,
 			h: 60,
@@ -189,7 +189,7 @@ function updatePlayer(player)
 			vsy: 1.5,
 		});
 
-		window.app.findResource('extra', 'sound').play();
+		b5.app.findResource('extra', 'sound').play();
 		player.extra_life = false;
 		lives_left++;
 		updateHud();
@@ -202,7 +202,7 @@ function sceneTapped(scene, touch_pos)
 	if (!game_in_progress)
 		return;
 		
-	if (window.app.findScene("gamehud").findActor("settings").hitTest(touch_pos) != null)
+	if (b5.app.findScene("gamehud").findActor("settings").hitTest(touch_pos) != null)
 		return;
 	
 	if (scene.panning)
@@ -229,12 +229,12 @@ function sceneTapped(scene, touch_pos)
 			
 			// Animate head
 			var head = player1.findActor("frog_head");
-			scene.timelines.add(new Timeline(head, "_scale", [1, 1.5, 1], [0, 0.5, 1], 1, [Ease.quartin, Ease.quartout]));
+			scene.timelines.add(new b5.Timeline(head, "_scale", [1, 1.5, 1], [0, 0.5, 1], 1, [b5.Ease.quartin, b5.Ease.quartout]));
 			
 			// Create sparkle at tap point
-			var particles = new ParticleActor();
+			var particles = new b5.ParticleActor();
 			scene.addActor(particles);
-			particles.generateExplosion(10, Actor, 1, 200, 1, 10, 1, {
+			particles.generateExplosion(10, b5.Actor, 1, 200, 1, 10, 1, {
 				atlas: scene.findResource("ring", "brush"),
 				w: 60,
 				h: 60,
@@ -248,7 +248,7 @@ function sceneTapped(scene, touch_pos)
 			updateHud();
 			
 			// Play show sound effect
-			window.app.findResource('shot', 'sound').play();
+			b5.app.findResource('shot', 'sound').play();
 			
 			// Sometimes colliion does not fire for very small movements so we need to set a max time before allow jump is reset
 			jump_timer = Date.now();
@@ -281,12 +281,12 @@ function roundOver(failed, game_over)
 	if (!failed)
 	{
 		// Create anim that sends player to wife
-		var scene = window.app.findScene("gamescene");
+		var scene = b5.app.findScene("gamescene");
 		var player1 = scene.findActor("player1");
 		var wife = scene.findActor("wife");
 		player1.releaseBody();
-		scene.timelines.add(new Timeline(player1, "_x", [player1.x, wife.x - 80], [0, 2], 1, [Ease.quartout]));
-		scene.timelines.add(new Timeline(player1, "_y", [player1.y, wife.y], [0, 2], 1, [Ease.quartout]));
+		scene.timelines.add(new b5.Timeline(player1, "_x", [player1.x, wife.x - 80], [0, 2], 1, [b5.Ease.quartout]));
+		scene.timelines.add(new b5.Timeline(player1, "_y", [player1.y, wife.y], [0, 2], 1, [b5.Ease.quartout]));
 	}
 	showAds();
 }
@@ -305,11 +305,11 @@ function playerCollided(player, contact)
 	var b = actorB.otype === "heart";
 	if (a || b)
 	{
-		var particles = new ParticleActor();
+		var particles = new b5.ParticleActor();
 		scene.addActor(particles);
 		for (var t = 0; t < 5; t++)
 		{
-			var particle = new Actor();
+			var particle = new b5.Actor();
 			particle.atlas = scene.findResource("lives", "brush");
 			particle.w = 80;
 			particle.h = 72;
@@ -335,7 +335,7 @@ function playerCollided(player, contact)
 		scene.num_hearts--;
 		if (scene.num_hearts <= 0)
 			roundOver(false);
-		window.app.findResource('health', 'sound').play();
+		b5.app.findResource('health', 'sound').play();
 	}
 	else
 	{
@@ -375,7 +375,7 @@ function playerCollided(player, contact)
 			}
 		}
 	}
-	window.app.findResource('hit', 'sound').play();
+	b5.app.findResource('hit', 'sound').play();
 	player.allow_jump = 1;
 }
 
@@ -462,7 +462,7 @@ function loadGame()
 
 function initAds()
 {
-	if (window.app.cocoonjs)
+	if (b5.app.cocoonjs)
 	{
 		Cocoon.Ad.interstitial.on("ready", function(){
 			console.log("**** Ad ready");
@@ -478,7 +478,7 @@ function initAds()
 
 function loadAds()
 {
-	if (window.app.cocoonjs)
+	if (b5.app.cocoonjs)
 	{
 console.log("**** Loading ad");
 		Cocoon.Ad.loadInterstitial();
@@ -487,7 +487,7 @@ console.log("**** Loading ad");
 
 function showAds()
 {
-	if (window.app.cocoonjs)
+	if (b5.app.cocoonjs)
 	{
 console.log("**** Showing ad");
 		Cocoon.Ad.showInterstitial();

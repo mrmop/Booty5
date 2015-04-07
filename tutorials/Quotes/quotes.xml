@@ -2,7 +2,9 @@
 <xml>
   <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="False" JQuery="False" ExportMKB="False" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Box2D="False" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
   <Brush Name="grad1" Rect="0,0,32,32" ScaleArea="0,0,0,0" BrushType="1">
     <ColourStop a="0" r="100" g="149" b="237" selected="false" value="0" />
     <ColourStop a="255" r="135" g="206" b="235" selected="false" value="0.5" />
@@ -14,7 +16,7 @@
     <ColourStop a="0" r="255" g="255" b="255" selected="false" value="1" />
   </Brush>
   <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Quotes\Common.js" />
-  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WorldScale="10,10" PhysicsTimestep="0.0333333333333333">
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" WorldScale="">
     <Icon Name="noname36" Position="0,0" Scale="1.2,1.2" GEnd="1,0" Background="grad2" Size="200,200" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" AngularVelocity="10" WrapPosition="False" ShadowColour="#FF000000">
       <Icon Name="noname25" Position="0,200" GEnd="1,0" Background="grad2" Size="200,200" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
       <Icon Name="noname11" Position="0,-200" GEnd="1,0" Background="grad2" Size="200,200" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />

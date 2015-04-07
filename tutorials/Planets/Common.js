@@ -16,7 +16,7 @@ function createPlanets(scene)
 	var angle = 0;
 	for (var t = 0; t < num_planets; t++)
 	{
-		var planet = new ArcActor();
+		var planet = new b5.ArcActor();
 		planet.name = "planet" + t;
 		planet.radius = 100;
 		planet.fill_style = colours[colour];
@@ -29,7 +29,6 @@ function createPlanets(scene)
 		if (colour >= colours.length) colour = 0;
 	}
 }
-
 
 function updatePlanets(scene)
 {

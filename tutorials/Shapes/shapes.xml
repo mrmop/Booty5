@@ -2,7 +2,7 @@
 <xml>
   <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" ExportMKB="False" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
   <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
   <Image Name="crate" Location="E:\AppEasy\html5\tutorials\Shapes\crate.png" />
@@ -22,15 +22,15 @@
     <Icon Name="rect3" Position="140.8,-193.6" GEnd="1,0" Colour="#FFDEB887" CornerRadius="20" Size="100,100" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" Type="0" AngularVelocity="-50" WrapPosition="False" ShadowColour="#FF000000" />
     <Icon Name="rect4" Position="294.8,-190.8" GAngle="45" GEnd="1,0" Colour="#FFDEB887" CornerRadius="20" Background="blue" Size="100,100" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="2" Type="0" AngularVelocity="-50" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="5" ShadowColour="#FF000000" />
     <Icon Name="circle4" Position="-5.19999999999999,-193.2" GEnd="1,0" Colour="#FF6495ED" StrokeColour="#FFFF00FF" StrokeThickness="10" Background="blue" Size="100,100" AlphaMode="4" CompositeOp="0" Cache="True" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000">
-      <Icon Name="circle1" Position="0,0" GEnd="1,0" Filled="False" Colour="#FFFF00FF" StrokeColour="#FFFF00FF" StrokeThickness="20" Size="100,100" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" RenderAs="1" Type="0" WrapPosition="False" ShadowOffset="10,10" ShadowBlur="10" ShadowColour="#FF000000" />
+      <Icon Name="circle1" Position="0,0" GEnd="1,0" Filled="False" Colour="#FFFF00FF" StrokeColour="#FFFF00FF" StrokeThickness="20" Size="100,100" AlphaMode="4" CompositeOp="0" Merge="True" RenderAs="1" Type="0" WrapPosition="False" ShadowOffset="10,10" ShadowBlur="10" ShadowColour="#FF000000" />
     </Icon>
     <Icon Name="shape1" Position="-217.6,63.9999999999999" GEnd="1,0" Colour="#FF1E90FF" Background="blue" Size="216,243" Geometry="shape1" AlphaMode="4" CompositeOp="0" Cache="True" Type="0" AngularVelocity="20" WrapPosition="False" Shadow="True" ShadowOffset="5,5" ShadowBlur="5" ShadowColour="#FF0000FF">
       <Icon Name="circle2" Position="0,0" GEnd="1,0" Colour="#FFFF00FF" Background="blue" Size="100,100" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000">
         <Icon Name="circle3" Position="0,0" GEnd="1,0" Origin="50,0" Colour="#FFFF00FF" Background="blue" Size="40,40" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" />
       </Icon>
-      <Icon Name="shape3" Position="0,0" GEnd="1,0" Filled="False" Colour="#FF1E90FF" StrokeColour="#FF8FBC8F" StrokeThickness="10" Size="216,243" Geometry="shape1" AlphaMode="4" CompositeOp="0" Cache="True" Merge="True" Type="0" AngularVelocity="-20" WrapPosition="False" Shadow="True" ShadowOffset="4,4" ShadowBlur="5" ShadowColour="#FF000000" />
     </Icon>
     <Icon Name="shape2" Position="285.2,67" GEnd="1,0" Background="crate" Size="219,245" AlphaMode="4" CompositeOp="0" Cache="True" SelfClip="True" ClipShape="shape1" Type="0" AngularVelocity="20" WrapPosition="False" ShadowColour="#FF000000" />
-    <Label Name="noname" Position="-33.6,-298.2" GEnd="1,0" Size="400,80" AlphaMode="4" CompositeOp="0" Cache="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Hello World" Font="50pt Calibri" TextColour="#FF000000" AlignH="1" AlignV="1" />
+    <Label Name="noname" Position="-33.6,-298.2" GEnd="1,0" Colour="#FF000000" Size="400,80" AlphaMode="4" CompositeOp="0" Cache="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Hello World" Font="50pt Calibri" AlignH="1" AlignV="1" TextColour="" />
+    <Icon Name="shape3" Position="25,67" GEnd="1,0" Filled="False" Colour="#FF1E90FF" StrokeColour="#FF8FBC8F" StrokeThickness="10" Size="216,243" Geometry="shape1" AlphaMode="4" CompositeOp="0" Cache="True" Type="0" AngularVelocity="-20" WrapPosition="False" Shadow="True" ShadowOffset="4,4" ShadowBlur="5" ShadowColour="#FF000000" />
   </Scene>
 </xml>
