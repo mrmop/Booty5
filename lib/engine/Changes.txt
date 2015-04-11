@@ -1,6 +1,12 @@
+v1.4.7
+------
+* Added new property to Actor called round_pixels, when set to true vertices will be rounded to integer which can speed up rendering significantly
+* Added support for collision flags to physics fixtures (category, mask and group index)
+
 v1.4.6
 ------
 * Added new actor type called MapActor which can render tiled maps
+* Support added to Xoml for loading Booty5 game editor exported tile maps
 * Fix: Actor.vr wasn't updating transform
 
 v1.4.5
