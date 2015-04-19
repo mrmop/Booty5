@@ -1,3 +1,9 @@
+v1.4.8
+------
+* JSDoc documentation added
+* App.canvas_fill_window removed
+* Modified how the render scaling and canvas resizing works to make it easier to use.
+
 v1.4.7
 ------
 * Added new property to Actor called round_pixels, when set to true vertices will be rounded to integer which can speed up rendering significantly
