@@ -1,7 +1,17 @@
+v1.4.9
+------
+* b5.Xoml.loadJSON now accepts 4th parameter which can be used to stipulate loaded data should be returned as binary buffer
+* b5.App.use_web_audio property added which can be used to switch on support for Web Audio if it is supported
+* b5.Xoml.loadJSON moved to b5.Utils.loadJSON
+* b5.Xoml.loadJS moved to b5.Utils.loadJS
+* Added support for web audio API to sound (default is enabled). To disable Web Audio set b5.App.use_web_audio to false. If web audio is not supported then it will fallback to HTML5 Audio
+* b5.App constructor now accepts a second parameter which enables / disables web audio support
+* Added b5.Sound.auto_play property to enable auto playback of sounds after they are loaded
+
 v1.4.8
 ------
 * JSDoc documentation added
-* App.canvas_fill_window removed
+* b5.App.canvas_fill_window removed
 * Modified how the render scaling and canvas resizing works to make it easier to use.
 
 v1.4.7
