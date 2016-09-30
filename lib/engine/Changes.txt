@@ -1,3 +1,9 @@
+v1.5
+----
+* Modified b5.Utils.loadJSON to work with node-webkit
+* Added new screen fit modes to app
+* Throw an exception when Scene.addResource() called without a resource type
+
 v1.4.9
 ------
 * b5.Xoml.loadJSON now accepts 4th parameter which can be used to stipulate loaded data should be returned as binary buffer
