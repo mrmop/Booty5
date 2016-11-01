@@ -1,3 +1,10 @@
+v1.1.1
+------
+* Removed support for resize and orientation changed checks in app
+* Canvas now rescaled when a change in client size is detected
+* Client size is now taken from document and not window
+* devicePixelRatio support removed
+
 v1.5
 ----
 * Modified b5.Utils.loadJSON to work with node-webkit
