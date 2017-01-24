@@ -27,7 +27,7 @@ var rounds_complete = [
 
 function gameLoaded()
 {
-	b5.app.findResource('music', 'sound').play();
+	//b5.app.findResource('music', 'sound').play();
 	b5.app.cocoonjs = typeof Cocoon != "undefined";
 	initAds();
 	loadAds();
@@ -76,7 +76,7 @@ function startLevel(level)
 	}
 
 	// Load new scene
-	new b5.Xoml(app).parseResources(app, [window["level" + level]]);
+	new b5.Xoml(app).parseResources(app, [b5.data["level" + level]]);
 	app.order_changed = true;
 	// Disable main menu
 	var select_scene = app.findScene("levelselect");
@@ -86,7 +86,7 @@ function startLevel(level)
 	game_in_progress = true;
 	current_round = level;
 	updateHud();
-	app.findScene("gamescene").min_panning = 2*2 * 2; // Prevents small touch pan movements from stopping jump
+	app.findScene("gamescene").min_panning = 5*5 * 2; // Prevents small touch pan movements from stopping jump
 }
 
 function restartRound()
@@ -140,7 +140,7 @@ function updateTime(clock, dt)
 
 function updateSky(sky, dt)
 {
-	sky.y = -sky.scene.camera_y / 2 - 580;
+	sky.y = -sky.scene.camera_y / 3 - 580;
 }
 
 function updatePlayer(player)

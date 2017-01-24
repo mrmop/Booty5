@@ -33,6 +33,7 @@ function Board(x_count, y_count)
 			tile.view_actor.y = ypos;
 			tile.view_actor.w = tile_size;
 			tile.view_actor.h = tile_size;
+			tile.view_actor.ignore_atlas_size = true;
 			tile.view_actor.atlas = app.findResource("d" + tile.type, "brush");
 			view_area.addActor(tile.view_actor);
 			tile.guess_actor.tag = "tile";
@@ -40,6 +41,7 @@ function Board(x_count, y_count)
 			tile.guess_actor.y = ypos;
 			tile.guess_actor.w = tile_size;
 			tile.guess_actor.h = tile_size;
+			tile.guess_actor.ignore_atlas_size = true;
 			tile.guess_actor.atlas = empty_brush;
 			tile.guess_actor.sm_tile = tile;
 			tile.guess_actor.touchable = true;

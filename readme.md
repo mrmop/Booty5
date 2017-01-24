@@ -10,6 +10,7 @@ Currently supports:
 - Actor (game object) management, image, text, shape, tile map and particle system based
 - Sprite, text and 2D polygon rendering
 - Actions system
+- Tasks and user events
 - Box2D physics via Box2DWeb
 - Animation timelines / tweening
 - Bitmap and gradient brushes
@@ -18,7 +19,7 @@ Currently supports:
 - Touch event handlers
 - Scene and actor clipping
 - 2D canvas
-- Audio play back, including reliable audio via Marmalasde Web if available
+- Audio play back
 - Dynamic scaling of canvas to fit display
 - Game object caching to speed up rendering
 - Support for Booty5 game HTML5 editor / maker

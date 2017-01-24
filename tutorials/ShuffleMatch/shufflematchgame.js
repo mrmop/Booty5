@@ -35,10 +35,10 @@ function ShuffleMatch()
 
 	// Parse scenes that make up the game because these scenes are not automatically loaded like the loading scene
 	var xoml = new b5.Xoml(app);
-	xoml.parseResources(app, [window.viewarea]);
-	xoml.parseResources(app, [window.guessarea]);
-	xoml.parseResources(app, [window.gameover]);
-	xoml.parseResources(app, [window.mainmenu]);
+	xoml.parseResources(app, [b5.data.viewarea]);
+	xoml.parseResources(app, [b5.data.guessarea]);
+	xoml.parseResources(app, [b5.data.gameover]);
+	xoml.parseResources(app, [b5.data.mainmenu]);
 
 	// Make main menu the focus scene
 	this.menuscene = b5.app.findScene("mainmenu");
@@ -183,7 +183,7 @@ ShuffleMatch.prototype.correct = function(tile)
 
 	// Animate score indicator to show added score
 	var score_icon = this.viewscene.findActor("score_icon");
-	score_icon.scene.timelines.add(new b5.Timeline(score_icon, "_scale", [1, 1.2, 1], [0, 0.25, 0.5], 1, [b5.Ease.quadout, b5.Ease.quadin]));
+	score_icon.scene.timelines.add(new b5.Timeline(score_icon, "_scale", [0.8, 1, 0.8], [0, 0.25, 0.5], 1, [b5.Ease.quadout, b5.Ease.quadin]));
 
 	// Reduce number of tiles left to find
 	this.tiles_left--;

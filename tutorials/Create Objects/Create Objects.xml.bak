@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Material Name="static" MaterialType="0" Density="1" Friction="0.1" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
+  <Material Name="dynamic" MaterialType="1" Density="1" Friction="0.1" Restitution="1" GravityScale="1" IsBullet="false" FixedRotation="false" />
+  <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Create Objects\Common.js" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="-800,-800,1600,1600" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <Icon Name="bg" Position="0,0" GEnd="1,0" Colour="#FFBDB76B" Size="1024,768" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+    <Icon Name="ball" Position="0,0" GEnd="1,0" Colour="#FF0000FF" Size="60,60" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="True" ShadowColour="#FF000000">
+      <Fixture Material="dynamic" />
+      <Icon Name="ball1" Position="51,-0.599999999999998" GEnd="1,0" Origin="-50,0" Colour="#FF6495ED" Size="30,30" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" AngularVelocity="100" WrapPosition="True" ShadowColour="#FF000000" />
+    </Icon>
+    <Icon Name="button" Position="-1,280" GEnd="1,0" Colour="#FFD2691E" Size="600,50" AlphaMode="4" CompositeOp="0" RenderAs="2" OnTapped="createNewBalls();" OnBeginTouch="this.opacity = 0.5;" OnLostTouchFocus="this.opacity = 1.0;" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+      <Label Name="label" Position="0,0" GEnd="1,0" Size="500,40" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" Text="Create new ball" Font="40px Arial" AlignH="1" AlignV="1" />
+    </Icon>
+    <Icon Name="side1" Position="392,-132" Angle="80" GEnd="1,0" Colour="#FFFF8C00" Size="800,50" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+    <Icon Name="side2" Position="-393,-135.471388706887" Angle="280" GEnd="1,0" Colour="#FFFF8C00" Size="800,50" AlphaMode="4" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000">
+      <Fixture Material="static" />
+    </Icon>
+  </Scene>
+</xml>

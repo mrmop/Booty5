@@ -1,4 +1,17 @@
-v1.1.1
+v1.5.2
+------
+* Added support for events and event notification (see b5.EventsManager)
+* Added support for tasks (see b5.TasksManager)
+* Added support to brushes for animation sets
+* Added support to actors for working with brush animation sets (see b5.Actor.playAnim)
+* Bitmap based actors now support trimmed atlas images
+* Image based actors that use an atlas will use the size of the atlas frame, can be overriden by setting ignore_atlas_size to true
+* Removed support for web Marmalade
+* All booty5 scene data is now loaded into the b5.data space instead of window
+* Xoml data property names have been minified to greatly cut down Xoml datas format storage size
+* Added polyfill for RequestAnimationFrame
+
+v1.5.1
 ------
 * Removed support for resize and orientation changed checks in app
 * Canvas now rescaled when a change in client size is detected

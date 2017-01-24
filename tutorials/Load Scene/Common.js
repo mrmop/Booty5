@@ -7,7 +7,7 @@ function loadScene()
 		eval(json);
 		// Parse the scene
 		var xoml = new b5.Xoml(app);
-		xoml.parseResources(app, [window.scene1]);
+		xoml.parseResources(app, [b5.data.scene1]);
 		// Set the loaded scene asthe focus scene
 		app.focus_scene = app.findScene("scene1");
 	});

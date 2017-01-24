@@ -6,7 +6,7 @@ function createNewBalls()
 	var game_scene = app.findScene("gamescene");
 
 	// Search Xoml gamescene for ball icon actor resource
-	var ball_template = b5.Xoml.findResource(window.gamescene, "ball", "icon");
+	var ball_template = b5.Xoml.findResource(b5.data.gamescene, "ball", "icon");
 	
 	// Create ball from the Xoml template and add it to game_scene
 	var xoml = new b5.Xoml(app);
