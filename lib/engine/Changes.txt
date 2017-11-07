@@ -1,3 +1,26 @@
+v1.5.4
+------
+* frames_repeat added to actotr which allows bitmap anim to repeat
+* Actor.playTimeline() shortcut added for playing timelines
+* Actor.TweenTo() and TweenToWithEnd() utility methods added to allow easy creation of tweens
+* Actor.TweenToMany() utility method added to allow easy creation of multiple tweens
+* Actor.addTask() / removeTask() shortcut added for adding and removing tasks from actors
+* Added delay property to animations to allow then to be delayed
+* Added Animation.setRelative() method to allow animations to be marked as relative to their original values
+* Timeline now has new setRelative(), setRepeats(), setDelay() and changeTarget() methods
+* TimelineManager now has setRepeats() and changeTarget() methods
+* App now has new prevent_default property which can be used to allow or prevent mouse input reaching other elements on the page
+* App.addTask() / removeTask() shortcut added for adding and removing tasks from the global app
+* App.fill_screen property added which when set will bypass all scaling methods and simply scale the canvas to the window size
+* Scene.addTask() / removeTask() shortcut added for adding and removing tasks from the scene
+* Scene.playTimeline() shortcut added for playing timelines in the scene
+* Added b5.Utils.RunafterTime() which allows you ot run a function after a delay (uses global app task manager)
+* Low resolution canvas scaling issue fixed on retina displays
+
+v1.5.3
+------
+* Fixed issue where absolute origin was not being set correctly from actors imported via XOML
+
 v1.5.2
 ------
 * Added support for events and event notification (see b5.EventsManager)
