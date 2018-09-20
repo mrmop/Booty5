@@ -23,6 +23,7 @@ Currently supports:
 - Dynamic scaling of canvas to fit display
 - Game object caching to speed up rendering
 - Support for Booty5 game HTML5 editor / maker
+- Support for Facebook Instant Games added
 
 #The Basics
 ##App

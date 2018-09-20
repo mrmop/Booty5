@@ -1,3 +1,41 @@
+v1.5.5
+------
+* New hit property added to Actors. If true then will be included io hit testing
+* New dock_screen property added to Actors. If true then docking will be to screen edge instead of scene edge
+* New padding property added to Actors. Text padding (used when caching)
+* New scale_method property added to Actors. Scale method used to fit actor to screen
+* New draw_reverse property added to Actors. If set to true children are drawn in reverse order
+* New _av property added to Actors. This will set active and visible states at the same time
+* New method removeAllActors added to Actor which removes all actors from the actors child list
+* New getSlot and moveToSlot methods added to Actor which allows you to query a child sort index and modify it
+* New overlapsRect method added to Actors which checks for a rect area overlapping the Actors rect area
+* New circleOverlaps method added to Actors which checks for a circular area overlapping the Actors circular area
+* New circleOverlapsRect method added to Actors which checks for a rect area overlapping the Actors circular area
+* New fullCircleOverlapTest method added to Actors which checks for a circular area overlapping the Actors circular area (taking into account transforms)
+* New stroke_filled property added to all Actor types which if true will cause stroke will be drawn
+* New line_height property added to LabelActor which specifies the height of a line of text
+* New _text property added to LabelActor which sets the labels text and updates its cached version if cached
+* New deactivate property added to Animations. When set to true deactivates and hides target actor when its done (default false), should only be used with actors
+* Many new easinng funnctions added to the animation system
+* App canvas_width and canvas_height now known as design_width and design_width
+* Fonts now added to the app as resources, the underlying font loaded uses the FontObserver lib to load fonts
+* Raw JSON resource type now added to the App
+* New started property added to the App which is a callback that will be called when the app starts
+* All App resource containers are now objecsts instead of arrays
+* App waitForResources now calls a supplied callback to alert the user of progress during loading
+* App main logic loop is now ran on requestAnimationFrame
+* New draw_reverse property added to Scenes. If set to true children are drawn in reverse order
+* New _av property added to Scebes. This will set active and visible states at the same time
+* Added new Task type called TaskQ which is a collection of tasks that are ran serial. Only the first task in the queue is ran, once that tasks is complete the next task in the queue is ran.
+* Resources now checked for load failure and attempt to reload a number of times before giving up
+* Value passed to Actor _atlas can be an atlas ojbect or the name of an image atlas brush
+* Calling playAnim or playTimeline on an inactive or invisible Actor will make acivate it and make it visible
+* Hit tests are no longer carried out on inactive Actors
+* Fixed Actor _scale property so that it now updates the main transform
+* Fixed virtual Actor margins
+* Action lists are now optional component and not included by default
+- Support for Facebook Instant Games added
+
 v1.5.4
 ------
 * frames_repeat added to actotr which allows bitmap anim to repeat
