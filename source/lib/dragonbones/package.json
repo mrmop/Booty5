@@ -1,0 +1,12 @@
+{
+  "name": "Dragonbones",
+  "version": "1.0.0",
+  "description": "Dragonbones for Booty5 Game Engine",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-minify": "^3.5.0"
+  }
+}

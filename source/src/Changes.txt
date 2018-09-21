@@ -1,3 +1,9 @@
+v1.5.6
+------
+* Tideed up the repo
+* Added Dragon Bones module
+* Added actions back into the main build by default
+
 v1.5.5
 ------
 * New hit property added to Actors. If true then will be included io hit testing
@@ -34,7 +40,7 @@ v1.5.5
 * Fixed Actor _scale property so that it now updates the main transform
 * Fixed virtual Actor margins
 * Action lists are now optional component and not included by default
-- Support for Facebook Instant Games added
+* Support for Facebook Instant Games added
 
 v1.5.4
 ------

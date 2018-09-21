@@ -59,7 +59,8 @@ b5.version = 1.54;
         window.cancelAnimationFrame = function(id) {
             clearTimeout(id);
         };
-}());/**
+}());
+/**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
  * More info    http://booty5.com
@@ -342,6 +343,7 @@ b5.Ease.easingFuncs = [
             return 0.5 * (-Math.pow(2, -10 * (d - 1)) + 2);
     },
 ];
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -623,6 +625,7 @@ b5.Animation.prototype.setAction = function(index, action_function)
     this.actions[index] = action_function;
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -875,6 +878,7 @@ b5.Timeline.prototype.update = function(dt)
     return this.playing;
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -1045,6 +1049,299 @@ b5.TimelineManager.prototype.update = function(dt)
     return this.playing;
 };
 
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+/**
+ * The ActionsRegister contains a list of all available actions. new action creators are added to this register.
+ *
+ * The ActionsRegister is used by the Xoml system to instantiate actions lists from JSON.
+ *
+ * Below is an example that shows how to register an action that can be used from the Xoml system:
+ *
+ *      b5.ActionsRegister.register("ChangeActions", function(p) { return new b5.A_ChangeActions(p[1], p[2]); });
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.ActionsRegister
+ *
+ */
+b5.ActionsRegister =
+{
+    creators: [],                                   // Array of actions creator functions
+    /**
+     * Registers a new action creator
+     * @param action_name {string}      The action name, e.g. A_Sound
+     * @param creator_func {function}   Function that creates an instance of the action
+     */
+    register: function(action_name, creator_func)
+    {
+        b5.ActionsRegister.creators[action_name] = creator_func;
+    },
+    /**
+     * Creates an action from the supplied name and parameters
+     * @param action_name {string}      The action name, e.g. A_Sound
+     * @param params {any[]}            Array of parameters to pass to creation function
+     * @returns {object}                Created action
+     */
+    create: function(action_name, params)
+    {
+        return b5.ActionsRegister.creators[action_name](params);
+    }
+};
+
+/**
+ * An action is a single unit of functionality that can be applied to an object.
+ * Generally actions are chained together and added to a {@link b5.Actor} or {@link b5.Scene} to modify their behaviour
+ * Each action has a set of initial parameters which are supplied externally as well as the following event handlers:
+ *
+ * - onInit - Called when the action is first initialised, usually when the action is added to an object
+ * - onTick - Called when the action is updated (each game frame)
+ *
+ * If the onTick handler is not supplied then the action system will assume that it instantly exits and moves to the
+ * next action in the actions list
+ *
+ * An ActionsList contains a list of actions that are executed in sequence. Each action must fully complete (return
+ * false from its onTick method) before the next action can be executed. An action list can be executed a finite
+ * number of times or indefinitely.
+ *
+ * Each time an actions list is repeated, all actions within the list will be re-initialised.
+ *
+ * Example showing how to add two sequential actions to an actor:
+ *
+ *      var actions_list = new b5.ActionsList("moveme", 0);
+ *      actions_list.add(new b5.ActionMoveTo(actor,100,100,2,b5.Ease.sin,b5.Ease.sin));
+ *      actions_list.add(new b5.ActionMoveTo(actor,0,0,2,b5.Ease.sin,b5.Ease.sin));
+ *      actor.actions.add(actions_list).play();
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.ActionsList
+ * @constructor
+ * @returns {b5.ActionsList}                The created actions list
+ * @param name {string}                     Name of actions list
+ * @param repeat {boolean}                  Number of times that the actions list should repeat (0 for forever)
+ *
+ * @property {number}                   repeats_left    - Number of repeats left before action list ends (interval)
+ * @property {b5.ActionsListManager}    manager         - Parent actions list manager
+ * @property {string}                   name            - Name of this actions list
+ * @property {boolean}                  repeat          - Number of times the actions list should repeat
+ * @property {object[]}                 actions         - List of actions to sequentially execute
+ * @property {number}                   current         - Current executing action index
+ * @property {boolean}                  destroy         - If true then actions list will be destroyed when it finishes playing (default is true)
+ * @property {boolean}                  playing         - Playing state (default is false)
+ */
+b5.ActionsList = function(name, repeat)
+{
+    // Internal variables
+    this.repeats_left = repeat;     // Number of repeats left to play
+
+    // Public variables
+    this.manager = null;            // Parent container
+    this.name = name;               // Name of actions list
+    this.repeat = repeat;           // Number of times to repeat this actions list (0 for forever)
+    this.actions = [];		        // List of actions to sequentially execute
+    this.current = 0;               // Current executing action index
+    this.destroy = true;            // If true then actions list will be destroyed when it finishes playing (default is true)
+    this.playing = false;           // Playing state
+};
+
+/**
+ * Add the specified action to the actions list
+ * @param action {object}   Action to add
+ * @returns {object}        The added action
+ */
+b5.ActionsList.prototype.add = function(action)
+{
+    this.actions.push(action);
+    action.parent = this;
+    return action;
+};
+
+/**
+ * Removes the specified action from the actions list
+ * @param action {object}  The action to remove
+ */
+b5.ActionsList.prototype.remove = function(action)
+{
+    var actions = this.actions;
+    var count = actions.length;
+    for (var t = 0; t < count; t++)
+    {
+        if (actions[t] === action)
+        {
+            actions.splice(t, 1);
+            return;
+        }
+    }
+};
+
+/**
+ * Executes this actions list, automatically called by the actions list manager
+ * @returns {boolean} True if the action is still processing, false if it has stopped
+ */
+b5.ActionsList.prototype.execute = function()
+{
+    if (!this.playing)
+        return true;
+    var actions = this.actions;
+    var count = actions.length;
+    if (count === 0)
+        return false;
+
+    var action = actions[this.current];
+    // Initialise action if not already initialised
+    if (action.initialised !== true)
+    {
+        if (action.onInit !== undefined)
+            action.onInit();
+        action.initialised = true;
+    }
+    // Execute actions per frame update tick handler
+    if (action.onTick === undefined || !action.onTick())
+    {
+        action.initialised = false;
+        this.current++;
+        if (this.current >= count)
+        {
+            this.current = 0;
+            if (this.repeat !== 0)
+            {
+                this.repeats_left--;
+                if (this.repeats_left <= 0)
+                {
+                    this.playing = false;
+                    this.repeats_left = this.repeat;
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+};
+
+/**
+ * Pauses playback of the actions list
+ */
+b5.ActionsList.prototype.pause = function()
+{
+    this.playing = false;
+};
+
+/**
+ * Sets the actions list playing, if actions list is paused then it will be un-paused
+ */
+b5.ActionsList.prototype.play = function()
+{
+    this.playing = true;
+};
+
+/**
+ * Restarts the actions list restarting all actions contained within it
+ */
+b5.ActionsList.prototype.restart = function()
+{
+    var actions = this.actions;
+    var count = actions.length;
+    for (var t = 0; t < count; t++)
+        actions[t].initialised = false;
+    this.repeats_left = this.repeat;
+    this.play();
+};
+
+/**
+ * An ActionsListManager manages a collection of {@link b5.ActionsList}'s. The App and each Actor / Scene has its own ActionsListManager
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.ActionsListManager
+ * @constructor
+ * @returns {b5.ActionsListManager}             The created actions list manager
+ *
+ * @property {b5.ActionsList[]} actions         - Array of action lists that are managed by this manager
+ */
+b5.ActionsListManager = function()
+{
+    // Public variables
+    this.actions = [];                  // Array of action lists
+};
+
+
+/**
+ * Adds the supplied actions list to the manager
+ * @param actionlist {b5.ActionsList} The actions list to add
+ * @returns {b5.ActionsList} The added actions list
+ */
+b5.ActionsListManager.prototype.add = function(actionlist)
+{
+    this.actions.push(actionlist);
+    actionlist.manager = this;
+    return actionlist;
+};
+
+/**
+ * Removes the supplied actions list from the manager
+ * @param actionlist {b5.ActionsList} The actions list to remove
+ */
+b5.ActionsListManager.prototype.remove = function(actionlist)
+{
+    var actions = this.actions;
+    var count = actions.length;
+    for (var t = 0; t < count; t++)
+    {
+        if (actions[t] === actionlist)
+        {
+            actions.splice(t, 1);
+            return;
+        }
+    }
+};
+
+/**
+ * Searches the actions list manager for the named actions list
+ * @param name {string} Name of actions list to find
+ * @returns {b5.ActionsList} Found actions list or null if not found
+ */
+b5.ActionsListManager.prototype.find = function(name)
+{
+    var actions = this.actions;
+    var count = actions.length;
+    for (var t = 0; t < count; t++)
+    {
+        if (actions[t].name === name)
+            return actions[t];
+    }
+    return null;
+};
+
+/**
+ * Executes all actions within this actions list, automatically called by parent app, actor or scene
+ */
+b5.ActionsListManager.prototype.execute = function()
+{
+    // Update action lists
+    var removals = [];
+    var actions = this.actions;
+    var count = actions.length;
+    for (var t = 0; t < count; t++)
+    {
+        if (!actions[t].execute())
+        {
+            if (actions[t].destroy)
+                removals.push(actions[t]);
+        }
+    }
+    // Remove destroyed action lists
+    for (var t = 0; t < removals.length; t++)
+        this.remove(removals[t]);
+};
+
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -1137,6 +1434,7 @@ b5.EventsManager.prototype.dispatch = function(event_name)
         }
     }
 };
+
 
 
 /**
@@ -1585,6 +1883,7 @@ b5.TasksManager.prototype.execute = function()
         this.removeTask(removals[t]);
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -1794,7 +2093,7 @@ b5.TasksManager.prototype.execute = function()
  * @property {boolean}                  active              - Active state, inactive actors will not be updated (default is true)
  * @property {boolean}                  visible             - Visible state, invisible actors will not be drawn (default is true)
  * @property {boolean}                  touchable           - If true then can be touched (default false)
- * @property {boolean}                  hit           		- If true then can will be included io hit testing (default true)
+ * @property {boolean}                  hit           		- If true then will be included io hit testing (default true)
  * @property {number}                   layer               - Actor sorting layer, set via _layer (default is 0)
  * @property {number}                   x                   - X position in scene, set via _x (default is 0)
  * @property {number}                   y                   - Y position in scene, set via _y (default is 0)
@@ -3961,6 +4260,7 @@ b5.Actor.fullCircleOverlapTest = function(act1, act2)
 	
 	return false;
 };
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -4215,6 +4515,7 @@ b5.ArcActor.prototype.hitTest = function(position)
     return null;
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -4435,6 +4736,7 @@ b5.LabelActor.prototype.drawToCache = function()
 
     this.cache_canvas = cache;
 };
+
 
 
 /**
@@ -4781,6 +5083,7 @@ b5.ParticleActor.prototype.generateRain = function(count, type, duration, speed,
 };
 
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -4980,6 +5283,7 @@ b5.PolygonActor.prototype.drawToCache = function()
 
 
 // TODO: Add polygon specific version of hitTest
+
 
 /**
  * author       Mat Hopwood
@@ -5193,6 +5497,7 @@ b5.RectActor.prototype.drawToCache = function()
 
     this.cache_canvas = cache;
 };
+
 
 /**
  * author       Mat Hopwood
@@ -5515,6 +5820,7 @@ b5.MapActor.prototype.draw = function()
             acts[t].draw();
     }
 };
+
 
 /**
  * author       Mat Hopwood
@@ -6580,6 +6886,7 @@ b5.App.prototype.removeTask = function(task_name)
     this.tasks.remove(task_name);
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -7599,6 +7906,7 @@ b5.Scene.prototype.countResourcesNeedLoading = function()
     return total;
 };
 
+
 /**
 /**
  * author       Mat Hopwood
@@ -8494,6 +8802,7 @@ b5.Xoml.findResource = function(objects, name, type)
     return null;
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -8577,6 +8886,7 @@ b5.Maths.vecMulMatrix = function(x, y, mat)
     var ty = x * mat[1] + y * mat[3] + mat[5];
     return {x: tx, y: ty };
 };
+
 
 /**
  * author       Mat Hopwood
@@ -8952,6 +9262,7 @@ b5.Display.prototype.setCache = function(cache)
     else
         this.cache_ctx = cache.getContext("2d");
 };
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -9035,6 +9346,7 @@ b5.Raw.prototype.destroy = function()
     if (this.parent !== null)
         this.parent.removeResource(this, "raw");
 };
+
 
 // Fontobserver lib
 (function(){function l(a,b){document.addEventListener?a.addEventListener("scroll",b,!1):a.attachEvent("scroll",b)}function m(a){document.body?a():document.addEventListener?document.addEventListener("DOMContentLoaded",function c(){document.removeEventListener("DOMContentLoaded",c);a()}):document.attachEvent("onreadystatechange",function k(){if("interactive"==document.readyState||"complete"==document.readyState)document.detachEvent("onreadystatechange",k),a()})};function r(a){this.a=document.createElement("div");this.a.setAttribute("aria-hidden","true");this.a.appendChild(document.createTextNode(a));this.b=document.createElement("span");this.c=document.createElement("span");this.h=document.createElement("span");this.f=document.createElement("span");this.g=-1;this.b.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;";this.c.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;";
@@ -9124,6 +9436,7 @@ b5.Font.prototype.destroy = function()
     if (this.parent !== null)
         this.parent.removeResource(this, "font");
 };
+
 
 /**
  * author       Mat Hopwood
@@ -9219,6 +9532,7 @@ b5.Bitmap.prototype.destroy = function()
     if (this.parent !== null)
         this.parent.removeResource(this, "bitmap");
 };
+
 
 /**
  * author       Mat Hopwood
@@ -9353,6 +9667,7 @@ b5.Gradient.prototype.createStyle = function(w, h, start, end)
 
     return null;
 };
+
 
 /**
  * author       Mat Hopwood
@@ -9525,6 +9840,7 @@ b5.ImageAtlas.prototype.destroy = function()
         this.parent.removeResource(this, "brush");
 };
 
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -9586,6 +9902,7 @@ b5.Material.prototype.destroy = function()
     if (this.parent !== null)
         this.parent.removeResource(this, "material");
 };
+
 
 /**
  * author       Mat Hopwood
@@ -9679,6 +9996,7 @@ b5.Shape.prototype.remove = function()
     if (this.parent !== null)
         this.parent.removeResource(this, "shape");
 };
+
 
 /**
  * author       Mat Hopwood
@@ -9962,6 +10280,7 @@ b5.Sound.prototype.pause = function()
 b5.Sound.prototype.destroy = function()
 {
 };
+
 
 /**
  * author       Mat Hopwood
@@ -10302,6 +10621,7 @@ b5.Utils.RunafterTime = function(delay, task_function, task_data)
 {
     b5.app.addTask("", delay, 1, task_function, task_data);
 };
+
 
 "use strict";
 
@@ -10913,3 +11233,2142 @@ b5.Instants.prototype.CreateShortcut = function(done_callback)
 
 
 
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Action List actions are actions that modify action lists
+//
+// A_ChangeActions      - Changes the named actions list
+
+//
+// The A_ChangeActions action changes the state of an actions list then exits
+// - actions - Path to actions list or instance of actions list
+// - action - Action to perform on the actions list (play, pause or restart)
+//
+
+/**
+ * Action that changes the state of an actions list then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_ChangeActions
+ * @constructor
+ * @returns {b5.A_ChangeActions} The created action
+ * @param actions {object} Actions list
+ * @param action {string} Action to perform on the actions list (play, pause or restart)
+ *
+ */
+b5.A_ChangeActions = function(actions, action)
+{
+    this.actions = actions;
+    this.action = action;
+};
+b5.A_ChangeActions.prototype.onInit = function()
+{
+    this.actions = b5.Utils.resolveObject(this.actions, "actions");
+    var actions = this.actions;
+    if (actions !== null)
+    {
+        var action = this.action;
+        if (action === "play")
+            actions.play();
+        else if (action === "pause")
+            actions.pause();
+        else if (action === "restart")
+            actions.restart();
+    }
+};
+b5.ActionsRegister.register("ChangeActions", function(p) { return new b5.A_ChangeActions(p[1], p[2]); });
+
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Actor actions are actions that create / modify actors
+//
+// A_CreateExplosion    - Creates an explosion particle system actor then exits
+// A_CreatePlume        - Creates a plume particle system actor then exits
+
+/**
+ * Action that creates an explosion particle system actor then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CreateExplosion
+ * @constructor
+ * @returns {b5.A_CreateExplosion} The created action
+ * @param container {string|b5.Scene|b5.Actor}     Path to scene / actor or instance of scene / actor that will contain the generated particle actor
+ * @param count {number}                    Total number of particles to create
+ * @param type {object|string}              The actor type of each particle created, for example Actor, ArcActor, LabelActor, PolygonActor etc
+ * @param duration {number}                 The total duration of the particle system in seconds
+ * @param speed {number}                    The speed at which the particles blow apart
+ * @param spin_speed {number}               The speed at which particles spin
+ * @param rate {number}                     Rate at which particles are created
+ * @param damping {number}                  A factor to reduce velocity of particles each frame, values greater than 1 will increase velocities
+ * @param properties {object}               Object that contains property / value pairs that will be set to particles when they are created (e.g. {"vx":0,"vy":0})
+ * @param actor {b5.Actor}                  If provided then the generated particle actor will be placed at the same position and orientation as this actor, actor can be an instance of an actor or a path to an actor
+ *
+ */
+b5.A_CreateExplosion = function(container, count, type, duration, speed, spin_speed, rate, damping, properties, actor)
+{
+    this.container = container;
+    this.actor = actor;
+    this.count = count;
+    this.type = type;
+    this.duration = duration;
+    this.speed = speed;
+    this.spin_speed = spin_speed;
+    this.rate = rate;
+    this.damping = damping;
+    this.properties = properties;
+};
+b5.A_CreateExplosion.prototype.onInit = function()
+{
+    this.container = b5.Utils.resolveObject(this.container);
+    this.actor = b5.Utils.resolveObject(this.actor);
+    var actor = new b5.ParticleActor();
+    this.container.addActor(actor);
+    actor.generateExplosion(this.count, this.type, this.duration, this.speed, this.spin_speed, this.rate, this.damping, this.properties);
+    if (this.actor !== null)
+    {
+        actor._x = this.actor.x;
+        actor._y = this.actor.y;
+        actor._rotation = this.actor.rotation;
+    }
+};
+b5.ActionsRegister.register("CreateExplosion", function(p) { return new b5.A_CreateExplosion(p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9],p[10]); });
+
+/**
+ * Action that creates a plume particle system actor then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CreatePlume
+ * @constructor
+ * @returns {b5.A_CreatePlume} The created action
+ * @param container {string|b5.Scene|b5.Actor}     Path to scene / actor or instance of scene / actor that will contain the generated particle actor
+ * @param count {number}                    Total number of particles to create
+ * @param type {object|string}              The actor type of each particle created, for example Actor, ArcActor, LabelActor, PolygonActor etc
+ * @param duration {number}                 The total duration of the particle system in seconds
+ * @param speed {number}                    The speed at which the particles blow apart
+ * @param spin_speed {number}               The speed at which particles spin
+ * @param rate {number}                     Rate at which particles are created
+ * @param damping {number}                  A factor to reduce velocity of particles each frame, values greater than 1 will increase velocities
+ * @param properties {object}               Object that contains property / value pairs that will be set to particles when they are created (e.g. {"vx":0,"vy":0})
+ * @param actor {b5.Actor}                  If provided then the generated particle actor will be placed at the same position and orientation as this actor, actor can be an instance of an actor or a path to an actor
+ *
+ */
+b5.A_CreatePlume = function(container, count, type, duration, speed, spin_speed, rate, damping, properties, actor)
+{
+    this.container = container;
+    this.actor = actor;
+    this.count = count;
+    this.type = type;
+    this.duration = duration;
+    this.speed = speed;
+    this.spin_speed = spin_speed;
+    this.rate = rate;
+    this.damping = damping;
+    this.properties = properties;
+};
+b5.A_CreatePlume.prototype.onInit = function()
+{
+    this.container = b5.Utils.resolveObject(this.container);
+    this.actor = b5.Utils.resolveObject(this.actor);
+    var actor = new b5.ParticleActor();
+    this.container.addActor(actor);
+    actor.generatePlume(this.count, this.type, this.duration, this.speed, this.spin_speed, this.rate, this.damping, this.properties);
+    if (this.actor !== null)
+    {
+        actor._x = this.actor.x;
+        actor._y = this.actor.y;
+        actor._rotation = this.actor.rotation;
+    }
+};
+b5.ActionsRegister.register("CreatePlume", function(p) { return new b5.A_CreatePlume(p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9],p[10]); });
+
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Attractor actions are actions that attract or repel other objects
+//
+// A_AttractX           - Pulls objects towards or repels objects away on the x-axis that are within a specific range
+// A_AttractY           - Pulls objects towards or repels objects away on the y-axis that are within a specific range
+// A_Attract            - Pulls objects towards or repels objects away on the x and y-axis that are within a specific range
+
+/**
+ * Action that pulls objects towards or repels objects away on the x-axis that are within a specific range, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_AttractX
+ * @constructor
+ * @returns {b5.A_AttractX}             The created action
+ * @param target {string:b5.Actor}      Path to or instance of actor object that will attract other objects
+ * @param container {b5.Actor|b5.Scene} Path to or instance of object that contains the actors (actors that can be attracted have attract property set to true)
+ * @param min_x {number}                Minimum x-axis attraction range
+ * @param max_x {number}                Maximum x-axis attraction range
+ * @param min_y {number}                Minimum y-axis inclusion range
+ * @param max_y {number}                Maximum y-axis inclusion range
+ * @param strength {number}             Strength of attraction, negative for repulsion
+ * @param stop {boolean}                If set to true then attracted objects will stop when they hit the min distance range
+ * @param bounce {boolean}              If set to true then objects when stopped at the min distance range will bounce
+ *
+ */
+b5.A_AttractX = function(target, container, min_x, max_x, min_y, max_y, strength, stop, bounce)
+{
+    this.target = target;
+    this.container = container;
+    this.min_x = min_x;
+    this.max_x = max_x;
+    this.min_y = min_y;
+    this.max_y = max_y;
+    this.strength = strength;
+    this.stop = stop;
+    this.bounce = bounce;
+};
+b5.A_AttractX.prototype.onTick = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.container = b5.Utils.resolveObject(this.container);
+    var target = this.target;
+    var actors = this.container.actors;
+    var count = actors.length;
+    var x = target.x;
+    var y = target.y;
+    var min_x = this.min_x;
+    var max_x = this.max_x;
+    var min_y = this.min_y;
+    var max_y = this.max_y;
+    var strength = this.strength;
+    var stop = this.stop;
+    var bounce = this.bounce;
+    for (var t = 0; t < count; t++)
+    {
+        var actor = actors[t];
+        if (actor.attract !== undefined)
+        {
+            var dy = actor.y - y;
+            if (dy > min_y && dy < max_y)
+            {
+                var dx = x - actor.x;
+                if (dx < min_x && dx > -min_x)
+                {
+                    if (stop)
+                    {
+                        if (actor.x < x)
+                            actor._x = x - min_x;
+                        else
+                        if (actor.x > x)
+                            actor._x = x + min_x;
+                        if (bounce)
+                            actor.vx = -actor.vx;
+                        else
+                            actor.vx = 0;
+                    }
+                }
+                else if (dx > min_x && dx < max_x)
+                    actor.vx += strength;
+                else if (dx > -max_x && dx < -min_x)
+                    actor.vx -= strength;
+            }
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("AttractX", function(p) { return new b5.A_AttractX(p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]); });
+
+/**
+ * Action that pulls objects towards or repels objects away on the y-axis that are within a specific range, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_AttractY
+ * @constructor
+ * @returns {b5.A_AttractY}             The created action
+ * @param target {string:b5.Actor}      Path to or instance of actor object that will attract other objects
+ * @param container {b5.Actor|b5.Scene} Path to or instance of object that contains the actors (actors that can be attracted have attract property set to true)
+ * @param min_y {number}                Minimum y-axis attraction range
+ * @param max_y {number}                Maximum y-axis attraction range
+ * @param min_x {number}                Minimum x-axis inclusion range
+ * @param max_x {number}                Maximum x-axis inclusion range
+ * @param strength {number}             Strength of attraction, negative for repulsion
+ * @param stop {boolean}                If set to true then attracted objects will stop when they hit the min distance range
+ * @param bounce {boolean}              If set to true then objects when stopped at the min distance range will bounce
+ *
+ */
+b5.A_AttractY = function(target, container, min_y, max_y, min_x, max_x, strength, stop, bounce)
+{
+    this.target = target;
+    this.container = container;
+    this.min_y = min_y;
+    this.max_y = max_y;
+    this.min_x = min_x;
+    this.max_x = max_x;
+    this.strength = strength;
+    this.stop = stop;
+    this.bounce = bounce;
+};
+b5.A_AttractY.prototype.onTick = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.container = b5.Utils.resolveObject(this.container);
+    var target = this.target;
+    var actors = this.container.actors;
+    var count = actors.length;
+    var x = target.x;
+    var y = target.y;
+    var min_y = this.min_y;
+    var max_y = this.max_y;
+    var min_x = this.min_x;
+    var max_x = this.max_x;
+    var strength = this.strength;
+    var stop = this.stop;
+    var bounce = this.bounce;
+    for (var t = 0; t < count; t++)
+    {
+        var actor = actors[t];
+        if (actor.attract !== undefined)
+        {
+            var dx = actor.x - x;
+            if (dx > min_x && dx < max_x)
+            {
+                var dy = y - actor.y;
+                if (dy < min_y && dy > -min_y)
+                {
+                    if (stop)
+                    {
+                        if (actor.y < y)
+                            actor._y = y - min_y;
+                        else
+                        if (actor.y > y)
+                            actor._y = y + min_y;
+                        if (bounce)
+                            actor.vy = -actor.vy;
+                        else
+                            actor.vy = 0;
+                    }
+                }
+                else if (dy > min_y && dy < max_y)
+                    actor.vy += strength;
+                else if (dy > -max_y && dy < -min_y)
+                    actor.vy -= strength;
+            }
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("AttractY", function(p) { return new b5.A_AttractY(p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]); });
+
+/**
+ * Action that pulls objects towards or repels objects away on the x and y-axis that are within a specific range, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Attract
+ * @constructor
+ * @returns {b5.A_Attract}              The created action
+ * @param target {string:b5.Actor}      Path to or instance of actor object that will attract other objects
+ * @param container {b5.Actor|b5.Scene} Path to or instance of object that contains the actors (actors that can be attracted have attract property set to true)
+ * @param min_dist {number}             Minimum attraction range
+ * @param max_dist {number}             Maximum attraction range
+ * @param strength {number}             Strength of attraction, negative for repulsion
+ * @param stop {boolean}                If set to true then attracted objects will stop when they hit the min distance range
+ * @param bounce {boolean}              If set to true then objects when stopped at the min distance range will bounce
+ *
+ */
+b5.A_Attract = function(target, container, min_dist, max_dist, strength, stop, bounce)
+{
+    this.target = target;
+    this.container = container;
+    this.min_dist = min_dist;
+    this.max_dist = max_dist;
+    this.strength = strength;
+    this.stop = stop;
+    this.bounce = bounce;
+};
+b5.A_Attract.prototype.onTick = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.container = b5.Utils.resolveObject(this.container);
+    var target = this.target;
+    var actors = this.container.actors;
+    var count = actors.length;
+    var x = target.x;
+    var y = target.y;
+    var min_dist = this.min_dist;
+    var max_dist = this.max_dist;
+    var strength = this.strength;
+    var stop = this.stop;
+    var bounce = this.bounce;
+    var d2 = Math.sqrt(min_dist);
+    for (var t = 0; t < count; t++)
+    {
+        var actor = actors[t];
+        if (actor.attract !== undefined)
+        {
+            var dx = actor.x - x;
+            var dy = actor.y - y;
+            var d = dx * dx + dy * dy;
+            if (d > min_dist && d < max_dist)
+            {
+                d = Math.sqrt(d);
+                actor.vx -= strength * dx / d;
+                actor.vy -= strength * dy / d;
+            }
+            else
+            if (d < min_dist)
+            {
+                d = Math.sqrt(d);
+                if (stop)
+                {
+                    actor._x = x + d2 * dx / d;
+                    actor._y = y + d2 * dy / d;
+                    if (bounce)
+                    {
+                        actor.vx = -actor.vx;
+                        actor.vy = -actor.vy;
+                    }
+                    else
+                    {
+                        actor.vx = 0;
+                        actor.vy = 0;
+                    }
+                }
+
+            }
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("Attract", function(p) { return new b5.A_Attract(p[1],p[2],p[3],p[4],p[5],p[6],p[7]); });
+
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Audio actions are actions that deal with changing audio
+//
+// A_Sound      - Plays, pauses or stops a sound
+
+//
+// The Sound action plays, pauses or stops a sound then exits
+// - name - Path to or instance of sound
+// - action - Action to perform on sound (play, pause or stop)
+//
+/**
+ * Action that plays, pauses or stops a sound then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Sound
+ * @constructor
+ * @returns {b5.A_Sound}                The created action
+ * @param sound {string:b5.Sound}       Path to or instance of sound resource
+ * @param action {string}               Action to perform on sound (play, pause or stop)
+ *
+ */
+b5.A_Sound = function(sound, action)
+{
+    this.sound = sound;
+    this.action = action;
+};
+b5.A_Sound.prototype.onInit = function()
+{
+    this.sound = b5.Utils.resolveResource(this.sound, "sound");
+    var sound = this.sound;
+    if (sound !== null)
+    {
+        var action = this.action;
+        if (action === "play")
+            sound.play();
+        else if (action === "pause")
+            sound.pause();
+        else if (action === "stop")
+            sound.stop();
+    }
+};
+b5.ActionsRegister.register("Sound", function(p) { return new b5.A_Sound(p[1],p[2]); });
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Animation actions are actions that deal with changing animation
+//
+// A_ChangeTimeline - Changes the named timeline
+
+/**
+ * Action that changes the state of an animation timeline then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_ChangeTimeline
+ * @constructor
+ * @returns {b5.A_ChangeTimeline} The created action
+ * @param timeline {string|b5.Timeline}     Path to timeline or instance of timeline to change
+ * @param action {string}                   Action to perform on the timeline (play, pause or restart)
+ *
+ */
+b5.A_ChangeTimeline = function(timeline, action)
+{
+    this.timeline = timeline;
+    this.action = action;
+};
+b5.A_ChangeTimeline.prototype.onInit = function()
+{
+    this.timeline = b5.Utils.resolveObject(this.timeline, "timeline");
+    var timeline = this.timeline;
+    if (timeline !== null)
+    {
+        var action = this.action;
+        if (action === "play")
+            timeline.play();
+        else if (action === "pause")
+            timeline.pause();
+        else if (action === "restart")
+            timeline.restart();
+    }
+};
+b5.ActionsRegister.register("ChangeTimeline", function(p) { return new b5.A_ChangeTimeline(p[1],p[2]); });
+
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// General actions are actions that are generic in nature
+//
+// A_Wait           - waits for a specified time then exits
+// A_SetProps       - sets a property or group of properties of an object to specified values
+// A_AddProps       - adds the specified value or array of values onto the specified properties
+// A_TweenProps     - Tweens the array of property values over time then exits
+// A_Call           - Calls a function with parameters then exits
+// A_Create         - Creates an object from a xoml template then exits
+// A_Destroy        - Destroys an object then exits
+// A_FocusScene     - Sets the current focus scene
+
+/**
+ * Action that waits for a specified time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Wait
+ * @constructor
+ * @returns {b5.A_Wait}                 The created action
+ * @param duration {number}             Amount of time to wait in seconds
+ *
+ */
+b5.A_Wait = function(duration)
+{
+    this.duration = duration;
+};
+b5.A_Wait.prototype.onInit = function()
+{
+    this.time = Date.now();
+};
+b5.A_Wait.prototype.onTick = function()
+{
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("Wait", function(p) { return new b5.A_Wait(p[1]); });
+
+/**
+ * Action that sets a group of properties of an object to specified values then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_SetProps
+ * @constructor
+ * @returns {b5.A_SetProps}             The created action
+ * @param target {string|object}        Path to or instance of target object to change properties of
+ * @param properties {object}           Property / value pairs that will be set (e.g. {"vx":0,"vy":0})
+ *
+ */
+b5.A_SetProps = function(target, properties)
+{
+    this.target = target;
+    this.properties = properties;
+};
+b5.A_SetProps.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    var props = this.properties;
+    for (var prop in props)
+        target[prop] = props[prop];
+};
+b5.ActionsRegister.register("SetProps", function(p) { return new b5.A_SetProps(p[1],p[2]); });
+
+/**
+ * Action that adds the specified values onto the specified properties then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_AddProps
+ * @constructor
+ * @returns {b5.A_AddProps}             The created action
+ * @param target {string|object}        Path to or instance of target object to change properties of
+ * @param properties {object}           Property / value pairs that will be updated (e.g. {"vx":0,"vy":0})
+ *
+ */
+b5.A_AddProps = function(target, properties)
+{
+    this.target = target;
+    this.properties = properties;
+};
+b5.A_AddProps.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    var props = this.properties;
+    for (var prop in props)
+        target[prop] += props[prop];
+};
+b5.ActionsRegister.register("AddProps", function(p) { return new b5.A_AddProps(p[1],p[2]); });
+
+/**
+ * Action that tweens the specified property values over time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_TweenProps
+ * @constructor
+ * @returns {b5.A_TweenProps}           The created action
+ * @param target {string|object}        Path to or instance of target object to change properties of
+ * @param properties {string[]}         Array of property names to tween (e.g. ["x", "y"])
+ * @param start {number[]}              Array of start values
+ * @param end {number[]}                Array of end values
+ * @param duration {number}             Amount of time to tween over in seconds
+ * @param ease {number[]}               Array of easing functions to apply to tweens (see {@link b5.Ease})
+ *
+ */
+b5.A_TweenProps = function(target, properties, start, end, duration, ease)
+{
+    this.target = target;
+    this.props = properties;
+    this.start = start;
+    this.end = end;
+    this.duration = duration;
+    this.ease = ease;
+};
+b5.A_TweenProps.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+    var target = this.target;
+    var props = this.props;
+    var start = this.start;
+    var count = props.length;
+    for (var t = 0; t < count; t++)
+        target[props[t]] = start[t];
+};
+b5.A_TweenProps.prototype.onTick = function()
+{
+    var dt = Date.now() - this.time;
+    var dur = this.duration;
+    if (dur !== 0)
+    {
+        var props = this.props;
+        var start = this.start;
+        var end = this.end;
+        var count = props.length;
+        var target = this.target;
+        var ease = this.ease;
+        var d = dt / (dur * 1000);
+        if (d > 1) d = 1;
+        for (var t = 0; t < count; t++)
+            target[props[t]] = start[t] + (end[t] - start[t]) * b5.Ease.easingFuncs[ease[t]](d);
+    }
+
+    return (dt < (dur * 1000));
+};
+b5.ActionsRegister.register("TweenProps", function(p) { return new b5.A_TweenProps(p[1],p[2],p[3],p[4],p[5],p[6]); });
+
+/**
+ * Action that calls a function then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Call
+ * @constructor
+ * @returns {b5.A_Call}                 The created action
+ * @param func {string}                 Function to call
+ * @param params {object}               Parameter or pass to the function
+ *
+ */
+b5.A_Call = function(func, params)
+{
+    this.func = func;
+    this.params = params;
+};
+b5.A_Call.prototype.onInit = function()
+{
+    window[this.func](this.params);
+};
+b5.ActionsRegister.register("Call", function(p) { return new b5.A_Call(p[1],p[2]); });
+
+/**
+ * Action that creates an object from a xoml template then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Create
+ * @constructor
+ * @returns {b5.A_Create}               The created action
+ * @param objects {object[]}            Collection of objects in XOML JSON format (as exported from Booty5 editor) that contains the template
+ * @param scene {string|b5.Scene}       Path to or instance of scene that contains the template and its resources
+ * @param template {string}             The name of the object template
+ * @param type {string}                 The type of object (e.g. icon, label, scene etc)
+ * @param properties {object}           Object that contains property / value pairs that will be set to created object (e.g. {"vx":0,"vy":0})
+ *
+ */
+b5.A_Create = function(objects, scene, template, type, properties)
+{
+    this.objects = objects;
+    this.temp_name = template;
+    this.type = type;
+    this.scene = scene;
+    this.properties = properties;
+};
+b5.A_Create.prototype.onInit = function()
+{
+    if (typeof this.objects === "string")
+        this.objects = b5.data[this.objects];
+    this.scene = b5.Utils.resolveObject(this.scene);
+    var template = b5.Xoml.findResource(this.objects, this.temp_name, this.type);
+    var xoml = new b5.Xoml(b5.app);
+    xoml.current_scene = this.scene;
+    var obj = xoml.parseResource(this.scene, template);
+    var props = this.properties;
+    for (var prop in props)
+        obj[prop] = props[prop];
+};
+b5.ActionsRegister.register("Create", function(p) { return new b5.A_Create(p[1],p[2],p[3],p[4],p[5]); });
+
+/**
+ * Action that destroys an object then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Destroy
+ * @constructor
+ * @returns {b5.A_Destroy}              The created action
+ * @param target {string|object}        Path to or instance of object to destroy
+ *
+ */
+b5.A_Destroy = function(target)
+{
+    this.target = target;
+};
+b5.A_Destroy.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.target.destroy();
+};
+b5.ActionsRegister.register("Destroy", function(p) { return new b5.A_Destroy(p[1]); });
+
+/**
+ * Action that sets the current focus scene then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_FocusScene
+ * @constructor
+ * @returns {b5.A_FocusScene}           The created action
+ * @param target {string|b5.Scene}      Path to or instance of scene to set as focus
+ & @param focus2 {boolean}              Set as secondary focus instead if true
+ *
+ */
+b5.A_FocusScene = function(target, focus2)
+{
+    this.target = target;
+    this.focus2 = focus2;
+};
+b5.A_FocusScene.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    if (this.focus2 === true)
+        b5.app.focus_scene2 = target;
+    else
+        b5.app.focus_scene = target;
+};
+b5.ActionsRegister.register("FocusScene", function(p) { return new b5.A_FocusScene(p[1],p[2]); });
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Movement actions are actions that affect the position, speed or velocity of an object
+//
+// A_StopMove           - Stops an object from moving, pauses for a duration then exits
+// A_Gravity            - Apply gravity to an object, does not exit
+// A_Move               - Moves an object dx, dy units over the specified time then exits
+// A_MoveTo             - Moves an object to a specific coordinate over the specified time then exits
+// A_MoveWithSpeed      - Moves an object at a specific speed in its current direction over the specified time then exits
+// A_Follow             - Follows a target object, does not exit
+// A_LookAt             - Turns an object to face another object, does not exit
+// A_FollowPath         - Follows a path, does not exit
+// A_FollowPathVel      - Uses velocities to follow a path, does not exit
+// A_LimitMove          - Limits movement of object to within a rectangular area, does not exit
+//
+
+/**
+ * Action that stops an object from moving then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_StopMove
+ * @constructor
+ * @returns {b5.A_StopMove}             The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param stop_vx {boolean}             Stops x velocity
+ * @param stop_vy {boolean}             Stops y velocity
+ * @param stop_vr                       Stops rotational velocity
+ * @param duration {number}             Amount of time to wait before stopping in seconds
+ *
+ */
+b5.A_StopMove = function(target, stop_vx, stop_vy, stop_vr, duration)
+{
+    this.target = target;
+    this.stop_vx = stop_vx;
+    this.stop_vy = stop_vy;
+    this.stop_vr = stop_vr;
+    this.duration = duration;
+};
+b5.A_StopMove.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+};
+b5.A_StopMove.prototype.onTick = function()
+{
+    if (!((Date.now() - this.time) < (this.duration * 1000)))
+    {
+        var target = this.target;
+        if (this.stop_vx)
+            target.vx = 0;
+        if (this.stop_vy)
+            target.vy = 0;
+        if (this.stop_vr)
+            target.vr = 0;
+        return false;
+    }
+    return true;
+};
+b5.ActionsRegister.register("StopMove", function(p) { return new b5.A_StopMove(p[1],p[2],p[3],p[4],p[5]); });
+
+/**
+ * Action that applies gravity to an object, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Gravity
+ * @constructor
+ * @returns {b5.A_Gravity}              The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param gravity_x {number}            Gravity strength on x-axis
+ * @param gravity_y {number}            Gravity strength on y-axis
+ *
+ */
+b5.A_Gravity = function(target, gravity_x, gravity_y)
+{
+    this.target = target;
+    this.gravity_x = gravity_x;
+    this.gravity_y = gravity_y;
+};
+b5.A_Gravity.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_Gravity.prototype.onTick = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    target.vx += this.gravity_x;
+    target.vy += this.gravity_y;
+    return false;
+};
+b5.ActionsRegister.register("Gravity", function(p) { return new b5.A_Gravity(p[1],p[2],p[3]); });
+
+/**
+ * Action that moves an object dx, dy units over the specified time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Move
+ * @constructor
+ * @returns {b5.A_Move      }           The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param dx {number}                   Distance to move on x axis (passing null will not affect the property)
+ * @param dy {number}                   Distance to move on y axis (passing null will not affect the property)
+ * @param duration {number}             Amount of time to move over in seconds
+ *
+ */
+b5.A_Move = function(target, dx, dy, duration)
+{
+    this.target = target;
+    this.dx = dx;
+    this.dy = dy;
+    this.duration = duration;
+    this.x = target.x;
+    this.y = target.y;
+};
+b5.A_Move.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    if (this.dx != null)
+        target.vx = this.dx / this.duration;
+    if (this.dy != null)
+        target.vy = this.dy / this.duration;
+    this.time = Date.now();
+};
+b5.A_Move.prototype.onTick = function()
+{
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("Move", function(p) { return new b5.A_Move(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that moves an object to a specific coordinate over the specified time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_MoveTo
+ * @constructor
+ * @returns {b5.A_MoveTo}               The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param x {number}                    Target x-axis position to move to (passing null will not affect the property)
+ * @param y {number}                    Target y-axis position to move to (passing null will not affect the property)
+ * @param duration {number}             Amount of time to move over in seconds
+ * @param ease_x {number}               Easing function to use on x-axis (see {@link b5.Ease})
+ * @param ease_y {number}               Easing function to use on y-axis (see {@link b5.Ease})
+ *
+ */
+b5.A_MoveTo = function(target, x, y, duration, ease_x, ease_y)
+{
+    this.target = target;
+    this.duration = duration;
+    this.x = x;
+    this.y = y;
+    this.sx = target.x;
+    this.sy = target.y;
+    this.ease_x = ease_x || b5.Ease.linear;
+    this.ease_y = ease_y || b5.Ease.linear;
+};
+b5.A_MoveTo.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    this.time = Date.now();
+    this.sx = target.x;
+    this.sy = target.y;
+};
+b5.A_MoveTo.prototype.onTick = function()
+{
+    var target = this.target;
+    var dt = Date.now() - this.time;
+    var d = dt / (this.duration * 1000);
+    if (d > 1) d = 1;
+    if (this.x != null)
+        target._x = this.sx + (this.x - this.sx) * b5.Ease.easingFuncs[this.ease_x](d);
+    if (this.y != null)
+        target._y = this.sy + (this.y - this.sy) * b5.Ease.easingFuncs[this.ease_y](d);
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("MoveTo", function(p) { return new b5.A_MoveTo(p[1],p[2],p[3],p[4],p[5],p[6]); });
+
+/**
+ * Action that moves an object at specific speed in its current direction over the specified time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_MoveWithSpeed
+ * @constructor
+ * @returns {b5.A_MoveWithSpeed}        The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param speed {number}                Speed at which to move
+ * @param duration {number}             Amount of time to move over in seconds
+ * @param ease {number}                 Easing function used to increase to target speed (see {@link b5.Ease})
+ *
+ */
+b5.A_MoveWithSpeed = function(target, speed, duration, ease)
+{
+    this.target = target;
+    this.speed = speed;
+    this.duration = duration;
+    this.ease = ease;
+};
+b5.A_MoveWithSpeed.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+    if (this.duration === 0)
+    {
+        var target = this.target;
+        var speed = this.speed;
+        var dir = target.rotation;
+        target.vx = speed * Math.sin(dir);
+        target.vy = -speed * Math.cos(dir);
+    }
+};
+b5.A_MoveWithSpeed.prototype.onTick = function()
+{
+    var dt = Date.now() - this.time;
+    var dur = this.duration;
+    if (dur !== 0)
+    {
+        var target = this.target;
+        var dir = target.rotation;
+        var d = dt / (dur * 1000);
+        if (d > 1) d = 1;
+        var speed = this.speed * b5.Ease.easingFuncs[this.ease](d);
+        target.vx = speed * Math.sin(dir);
+        target.vy = -speed * Math.cos(dir);
+    }
+
+    return (dt < (dur * 1000));
+};
+b5.ActionsRegister.register("MoveWithSpeed", function(p) { return new b5.A_MoveWithSpeed(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that follows a target, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_Follow
+ * @constructor
+ * @returns {b5.A_Follow}               The created action
+ * @param source {string|b5.Actor}      Path to or instance of source object that will follow the target
+ * @param target {string|b5.Actor}      Path to or instance of target object to follow
+ * @param speed {number}                Speed at which to follow, larger values will catch up with target slower
+ * @param distance {number}             Minimum distance allowed between source and target (squared)
+ *
+ */
+b5.A_Follow = function(source, target, speed, distance)
+{
+    this.source = source;
+    this.target = target;
+    this.speed = speed;
+    this.distance = distance;
+};
+b5.A_Follow.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.source = b5.Utils.resolveObject(this.source);
+};
+b5.A_Follow.prototype.onTick = function()
+{
+    var target = this.target;
+    var source = this.source;
+    var speed = this.speed;
+    var dx = target.x - source.x;
+    var dy = target.y - source.y;
+    var d = dx * dx + dy * dy;
+    if (d < this.distance)
+    {
+        source.vx = 0;
+        source.vy = 0;
+    }
+    else
+    {
+        source.vx = dx / speed;
+        source.vy = dy / speed;
+    }
+    return true;
+};
+b5.ActionsRegister.register("Follow", function(p) { return new b5.A_Follow(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that turns an object to face another object, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_LookAt
+ * @constructor
+ * @returns {b5.A_LookAt}               The created action
+ * @param source {string|b5.Actor}      Path to or instance of source object that will look at the target
+ * @param target {string|b5.Actor}      Path to or instance of target object to look at
+ * @param lower {number}                Optional lower limit angle
+ * @param upper {number}                Optional upper limit angle
+ *
+ */
+b5.A_LookAt = function(source, target, lower, upper)
+{
+    this.source = source;
+    this.target = target;
+    this.lower = lower;
+    this.upper = upper;
+};
+b5.A_LookAt.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.source = b5.Utils.resolveObject(this.source);
+};
+b5.A_LookAt.prototype.onTick = function()
+{
+    var target = this.target;
+    var source = this.source;
+    var angle = Math.atan2(target.y - source.y, target.x - source.x) + Math.PI / 2;
+    var lower = this.lower;
+    if (lower !== undefined && angle < lower)
+        angle = lower;
+    var upper = this.upper;
+    if (upper !== undefined && angle > upper)
+        angle = upper;
+    source._rotation = angle;
+    return true;
+};
+b5.ActionsRegister.register("LookAt", function(p) { return new b5.A_LookAt(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that causes an object follows a path, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_FollowPath
+ * @constructor
+ * @returns {b5.A_FollowPath}           The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param path {object[]}               Path to follow, array of x,y values that define the path, e.g. [x1,y1,x2,y2,etc..]
+ * @param start {number}                Distance to start along the path
+ * @param speed {number}                Speed at which to travel down the path
+ * @param angle {boolean}               If set to true then angle will adjust to path direction
+ *
+ */
+b5.A_FollowPath = function(target, path, start, speed, angle)
+{
+    this.target = target;
+    this.path = path;
+    this.distance = start;
+    this.speed = speed;
+    this.angle = angle;
+
+    // Calculate distances between each node
+    var count = path.length >> 1;
+    var total = 0;
+    this.distances = [];
+    this.angles = [];
+    this.distances[0] = 0;
+    for (var t = 1; t < count; t++)
+    {
+        var dx = path[t << 1] - path[(t - 1) << 1];
+        var dy = path[(t << 1) + 1] - path[((t - 1) << 1) + 1];
+        total += Math.sqrt(dx * dx + dy * dy);
+        this.distances[t] = total;
+        if (this.angle)
+            this.angles[t - 1] = Math.atan2(dy, dx) + Math.PI / 2;
+    }
+};
+b5.A_FollowPath.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_FollowPath.prototype.onTick = function()
+{
+    var target = this.target;
+
+    // Find path node we are currently on
+    var path = this.path;
+    var count = path.length >> 1;
+    var distances = this.distances;
+    var distance = this.distance + this.speed;
+    var total_dist = distances[count - 1];
+    while (distance >= total_dist)
+        distance -= total_dist;
+    while (distance < 0)
+        distance += total_dist;
+    this.distance = distance;
+    for (var t = 0; t < count; t++)
+    {
+        if (distance < distances[t])
+        {
+            var t2 = t - 1;
+            if (t2 >= count)
+                t2 = 0;
+            var x1 = path[t2 << 1];
+            var x2 = path[t << 1];
+            var y1 = path[(t2 << 1) + 1];
+            var y2 = path[(t << 1) + 1];
+            var d = (distance - distances[t2]) / (distances[t] - distances[t2]);
+            target._x = x1 + (x2 - x1) * d;
+            target._y = y1 + (y2 - y1) * d;
+            if (this.angle)
+                target._rotation = this.angles[t2];
+            break;
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("FollowPath", function(p) { return new b5.A_FollowPath(p[1],p[2],p[3],p[4],p[5]); });
+
+/**
+ * Action that causes an object to follow a path using velocity, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_FollowPathVel
+ * @constructor
+ * @returns {b5.A_FollowPathVel}        The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object
+ * @param path {object[]}               Path to follow, array of x,y values that define the path, e.g. [x1,y1,x2,y2,etc..]
+ * @param start {number}                Distance to start along the path
+ * @param speed {number}                Speed at which to travel down the path
+ * @param catchup_speed {number}        Speed at which object catches up with path target modes
+ * @param angle {boolean}               If set to true then angle will adjust to path direction
+ *
+ */
+b5.A_FollowPathVel = function(target, path, start, speed, catchup_speed, angle)
+{
+    this.target = target;
+    this.path = path;
+    this.distance = start;
+    this.speed = speed;
+    this.angle = angle;
+    this.catchup_speed = catchup_speed;
+
+    // Calculate distances between each node
+    var count = path.length >> 1;
+    var total = 0;
+    this.distances = [];
+    this.distances[0] = 0;
+    for (var t = 1; t < count; t++)
+    {
+        var dx = path[t << 1] - path[(t - 1) << 1];
+        var dy = path[(t << 1) + 1] - path[((t - 1) << 1) + 1];
+        total += Math.sqrt(dx * dx + dy * dy);
+        this.distances[t] = total;
+    }
+};
+b5.A_FollowPathVel.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_FollowPathVel.prototype.onTick = function()
+{
+    var target = this.target;
+
+    // Find path node we are currently on
+    var path = this.path;
+    var count = path.length >> 1;
+    var distances = this.distances;
+    var distance = this.distance + this.speed;
+    var total_dist = distances[count - 1];
+    while (distance >= total_dist)
+        distance -= total_dist;
+    while (distance < 0)
+        distance += total_dist;
+    this.distance = distance;
+    for (var t = 0; t < count; t++)
+    {
+        if (distance < distances[t])
+        {
+            var t2 = t - 1;
+            if (t2 >= count)
+                t2 = 0;
+            var x1 = path[t2 << 1];
+            var x2 = path[t << 1];
+            var y1 = path[(t2 << 1) + 1];
+            var y2 = path[(t << 1) + 1];
+            var d = (distance - distances[t2]) / (distances[t] - distances[t2]);
+            var catchup = this.catchup_speed;
+            target.vx = ((x1 + (x2 - x1) * d) - target.x) * catchup;
+            target.vy = ((y1 + (y2 - y1) * d) - target.y) * catchup;
+            if (this.angle)
+                target._rotation = Math.atan2(target.vy, target.vx) + Math.PI / 2;
+            break;
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("FollowPathVel", function(p) { return new b5.A_FollowPathVel(p[1],p[2],p[3],p[4],p[5],p[6]); });
+
+/**
+ * Action that limits movement of object to within a rectangular area, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_LimitMove
+ * @constructor
+ * @returns {b5.A_LimitMove}            The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object that will be limited
+ * @param area {number[]}               Rectangular area limit [x,y,w,h]
+ * @param hit {string}                  Action to perform when object oversteps boundary (bounce, wrap, stop)
+ * @param bounce {number}               Bounce factor
+ *
+ */
+b5.A_LimitMove = function(target, area, hit, bounce)
+{
+    this.target = target;
+    this.area = area;
+    if (hit === "bounce")
+        this.hit = 0;
+    else if (hit === "stop")
+        this.hit = 1;
+    else if (hit === "wrap")
+        this.hit = 2;
+    this.bounce = bounce;
+};
+b5.A_LimitMove.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_LimitMove.prototype.onTick = function()
+{
+    var target = this.target;
+    var x = target.x;
+    var y = target.y;
+    var hit = this.hit;
+    var area = this.area;
+    var bounce = this.bounce;
+    if (area[2] !== 0)
+    {
+        var l = area[0];
+        var r = l + area[2];
+        if (x < l)
+        {
+            if (hit === 0)
+                target.vx = -target.vx * bounce;
+            else if (hit === 1)
+                target.vx = 0;
+            else if (hit === 2)
+                target._x = r;
+        }
+        else
+        if (x > r)
+        {
+            if (hit === 0)
+                target.vx = -target.vx * bounce;
+            else if (hit === 1)
+                target.vx = 0;
+            else if (hit === 2)
+                target._x = l;
+        }
+    }
+    if (area[3] !== 0)
+    {
+        var t = area[1];
+        var b = t + area[3];
+        if (y < t)
+        {
+            if (hit === 0)
+                target.vy = -target.vy * bounce;
+            else if (hit === 1)
+                target.vy = 0;
+            else if (hit === 2)
+                target._y = b;
+        }
+        else
+        if (y > b)
+        {
+            if (hit === 0)
+                target.vy = -target.vy * bounce;
+            else if (hit === 1)
+                target.vy = 0;
+            else if (hit === 2)
+                target._y = t;
+        }
+    }
+    return false;
+};
+b5.ActionsRegister.register("LimitMove", function(p) { return new b5.A_LimitMove(p[1],p[2],p[3],p[4]); });
+
+
+
+
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Camera actions are actions that affect the scene camera
+//
+// A_CamStopMove           - Stops a camera from moving, pauses for a duration then exits
+// A_CamGravity            - Apply gravity to a camera, does not exit
+// A_CamMove               - Moves a camera dx, dy units over the specified time then exits
+// A_CamMoveTo             - Moves a camera to a specific coordinate over the specified time then exits
+// A_CamFollow             - Camera follows a target object, does not exit
+// A_CamFollowPath         - Camera follows a path, does not exit
+// A_CamFollowPathVel      - Uses velocities to make camera follow a path, does not exit
+// A_CamLimitMove          - Limits movement of camera to within a rectangular area, does not exit
+//
+
+/**
+ * Action that stops a scene camera from moving then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamStopMove
+ * @constructor
+ * @returns {b5.A_CamStopMove}          The created action
+ * @param target {string|b5.Scene}      Path to or instance of target scene that contains camera
+ * @param stop_vx {boolean}             Stops x velocity
+ * @param stop_vy {boolean}             Stops y velocity
+ * @param duration {number}             Amount of time to wait before stopping in seconds
+ *
+ */
+b5.A_CamStopMove = function(target, stop_vx, stop_vy, duration)
+{
+    this.target = target;
+    this.stop_vx = stop_vx;
+    this.stop_vy = stop_vy;
+    this.duration = duration;
+};
+b5.A_CamStopMove.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+};
+b5.A_CamStopMove.prototype.onTick = function()
+{
+    if (!((Date.now() - this.time) < (this.duration * 1000)))
+    {
+        var target = this.target;
+        if (this.stop_vx)
+            target.camera_vx = 0;
+        if (this.stop_vy)
+            target.camera_vy = 0;
+        return false;
+    }
+    return true;
+};
+b5.ActionsRegister.register("CamStopMove", function(p) { return new b5.A_CamStopMove(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that applies gravity to a scene camera, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamGravity
+ * @constructor
+ * @returns {b5.A_CamGravity}           The created action
+ * @param target {string|b5.Scene}      Path to or instance of target scene that contains camera
+ * @param gravity_x {number}            Gravity strength on x-axis
+ * @param gravity_y {number}            Gravity strength on y-axis
+ *
+ */
+b5.A_CamGravity = function(target, gravity_x, gravity_y)
+{
+    this.target = target;
+    this.gravity_x = gravity_x;
+    this.gravity_y = gravity_y;
+};
+b5.A_CamGravity.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_CamGravity.prototype.onTick = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    target.camera_vx += this.gravity_x;
+    target.camera_vy += this.gravity_y;
+    return false;
+};
+b5.ActionsRegister.register("CamGravity", function(p) { return new b5.A_CamGravity(p[1],p[2],p[3]); });
+
+/**
+ * Action that moves a scene camera dx, dy units over the specified time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamMove
+ * @constructor
+ * @returns {b5.A_CamMove}              The created action
+ * @param target {string|b5.Scene}      Path to or instance of target scene that contains camera
+ * @param dx {number}                   Distance to move on x axis (passing null will not affect the property)
+ * @param dy {number}                   Distance to move on y axis (passing null will not affect the property)
+ * @param duration {number}             Amount of time to move over in seconds
+ *
+ */
+b5.A_CamMove = function(target, dx, dy, duration)
+{
+    this.target = target;
+    this.dx = dx;
+    this.dy = dy;
+    this.duration = duration;
+    this.x = target.x;
+    this.y = target.y;
+};
+b5.A_CamMove.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    if (this.dx != null)
+        target.camera_vx = this.dx / this.duration;
+    if (this.dy != null)
+        target.camera_vy = this.dy / this.duration;
+    this.time = Date.now();
+};
+b5.A_CamMove.prototype.onTick = function()
+{
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("CamMove", function(p) { return new b5.A_CamMove(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that moves a scene camera to a specific coordinate over the specified time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamMoveTo
+ * @constructor
+ * @returns {b5.A_CamMoveTo}            The created action
+ * @param target {string|b5.Scene}      Path to or instance of target scene that contains camera
+ * @param x {number}                    Target x-axis position to move to (passing null will not affect the property)
+ * @param y {number}                    Target y-axis position to move to (passing null will not affect the property)
+ * @param duration {number}             Amount of time to move over in seconds
+ * @param ease_x {number}               Easing function to use on x-axis (see {@link b5.Ease})
+ * @param ease_y {number}               Easing function to use on y-axis (see {@link b5.Ease})
+ *
+ */
+b5.A_CamMoveTo = function(target, x, y, duration, ease_x, ease_y)
+{
+    this.target = target;
+    this.duration = duration;
+    this.x = x;
+    this.y = y;
+    this.ease_x = ease_x || b5.Ease.linear;
+    this.ease_y = ease_y || b5.Ease.linear;
+};
+b5.A_CamMoveTo.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    this.time = Date.now();
+    this.sx = target.camera_x;
+    this.sy = target.camera_y;
+};
+b5.A_CamMoveTo.prototype.onTick = function()
+{
+    var target = this.target;
+    var dt = Date.now() - this.time;
+    var d = dt / (this.duration * 1000);
+    if (d > 1) d = 1;
+    if (this.x != null)
+        target.camera_x = this.sx + (this.x - this.sx) * b5.Ease.easingFuncs[this.ease_x](d);
+    if (this.y != null)
+        target.camera_y = this.sy + (this.y - this.sy) * b5.Ease.easingFuncs[this.ease_y](d);
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("CamMoveTo", function(p) { return new b5.A_CamMoveTo(p[1],p[2],p[3],p[4],p[5],p[6]); });
+
+/**
+ * Action that causes scene camera to follow a target, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamFollow
+ * @constructor
+ * @returns {b5.A_CamFollow}            The created action
+ * @param source {string|b5.Scene}      Path to or instance of scene that contains camera that will follow the target
+ * @param target {string|b5.Actor}      Path to or instance of target object to follow
+ * @param speed {number}                Speed at which to follow, larger values will catch up with target slower
+ * @param distance {number}             Minimum distance allowed between source and target (squared)
+ *
+ */
+b5.A_CamFollow = function(source, target, speed, distance)
+{
+    this.source = source;
+    this.target = target;
+    this.speed = speed;
+    this.distance = distance;
+};
+b5.A_CamFollow.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.source = b5.Utils.resolveObject(this.source);
+};
+b5.A_CamFollow.prototype.onTick = function()
+{
+    var target = this.target;
+    var source = this.source;
+    var speed = this.speed;
+    var dx = target.x - source.camera_x;
+    var dy = target.y - source.camera_y;
+    var d = dx * dx + dy * dy;
+    if (d < this.distance)
+    {
+        source.camera_vx = 0;
+        source.camera_vy = 0;
+    }
+    else
+    {
+        source.camera_vx = dx / speed;
+        source.camera_vy = dy / speed;
+    }
+    return true;
+};
+b5.ActionsRegister.register("CamFollow", function(p) { return new b5.A_CamFollow(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that causes scene camera to follow a target, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamFollowPath
+ * @constructor
+ * @returns {b5.A_CamFollowPath}        The created action
+ * @param target {string|b5.Scene}      Path to or instance of scene that contains camera that will follow the target
+ * @param path {object[]}               Path to follow, array of x,y values that define the path, e.g. [x1,y1,x2,y2,etc..]
+ * @param start {number}                Distance to start along the path
+ * @param speed {number}                Speed at which to travel down the path
+ *
+ */
+b5.A_CamFollowPath = function(target, path, start, speed)
+{
+    this.target = target;
+    this.path = path;
+    this.distance = start;
+    this.speed = speed;
+
+    // Calculate distances between each node
+    var count = path.length >> 1;
+    var total = 0;
+    this.distances = [];
+    this.distances[0] = 0;
+    for (var t = 1; t < count; t++)
+    {
+        var dx = path[t << 1] - path[(t - 1) << 1];
+        var dy = path[(t << 1) + 1] - path[((t - 1) << 1) + 1];
+        total += Math.sqrt(dx * dx + dy * dy);
+        this.distances[t] = total;
+    }
+};
+b5.A_CamFollowPath.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_CamFollowPath.prototype.onTick = function()
+{
+    var target = this.target;
+
+    // Find path node we are currently on
+    var path = this.path;
+    var count = path.length >> 1;
+    var distances = this.distances;
+    var distance = this.distance + this.speed;
+    var total_dist = distances[count - 1];
+    while (distance >= total_dist)
+        distance -= total_dist;
+    while (distance < 0)
+        distance += total_dist;
+    this.distance = distance;
+    for (var t = 0; t < count; t++)
+    {
+        if (distance < distances[t])
+        {
+            var t2 = t - 1;
+            if (t2 >= count)
+                t2 = 0;
+            var x1 = path[t2 << 1];
+            var x2 = path[t << 1];
+            var y1 = path[(t2 << 1) + 1];
+            var y2 = path[(t << 1) + 1];
+            var d = (distance - distances[t2]) / (distances[t] - distances[t2]);
+            target.camera_x = x1 + (x2 - x1) * d;
+            target.camera_y = y1 + (y2 - y1) * d;
+            break;
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("CamFollowPath", function(p) { return new b5.A_CamFollowPath(p[1],p[2],p[3],p[4]); });
+
+/**
+ * Action that causes scene camera to follow a path using velocity, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamFollowPathVel
+ * @constructor
+ * @returns {b5.A_CamFollowPathVel}     The created action
+ * @param target {string|b5.Scene}      Path to or instance of scene that contains camera that will follow the target
+ * @param path {object[]}               Path to follow, array of x,y values that define the path, e.g. [x1,y1,x2,y2,etc..]
+ * @param start {number}                Distance to start along the path
+ * @param speed {number}                Speed at which to travel down the path
+ * @param catchup_speed {number}        Speed at which object catches up with path target modes
+ *
+ */
+b5.A_CamFollowPathVel = function(target, path, start, speed, catchup_speed)
+{
+    this.target = target;
+    this.path = path;
+    this.distance = start;
+    this.speed = speed;
+    this.catchup_speed = catchup_speed;
+
+    // Calculate distances between each node
+    var count = path.length >> 1;
+    var total = 0;
+    this.distances = [];
+    this.distances[0] = 0;
+    for (var t = 1; t < count; t++)
+    {
+        var dx = path[t << 1] - path[(t - 1) << 1];
+        var dy = path[(t << 1) + 1] - path[((t - 1) << 1) + 1];
+        total += Math.sqrt(dx * dx + dy * dy);
+        this.distances[t] = total;
+    }
+};
+b5.A_CamFollowPathVel.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_CamFollowPathVel.prototype.onTick = function()
+{
+    var target = this.target;
+
+    // Find path node we are currently on
+    var path = this.path;
+    var count = path.length >> 1;
+    var distances = this.distances;
+    var distance = this.distance + this.speed;
+    var total_dist = distances[count - 1];
+    while (distance >= total_dist)
+        distance -= total_dist;
+    while (distance < 0)
+        distance += total_dist;
+    this.distance = distance;
+    for (var t = 0; t < count; t++)
+    {
+        if (distance < distances[t])
+        {
+            var t2 = t - 1;
+            if (t2 >= count)
+                t2 = 0;
+            var x1 = path[t2 << 1];
+            var x2 = path[t << 1];
+            var y1 = path[(t2 << 1) + 1];
+            var y2 = path[(t << 1) + 1];
+            var d = (distance - distances[t2]) / (distances[t] - distances[t2]);
+            var catchup = this.catchup_speed;
+            target.camera_vx = ((x1 + (x2 - x1) * d) - target.x) * catchup;
+            target.camera_vy = ((y1 + (y2 - y1) * d) - target.y) * catchup;
+            break;
+        }
+    }
+
+    return true;
+};
+b5.ActionsRegister.register("CamFollowPathVel", function(p) { return new b5.A_CamFollowPathVel(p[1],p[2],p[3],p[4],p[5]); });
+
+/**
+ * Action that limits movement of scene camera to within a rectangular area, does not exit
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_CamLimitMove
+ * @constructor
+ * @returns {b5.A_CamLimitMove}         The created action
+ * @param target {string|b5.Scene}      Path to or instance of scene that contains camera that will be limited
+ * @param area {number[]}               Rectangular area limit [x,y,w,h]
+ * @param hit {string}                  Action to perform when object oversteps boundary (bounce, wrap, stop)
+ * @param bounce {number}               Bounce factor
+ *
+ */
+b5.A_CamLimitMove = function(target, area, hit, bounce)
+{
+    this.target = target;
+    this.area = area;
+    if (hit === "bounce")
+        this.hit = 0;
+    else if (hit === "stop")
+        this.hit = 1;
+    else if (hit === "wrap")
+        this.hit = 2;
+    this.bounce = bounce;
+};
+b5.A_CamLimitMove.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+};
+b5.A_CamLimitMove.prototype.onTick = function()
+{
+    var target = this.target;
+    var x = target.camera_x;
+    var y = target.camera_y;
+    var hit = this.hit;
+    var area = this.area;
+    var bounce = this.bounce;
+    if (area[2] !== 0)
+    {
+        var l = area[0];
+        var r = l + area[2];
+        if (x < l)
+        {
+            if (hit === 0)
+                target.camera_vx = -target.camera_vx * bounce;
+            else if (hit === 1)
+                target.camera_vx = 0;
+            else if (hit === 2)
+                target.camera_x = r;
+        }
+        else
+        if (x > r)
+        {
+            if (hit === 0)
+                target.camera_vx = -target.camera_vx * bounce;
+            else if (hit === 1)
+                target.camera_vx = 0;
+            else if (hit === 2)
+                target.camera_x = l;
+        }
+    }
+    if (area[3] !== 0)
+    {
+        var t = area[1];
+        var b = t + area[3];
+        if (y < t)
+        {
+            if (hit === 0)
+                target.camera_vy = -target.camera_vy * bounce;
+            else if (hit === 1)
+                target.camera_vy = 0;
+            else if (hit === 2)
+                target.camera_y = b;
+        }
+        else
+        if (y > b)
+        {
+            if (hit === 0)
+                target.camera_vy = -target.camera_vy * bounce;
+            else if (hit === 1)
+                target.camera_vy = 0;
+            else if (hit === 2)
+                target.camera_y = t;
+        }
+    }
+    return false;
+};
+b5.ActionsRegister.register("CamLimitMove", function(p) { return new b5.A_CamLimitMove(p[1],p[2],p[3],p[4]); });
+
+
+/**
+ * author       Mat Hopwood
+ * copyright    2014 Mat Hopwood
+ * More info    http://booty5.com
+ */
+"use strict";
+//
+// Physics actions are that modify the physical state of actors
+//
+// A_SetLinearVelocity          - Sets the linear velocity of an actors body for a specified period of time
+// A_SetAngularVelocity         - Sets the angular velocity of an actors body for a specified period of time
+// A_ApplyForce                 - Apply a force to actors body for a specified period of time
+// A_ApplyImpulse               - Apply an impulse to actors body
+// A_ApplyTorque                - Apply a torque to actors body for a specified period of time
+
+/**
+ * Action that sets the linear velocity of an actors body for a duration then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_SetLinearVelocity
+ * @constructor
+ * @returns {b5.A_SetLinearVelocity}    The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object that will be affected
+ * @param vx {number}                   x-axis velocity
+ * @param vy {number}                   y-axis velocity
+ * @param duration {number}             Duration of action
+ *
+ */
+b5.A_SetLinearVelocity = function(target, vx, vy, duration)
+{
+    this.target = target;
+    this.vx = vx;
+    this.vy = vy;
+    this.duration = duration;
+};
+b5.A_SetLinearVelocity.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+};
+b5.A_SetLinearVelocity.prototype.onTick = function()
+{
+    var target = this.target;
+    var body = target.body;
+    if (body !== null)
+    {
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        body.SetAwake(true);
+        body.SetLinearVelocity(new b2Vec2(this.vx, this.vy));
+    }
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("SetLinearVelocity", function(p) { return new b5.A_SetLinearVelocity(p[1], p[2], p[3], p[4]); });
+
+/**
+ * Action that sets the angular velocity of an actors body for a duration then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_SetAngularVelocity
+ * @constructor
+ * @returns {b5.A_SetAngularVelocity}   The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object that will be affected
+ * @param vr {number}                   Angular velocity
+ * @param duration {number}             Duration of action
+ *
+ */
+b5.A_SetAngularVelocity = function(target, vr, duration)
+{
+    this.target = target;
+    this.vr = vr;
+    this.duration = duration;
+};
+b5.A_SetAngularVelocity.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+};
+b5.A_SetAngularVelocity.prototype.onTick = function()
+{
+    var target = this.target;
+    var body = target.body;
+    if (body !== null)
+    {
+        body.SetAwake(true);
+        body.SetAngularVelocity(this.vr);
+    }
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("SetAngularVelocity", function(p) { return new b5.A_SetAngularVelocity(p[1], p[2], p[3]); });
+
+/**
+ * Action that applies force to an object over a period of time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_ApplyForce
+ * @constructor
+ * @returns {b5.A_ApplyForce}           The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object that will be affected
+ * @param fx {number}                   x-axis force
+ * @param fy {number}                   y-axis force
+ * @param dx {number}                   x-axis offset to apply force
+ * @param dy {number}                   y-axis offset to apply force
+ * @param duration {number}             Duration of action
+ *
+ */
+b5.A_ApplyForce = function(target, fx, fy, dx, dy, duration)
+{
+    this.target = target;
+    this.fx = fx;
+    this.fy = fy;
+    this.dx = dx;
+    this.dy = dy;
+    this.duration = duration;
+};
+b5.A_ApplyForce.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+};
+b5.A_ApplyForce.prototype.onTick = function()
+{
+    var target = this.target;
+    var body = target.body;
+    if (body !== null)
+    {
+        var ws = target.scene.world_scale;
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        body.SetAwake(true);
+        var pos = body.GetWorldPoint(new b2Vec2(this.dx / ws, this.dy / ws));
+        body.ApplyForce(new b2Vec2(this.fx, this.fy), pos);
+    }
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("ApplyForce", function(p) { return new b5.A_ApplyForce(p[1], p[2], p[3], p[4], p[5], p[6]); });
+
+/**
+ * Action that applies an impulse to an object then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_ApplyImpulse
+ * @constructor
+ * @returns {b5.A_ApplyImpulse}         The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object that will be affected
+ * @param ix {number}                   x-axis impulse
+ * @param iy {number}                   y-axis impulse
+ * @param dx {number}                   x-axis offset to apply force
+ * @param dy {number}                   y-axis offset to apply force
+ *
+ */
+b5.A_ApplyImpulse = function(target, ix, iy, dx, dy)
+{
+    this.target = target;
+    this.ix = ix;
+    this.iy = iy;
+    this.dx = dx;
+    this.dy = dy;
+};
+b5.A_ApplyImpulse.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    var target = this.target;
+    var body = target.body;
+    if (body !== null)
+    {
+        var ws = target.scene.world_scale;
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        body.SetAwake(true);
+        var pos = body.GetWorldPoint(new b2Vec2(this.dx / ws, this.dy / ws));
+        body.ApplyImpulse(new b2Vec2(this.ix, this.iy), pos);
+    }
+};
+b5.ActionsRegister.register("ApplyImpulse", function(p) { return new b5.A_ApplyImpulse(p[1], p[2], p[2], p[3], p[4]); });
+
+/**
+ * Action that applies a torque to an object over a period of time then exits
+ *
+ * Created actions should be added to an actor or scenes actions list to be processed
+ *
+ * For a complete overview of Actions see {@link http://booty5.com/html5-game-engine/booty5-html5-game-engine-introduction/actions-building-with-blocks/ Booty5 Actions Overview}
+ *
+ * @class b5.A_ApplyTorque
+ * @constructor
+ * @returns {b5.A_ApplyTorque}          The created action
+ * @param target {string|b5.Actor}      Path to or instance of target object that will be affected
+ * @param torque {number}               Amount of Torque to apply
+ * @param duration {number}             Duration of action
+ *
+ */
+b5.A_ApplyTorque = function(target, torque, duration)
+{
+    this.target = target;
+    this.torque = torque;
+    this.duration = duration;
+};
+b5.A_ApplyTorque.prototype.onInit = function()
+{
+    this.target = b5.Utils.resolveObject(this.target);
+    this.time = Date.now();
+};
+b5.A_ApplyTorque.prototype.onTick = function()
+{
+    var target = this.target;
+    var body = target.body;
+    if (body !== null)
+    {
+        body.SetAwake(true);
+        body.ApplyTorque(this.torque);
+    }
+    return ((Date.now() - this.time) < (this.duration * 1000))
+};
+b5.ActionsRegister.register("ApplyTorque", function(p) { return new b5.A_ApplyTorque(p[1], p[2], p[3]); });

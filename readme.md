@@ -24,6 +24,7 @@ Currently supports:
 - Game object caching to speed up rendering
 - Support for Booty5 game HTML5 editor / maker
 - Support for Facebook Instant Games added
+- Support for Dragon Bones animation system
 
 #The Basics
 ##App
