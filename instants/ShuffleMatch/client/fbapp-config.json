@@ -1,0 +1,15 @@
+{
+  "instant_games": {
+    "platform_version": "RICH_GAMEPLAY",
+    "custom_update_templates": {
+      "match_lost": {
+      },
+      "match_won": {
+      },
+      "match_tie": {
+      }
+      "challenge": {
+      }
+    }
+  }
+}

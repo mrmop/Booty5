@@ -1,0 +1,22 @@
+{
+  "name": "Test Server",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Test Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "Inchlib"
+  ],
+  "author": "Mat Hopwood",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.14.0"
+  }
+}

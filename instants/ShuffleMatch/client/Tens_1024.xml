@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:58355b67bdfd2f596cfda1aa361dd28e:13c3a3a154ce52daaf8b136076520fb1:8f84ac9db2758324dffbaed5c78c94a9$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Tens_1024.png" width="2048" height="2048">
+    <sprite n="ads_error.png" x="1" y="1750" w="499" h="286" pX="0.5" pY="0.5" oX="0" oY="0" oW="500" oH="287"/>
+    <sprite n="ads_unavailable.png" x="32" y="613" w="499" h="286" pX="0.5" pY="0.5" oX="0" oY="0" oW="500" oH="287"/>
+    <sprite n="audio_off.png" x="575" y="199" w="97" h="95" pX="0.5" pY="0.5"/>
+    <sprite n="audio_on.png" x="673" y="199" w="96" h="95" pX="0.5" pY="0.5" oX="1" oY="0" oW="97" oH="95"/>
+    <sprite n="button_selector.png" x="1232" y="413" w="192" h="76" pX="0.5" pY="0.5"/>
+    <sprite n="cancel_button.png" x="831" y="490" w="280" h="92" pX="0.5" pY="0.5"/>
+    <sprite n="challenge.png" x="1369" y="985" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="challenged_dlg.png" x="331" y="312" w="499" h="286" pX="0.5" pY="0.5" oX="0" oY="0" oW="500" oH="287"/>
+    <sprite n="chest_of_coins.png" x="1862" y="80" w="50" h="50" pX="0.5" pY="0.5"/>
+    <sprite n="coin.png" x="1059" y="293" w="55" h="53" pX="0.5" pY="0.5"/>
+    <sprite n="continue_button.png" x="1267" y="1117" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="continue_button2.png" x="501" y="1125" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="d0.png" x="1826" y="413" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d1.png" x="1233" y="583" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d2.png" x="1233" y="723" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d3.png" x="1774" y="715" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d4.png" x="1229" y="863" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d5.png" x="1774" y="855" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d6.png" x="1769" y="995" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d7.png" x="847" y="985" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d8.png" x="987" y="985" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d9.png" x="1127" y="1003" w="139" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="d10.png" x="1862" y="131" w="140" h="140" pX="0.5" pY="0.5"/>
+    <sprite n="empty.png" x="1862" y="272" w="140" h="140" pX="0.5" pY="0.5"/>
+    <sprite n="eor_d.png" x="697" y="824" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_e.png" x="762" y="824" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_e2.png" x="827" y="824" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_l1.png" x="1982" y="724" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_l2.png" x="1982" y="789" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_n.png" x="1982" y="854" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_o.png" x="1914" y="856" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="eor_w.png" x="1979" y="919" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="find.png" x="1233" y="80" w="628" h="140" pX="0.5" pY="0.5"/>
+    <sprite n="free_coins.png" x="1115" y="293" w="50" h="50" pX="0.5" pY="0.5"/>
+    <sprite n="free_daily.png" x="1" y="1026" w="451" h="361" pX="0.5" pY="0.5"/>
+    <sprite n="friends_button.png" x="865" y="199" w="193" h="77" pX="0.5" pY="0.5"/>
+    <sprite n="gameover_result.png" x="32" y="1" w="542" h="310" pX="0.5" pY="0.5"/>
+    <sprite n="gameover_title.png" x="139" y="900" w="707" h="98" pX="0.5" pY="0.5"/>
+    <sprite n="global_button.png" x="865" y="277" w="193" h="77" pX="0.5" pY="0.5"/>
+    <sprite n="glow.png" x="1075" y="1" w="150" h="150" pX="0.5" pY="0.5"/>
+    <sprite n="glowcircle.png" x="32" y="900" w="106" h="106" pX="0.5" pY="0.5"/>
+    <sprite n="glowflower.png" x="770" y="199" w="94" h="94" pX="0.5" pY="0.5" oX="3" oY="3" oW="100" oH="100"/>
+    <sprite n="grad1.jpg" x="1" y="1" w="30" h="1024" pX="0.5" pY="0.5"/>
+    <sprite n="iap1.png" x="831" y="355" w="400" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="iap2.png" x="1425" y="395" w="400" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="iap3.png" x="1373" y="715" w="400" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="iap4.png" x="1373" y="850" w="400" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="leaderboard_button.png" x="453" y="1257" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="leaderboard_entry.png" x="1393" y="553" w="550" h="161" pX="0.5" pY="0.5"/>
+    <sprite n="lives_icon.png" x="619" y="824" w="77" h="68" pX="0.5" pY="0.5"/>
+    <sprite n="overlay.png" x="2007" y="67" w="32" h="32" pX="0.5" pY="0.5"/>
+    <sprite n="peek.png" x="1075" y="152" w="150" h="140" pX="0.5" pY="0.5"/>
+    <sprite n="play_button.png" x="453" y="1389" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="pouch_of_coins.png" x="1166" y="293" w="50" h="50" pX="0.5" pY="0.5"/>
+    <sprite n="purchase_failed.png" x="575" y="1" w="499" h="197" pX="0.5" pY="0.5" oX="0" oY="0" oW="500" oH="197"/>
+    <sprite n="rank_box.png" x="892" y="824" w="336" h="160" pX="0.5" pY="0.5"/>
+    <sprite n="remember.png" x="1233" y="221" w="628" h="140" pX="0.5" pY="0.5"/>
+    <sprite n="reset_button.png" x="1112" y="490" w="280" h="92" pX="0.5" pY="0.5"/>
+    <sprite n="reset_dialog.png" x="1" y="1388" w="451" h="361" pX="0.5" pY="0.5"/>
+    <sprite n="restart_button.png" x="453" y="1521" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="rounds_icon.png" x="1966" y="413" w="73" h="79" pX="0.5" pY="0.5" oX="1" oY="0" oW="74" oH="80"/>
+    <sprite n="s10.png" x="1966" y="493" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s20.png" x="1966" y="526" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s30.png" x="1944" y="625" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s40.png" x="1944" y="658" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s50.png" x="1944" y="691" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s60.png" x="1914" y="724" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s70.png" x="1914" y="757" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s80.png" x="1914" y="790" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s90.png" x="1914" y="823" w="67" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="70" oH="44"/>
+    <sprite n="s100.png" x="1934" y="1" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s110.png" x="1934" y="34" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s120.png" x="1917" y="67" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s130.png" x="1283" y="362" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s140.png" x="1373" y="362" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s150.png" x="1463" y="362" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s160.png" x="1553" y="362" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s170.png" x="1643" y="362" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s180.png" x="1733" y="362" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s190.png" x="1944" y="559" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="s200.png" x="1944" y="592" w="89" h="32" pX="0.5" pY="0.5" oX="3" oY="6" oW="92" oH="44"/>
+    <sprite n="score_icon.png" x="532" y="824" w="86" h="69" pX="0.5" pY="0.5" oX="0" oY="0" oW="87" oH="69"/>
+    <sprite n="share_button.png" x="501" y="1653" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="shop_button.png" x="501" y="1785" w="399" h="131" pX="0.5" pY="0.5" oX="1" oY="0" oW="400" oH="131"/>
+    <sprite n="stack_of_coins.png" x="1232" y="362" w="50" h="50" pX="0.5" pY="0.5"/>
+    <sprite n="star.png" x="32" y="312" w="298" h="300" pX="0.5" pY="0.5" oX="1" oY="0" oW="300" oH="300"/>
+    <sprite n="timer_bar.png" x="1233" y="49" w="683" h="30" pX="0.5" pY="0.5"/>
+    <sprite n="timer_bar_bg.png" x="1233" y="1" w="700" h="47" pX="0.5" pY="0.5"/>
+    <sprite n="title.png" x="532" y="599" w="700" h="224" pX="0.5" pY="0.5"/>
+</TextureAtlas>

@@ -1,0 +1,1463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" GridSnap="64" SnapInclusionRange="100000" VirtualResolution="768,1024" VirtualScreenVisible="True" ProjectPath="G:\Instants\ShuffleMatch\client" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="Shuffle Match" Host="https://www.facebook.com/embed/instantgames/<YOUR APP ID>/player?game_url=https://localhost:8080/" ExportLocation="G:\Instants\ShuffleMatch\test\public" IDELocation="c:\Program Files\Microsoft VS Code\code.exe" TargetFrameRate="60" CSS="body {&#xD;&#xA;    background-color: #003cff;&#xD;&#xA;}" PrettyPrint="False" Smoothing="True" ForceRounding="False" AdaptivePhysics="False" PreventDefault="True" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Instants="True" Box2D="False" Droidscript="False" SocketIO="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" TileMapIterleave="False" ExportTestJS="True" LoadingBackgroundColour="#FF000000" LoadingBarBGColour="#FF000000" LoadingBarColour="#FF000000" LoadingImage="" />
+  <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Script Name="utils.js" ScriptType="1" Load="True" Location="G:\Instants\ShuffleMatch\client\utils.js" />
+  <Script Name="board.js" ScriptType="1" Load="True" Location="G:\Instants\ShuffleMatch\client\board.js" />
+  <Script Name="shufflematchgame.js" ScriptType="1" Load="True" Location="G:\Instants\ShuffleMatch\client\shufflematchgame.js" />
+  <Script Name="menu.js" ScriptType="1" Load="True" Location="G:\Instants\ShuffleMatch\client\menu.js" />
+  <Script Name="spinner.js" ScriptType="1" Load="True" Location="G:\Instants\ShuffleMatch\client\spinner.js" />
+  <Sound Name="wrong" Location="G:\Instants\ShuffleMatch\client\wrong.mp3" FallbackLocation="" Reuse="True" />
+  <Sound Name="correct" Location="G:\Instants\ShuffleMatch\client\correct.mp3" FallbackLocation="" Reuse="True" />
+  <Sound Name="tap" Location="G:\Instants\ShuffleMatch\client\tap.mp3" FallbackLocation="" Reuse="True" />
+  <Sound Name="lose" Location="G:\Instants\ShuffleMatch\client\lose.mp3" FallbackLocation="" Reuse="True" />
+  <Sound Name="win" Location="G:\Instants\ShuffleMatch\client\win.mp3" FallbackLocation="G:\Instants\ShuffleMatch\client\win.mp3" Reuse="True" />
+  <Sound Name="swap" Location="G:\Instants\ShuffleMatch\client\swap.mp3" FallbackLocation="" Reuse="True" />
+  <Sound Name="slide" Location="G:\Instants\ShuffleMatch\client\slide.mp3" />
+  <Sound Name="music" Location="G:\Instants\ShuffleMatch\client\music.mp3" Preload="False" AutoPlay="True" Reuse="True" Loop="True" />
+  <Image Name="Tens_1024" Location="G:\Instants\ShuffleMatch\client\Tens_1024.png" />
+  <Image Name="bg0" Location="G:\Instants\ShuffleMatch\assets\bg0.jpg" />
+  <Image Name="instructions" Location="G:\Instants\ShuffleMatch\client\instructions.png" />
+  <Image Name="ad2" Location="G:\Instants\ShuffleMatch\client\ad2.png" />
+  <Image Name="ad1" Location="G:\Instants\ShuffleMatch\client\ad1.png" />
+  <Brush Name="d0" Rect="1826,413,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d1" Rect="1233,583,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d2" Rect="1233,723,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d3" Rect="1774,715,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d4" Rect="1229,863,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d5" Rect="1774,855,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d6" Rect="1769,995,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d7" Rect="847,985,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d8" Rect="987,985,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d9" Rect="1127,1003,139,139" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="d10" Rect="1862,131,140,140" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="empty" Rect="1862,272,140,140" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="find" Rect="1233,80,628,140" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="remember" Rect="1233,221,628,140" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="timer_bar" Rect="1233,49,683,30" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="timer_bar_bg" Rect="1233,1,700,47" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s10" Rect="1966,493,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s100" Rect="1934,1,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s20" Rect="1966,526,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s30" Rect="1944,625,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s40" Rect="1944,658,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s50" Rect="1944,691,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s60" Rect="1914,724,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s70" Rect="1914,757,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s80" Rect="1914,790,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s90" Rect="1914,823,67,32" ScaleArea="0,0,0,0" Offset="3,6,70,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s110" Rect="1934,34,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s120" Rect="1917,67,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s130" Rect="1283,362,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s140" Rect="1373,362,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s150" Rect="1463,362,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s160" Rect="1553,362,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s170" Rect="1643,362,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s180" Rect="1733,362,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s190" Rect="1944,559,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="s200" Rect="1944,592,89,32" ScaleArea="0,0,0,0" Offset="3,6,92,44" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="lives_icon" Rect="619,824,77,68" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="score_icon" Rect="532,824,86,69" ScaleArea="0,0,0,0" Offset="0,0,87,69" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="bg1" Rect="0,0,768,1024" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="bg1" BrushType="0" />
+  <Brush Name="continue_button2" Rect="501,1125,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="cross" Rect="912,678,56,76" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="music" Rect="901,1779,94,93" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="rounds_icon" Rect="1966,413,73,79" ScaleArea="0,0,0,0" Offset="1,0,74,80" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="challenge" Rect="1369,985,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="play_button" Rect="453,1389,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="restart_button" Rect="453,1521,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="challenged_dlg" Rect="331,312,499,286" ScaleArea="0,0,0,0" Offset="0,0,500,287" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="share_button" Rect="501,1653,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="ads_unavailable" Rect="32,613,499,286" ScaleArea="0,0,0,0" Offset="0,0,500,287" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="continue_button" Rect="1267,1117,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="overlay" Rect="2007,67,32,32" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="ads_error" Rect="1,1750,499,286" ScaleArea="0,0,0,0" Offset="0,0,500,287" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="leaderboard_button" Rect="453,1257,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="bg0" Rect="0,0,768,1024" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="bg0" BrushType="0" />
+  <Brush Name="gameover_result" Rect="32,1,542,310" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="gameover_title" Rect="139,900,707,98" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="title" Rect="532,599,700,224" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="leaderboard_entry" Rect="1393,553,550,161" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="rank_box" Rect="892,824,336,160" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="glowflower" Rect="770,199,94,94" ScaleArea="0,0,0,0" Offset="3,3,100,100" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="glowcircle" Rect="32,900,106,106" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="grad1" Rect="1,1,30,1024" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="instructions" Rect="0,0,500,397" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="instructions" BrushType="0" />
+  <Brush Name="audio_off" Rect="575,199,97,95" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="audio_on" Rect="673,199,96,95" ScaleArea="0,0,0,0" Offset="1,0,97,95" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="button_selector" Rect="1232,413,192,76" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="friends_button" Rect="865,199,193,77" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="global_button" Rect="865,277,193,77" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="reset_button" Rect="1112,490,280,92" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="cancel_button" Rect="831,490,280,92" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="reset_dialog" Rect="1,1388,451,361" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_d" Rect="697,824,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_e" Rect="762,824,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_e2" Rect="827,824,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_l1" Rect="1982,724,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_l2" Rect="1982,789,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_n" Rect="1982,854,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_o" Rect="1914,856,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="eor_w" Rect="1979,919,64,64" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="glow" Rect="1075,1,150,150" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="star" Rect="32,312,298,300" ScaleArea="0,0,0,0" Offset="1,0,300,300" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="peek" Rect="1075,152,150,140" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="coin" Rect="1059,293,55,53" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="shop_button" Rect="501,1785,399,131" ScaleArea="0,0,0,0" Offset="1,0,400,131" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="chest_of_coins" Rect="1862,80,50,50" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="pouch_of_coins" Rect="1166,293,50,50" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="stack_of_coins" Rect="1232,362,50,50" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="iap1" Rect="831,355,400,134" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="iap2" Rect="1425,395,400,134" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="iap3" Rect="1373,715,400,134" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="iap4" Rect="1373,850,400,134" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="free_coins" Rect="1115,293,50,50" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="purchase_failed" Rect="575,1,499,197" ScaleArea="0,0,0,0" Offset="0,0,500,197" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="free_daily" Rect="1,1026,451,361" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="Tens_1024" BrushType="0" />
+  <Brush Name="ad2" Rect="0,0,200,130" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="ad2" BrushType="0" />
+  <Brush Name="ad1" Rect="0,0,200,130" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="ad1" BrushType="0" />
+  <Scene Name="guessarea" Position="1536,0" CanvasSize="768,1024" CanvasFit="4" TouchPan="0" Extents="-2000,-512,4000,1024" Load="False" ClipShape="" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Physics="False" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <TimelineCollection Name="camin">
+      <Timeline Prop="camera_x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="2" V="1536" />
+        <Kf T="0.5" D="0" V="0" />
+      </Timeline>
+    </TimelineCollection>
+    <TimelineCollection Name="camout">
+      <Timeline Prop="camera_x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="2" V="0" />
+        <Kf T="0.5" D="0" V="1536" />
+      </Timeline>
+    </TimelineCollection>
+    <Icon Name="find" Position="-60,424" Scale="0.9,0.9" GEnd="1,0" Background="find" Size="628,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,20" DockScreen="True" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <Icon Name="value" Position="159.8,-3.60000000000077" Scale="0.7,0.7" GEnd="1,0" Background="d10" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    </Icon>
+    <Icon Name="timer_bar_bg" Position="0,-363.52" GEnd="1,0" Background="timer_bar_bg" Size="700,47" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,100,0" DockScreen="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <Icon Name="timer_bar" Position="0,0" GEnd="1,0" Background="timer_bar" Size="683,30" AlphaMode="4" ScaleMethod="0" CompositeOp="0" OnTick="window.shuffle_match.updateGuessArea(this);" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    </Icon>
+    <Icon Name="peek" Position="289.8,429" Scale="0.9,0.9" GEnd="1,0" Background="peek" Size="150,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,20" DockScreen="True" OnTapped="Peek();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.9" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="0.55" D="0" V="0.9" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.9" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="0.55" D="0" V="0.9" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+  </Scene>
+  <Scene Name="viewarea" Position="0,0" Colour="#FF000000" CanvasSize="768,1024" CanvasFit="4" TouchPan="0" Extents="-2000,-512,4000,1024" Load="False" ClipShape="" FollowSpeed="1,1" VelocityDamping="0.8,0.8" AllowFocus="True" Physics="False" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnTapped="if (window.shuffle_match.allow_shuffle &amp;&amp; touch_pos.y &gt; -370) window.shuffle_match.shuffle();">
+    <TimelineCollection Name="camin">
+      <Timeline Prop="camera_x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0" OnEnd="window.shuffle_match.allow_shuffle = true;">
+        <Kf T="0" D="0" E="2" V="1536" />
+        <Kf T="0.5" D="0" V="0" />
+      </Timeline>
+    </TimelineCollection>
+    <TimelineCollection Name="camout">
+      <Timeline Prop="camera_x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0" OnEnd="window.shuffle_match.allow_shuffle = true;">
+        <Kf T="0" D="0" E="2" V="0" />
+        <Kf T="0.5" D="0" V="1536" />
+      </Timeline>
+    </TimelineCollection>
+    <Icon Name="bg2" Position="0,0" GEnd="1,0" Background="grad1" Size="800,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <Icon Name="glowflower1" Position="-269.92,-837.160000000002" GEnd="1,0" Background="glowflower" Size="94,94" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" OnTick="UpdateSpinner(this);" Type="0" AngularVelocity="50" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1.35" D="0" V="255" />
+            <Kf T="2" D="0" V="0" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="glowflower2" Position="-178.08,-839.320000000002" GEnd="1,0" Background="glowcircle" Size="106,106" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" OnTick="UpdateSpinner(this);" Type="0" AngularVelocity="50" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1.35" D="0" V="255" />
+            <Kf T="2" D="0" V="0" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="glowflower5" Position="129.72,-837.000000000001" GEnd="1,0" Background="glowcircle" Size="106,106" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" OnTick="UpdateSpinner(this);" Type="0" AngularVelocity="50" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1.35" D="0" V="255" />
+            <Kf T="2" D="0" V="0" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="glowflower3" Position="-84.0800000000003,-839.320000000002" GEnd="1,0" Background="glowflower" Size="94,94" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" OnTick="UpdateSpinner(this);" Type="0" AngularVelocity="50" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1.35" D="0" V="255" />
+            <Kf T="2" D="0" V="0" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="glowflower4" Position="9.91999999999973,-839.320000000002" GEnd="1,0" Background="glowcircle" Size="106,106" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" OnTick="UpdateSpinner(this);" Type="0" AngularVelocity="50" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1.35" D="0" V="255" />
+            <Kf T="2" D="0" V="0" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="1" />
+            <Kf T="2" D="0" V="3" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+    </Icon>
+    <Icon Name="remember" Position="0,424" GEnd="1,0" Background="remember" Size="628,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,20" DockScreen="True" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <Icon Name="value" Position="177.392,-0.351999999999999" Scale="0.7,0.7" GEnd="1,0" Background="d10" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    </Icon>
+    <Icon Name="sc0" Position="295.328000000001,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ro0" Position="-53.2,-413" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="sc1" Position="225.328000000001,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ro1" Position="-123.2,-413" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="sc3" Position="85.328000000001,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ro3" Position="-263.2,-413" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="sc4" Position="15.328000000001,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="sc5" Position="-54.671999999999,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="sc6" Position="-124.671999999999,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="lives" Position="-268,-475.6" Scale="0.4,0.4" GEnd="1,0" Background="d10" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,10,0" DockScreen="True" Depth="1" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="sc2" Position="155.328000000001,-475.6" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ro2" Position="-193.2,-413" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="coin3" Position="85.6,-343" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="coin2" Position="155.6,-343" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="coin1" Position="225.6,-343" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="coin0" Position="295.6,-343" GEnd="1,0" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" DockScreen="True" IgnoreAtlasSize="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="lives_icon" Position="-343.1,-475.6" GEnd="1,0" Background="lives_icon" Size="65,56" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,-3,0" DockScreen="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="pulse">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.2" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1.2" />
+          <Kf T="1" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="score_icon" Position="-207.071999999999,-475.6" Scale="0.8,0.8" GEnd="1,0" Visible="False" ExportVisible="False" Background="score_icon" Size="85,67" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,5,0" DockScreen="True" Active="False" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="pulse">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="17" V="0.8" />
+          <Kf T="0.4680000000000003" D="0" V="0.8" />
+          <Kf T="0.5" D="0" V="1" />
+          <Kf T="1" D="0" V="0.8" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="17" V="0.8" />
+          <Kf T="0.4680000000000003" D="0" V="0.8" />
+          <Kf T="0.5" D="0" V="1" />
+          <Kf T="1" D="0" V="0.8" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="rounds_icon" Position="-341.6,-408.6" GEnd="1,0" Background="rounds_icon" Size="72,78" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,70,0" DockScreen="True" IgnoreCamera="True" Docking="1" Type="0" AngularVelocity="25" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="coins_icon" Position="14.96,-408.6" GEnd="1,0" Background="coin" Size="55,53" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,85,0" DockScreen="True" IgnoreCamera="True" Docking="1" Type="0" AngularVelocity="25" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="audio" Position="-198.4,-403.2" GEnd="1,0" Background="audio_on" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,10,0" DockScreen="True" IgnoreAtlasSize="True" OnTapped="ToggleAudio();" Tappable="True" IgnoreCamera="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="you_won" Position="0,-50" GEnd="1,0" Layer="5" ExportVisible="False" Size="32,32" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="0" />
+          <Kf T="0.35" D="0" V="255" />
+          <Kf T="2" D="0" V="255" />
+          <Kf T="3" D="0" V="0" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="spinner" Position="0,0" GEnd="1,0" Background="star" Size="300,300" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="3" D="0" V="-240" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1" D="0" V="2" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1" D="0" V="2" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="letter1" Position="-96,-32" GEnd="1,0" ExportVisible="False" Background="eor_w" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter2" Position="-32,-32" GEnd="1,0" ExportVisible="False" Background="eor_e" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0.1" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter3" Position="32,-32" GEnd="1,0" ExportVisible="False" Background="eor_l1" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.2">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.2">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0.2" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter4" Position="96,-32" GEnd="1,0" ExportVisible="False" Background="eor_l2" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.3">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.3">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0.3" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter5" Position="-96,32" GEnd="1,0" ExportVisible="False" Background="eor_d" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter6" Position="-32,32" GEnd="1,0" ExportVisible="False" Background="eor_o" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0.1" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter7" Position="32,32" GEnd="1,0" ExportVisible="False" Background="eor_n" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.2">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.2">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0.2" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="letter8" Position="96,32" GEnd="1,0" ExportVisible="False" Background="eor_e2" Size="64,64" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.3">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.3">
+            <Kf T="0" D="0" E="14" V="0.001" />
+            <Kf T="1.25" D="0" V="1.2" />
+            <Kf T="1.65" D="0" V="1" />
+            <Kf T="1.95" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="True" Tween="True" Repeat="1" TimeScale="1" Delay="0.3" OnRepeat="">
+            <Kf T="0" D="0" V="255" />
+            <Kf T="1.65" D="0" V="255" />
+            <Kf T="1.95" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="star" Position="0,0" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="1" D="0" V="-40" />
+            </Timeline>
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.7">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.5" D="0" V="255" />
+              <Kf T="1" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="star1" Position="-64.0000000000001,-89.5999999999999" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1" D="0" V="-40" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="0.5" D="0" V="255" />
+            <Kf T="1" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="star2" Position="75.1999999999998,-126.4" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.2">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1" D="0" V="-40" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.2">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="0.5" D="0" V="255" />
+            <Kf T="1" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="star3" Position="57.6,98.3999999999999" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1" D="0" V="-40" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.1">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="0.5" D="0" V="255" />
+            <Kf T="1" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="star4" Position="-87.2,112" GEnd="1,0" Background="glow" Size="150,150" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="show">
+          <Timeline Prop="angle" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.3">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="1" D="0" V="-40" />
+          </Timeline>
+          <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0.3">
+            <Kf T="0" D="0" V="0" />
+            <Kf T="0.5" D="0" V="255" />
+            <Kf T="1" D="0" V="0" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+    </Icon>
+  </Scene>
+  <Scene Name="gameover" Position="1532,0" Layer="1" CanvasSize="768,1024" CanvasFit="3" TouchPan="0" Extents="0,0,0,0" Load="False" ClipShape="" FollowSpeed="1,1" VelocityDamping="0.8,0.8" AllowFocus="True" Physics="False" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <TimelineCollection Name="hide">
+      <Timeline Prop="x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="1" V="0" />
+        <Kf T="0.5" D="0" V="1532" />
+      </Timeline>
+    </TimelineCollection>
+    <TimelineCollection Name="show">
+      <Timeline Prop="x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="2" V="1532" />
+        <Kf T="0.5" D="0" V="0" />
+      </Timeline>
+    </TimelineCollection>
+    <Icon Name="background" Position="0,0" GEnd="1,0" Background="bg0" Size="768,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="title" Position="0,-400" Scale="1.07,1.07" GEnd="1,0" Background="gameover_title" Size="707,98" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,50,0" DockScreen="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="pulse">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="7" V="1" />
+          <Kf T="1" D="0" E="8" V="1.07" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="7" V="1" />
+          <Kf T="1" D="0" E="8" V="1.07" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="info" Position="0,-156.8" GEnd="1,0" Background="gameover_result" Size="542,310" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs0" Position="192.48,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs1" Position="136.48,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs2" Position="80.48,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs3" Position="24.48,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs4" Position="-31.52,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs5" Position="-87.52,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs6" Position="-143.52,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="fs7" Position="-199.52,-202.384000000001" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs0" Position="192.24,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs1" Position="136.24,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs2" Position="80.24,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs3" Position="24.24,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs4" Position="-31.76,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs5" Position="-87.76,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs6" Position="-143.76,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="brs7" Position="-199.76,-57.0320000000004" Scale="0.4,0.4" GEnd="1,0" Background="d0" Size="140,140" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ad1" Position="-160,-409.2" GEnd="1,0" Background="ad1" Size="200,130" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,125" DockScreen="True" OnTapped="SwitchGame(0);" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="1">
+          <Kf T="0" D="0" E="14" V="0" />
+          <Kf T="0.25" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="ad2" Position="154,-409.2" GEnd="1,0" Background="ad2" Size="200,130" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,125" DockScreen="True" OnTapped="SwitchGame(1);" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="1">
+          <Kf T="0" D="0" E="14" V="0" />
+          <Kf T="0.25" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="continue_button" Position="156,66.16" GEnd="1,0" Background="continue_button2" Size="300,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" SelectedColour="#FF969696" OnTapped="continueFromGameOver(this);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="restart_button" Position="-156,65.16" GEnd="1,0" Background="restart_button" Size="300,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" SelectedColour="#FF969696" OnTapped="restartGame(this);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="shop_button" Position="0,172.16" GEnd="1,0" Background="shop_button" Size="300,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" SelectedColour="#FF969696" OnTapped="ShowShopFromGameOver(true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="share_button" Position="-174,430.2" GEnd="1,0" Background="share_button" Size="304,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,20" DockScreen="True" IgnoreAtlasSize="True" SelectedColour="#FF969696" OnTapped="window.shuffle_match.ShareBestScore();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.3" D="0" V="1.1" />
+          <Kf T="0.45" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="leaderboard_button" Position="174,430.2" GEnd="1,0" Background="leaderboard_button" Size="304,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,20" DockScreen="True" IgnoreAtlasSize="True" SelectedColour="#FF969696" OnTapped="ShowLeaderboard(true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="shop_dialog" Position="0,0" GEnd="1,0" Colour="#00FFFFFF" Visible="False" ExportVisible="False" Size="768,1024" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Active="False" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="bg" Position="0,0" GEnd="1,0" CornerRadius="60" Visible="False" Background="bg0" Size="768,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      <Icon Name="rect" Position="-9.2,-62.56" GEnd="1,0" Colour="#C8FFFFFF" CornerRadius="60" Visible="False" Size="600,700" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="coin3" Position="-67.0399999999999,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="coin2" Position="2.96000000000013,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="coin1" Position="72.9600000000002,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="coin0" Position="142.96,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="icon" Position="-141.12,-298.08" GEnd="1,0" Visible="False" Background="coin" Size="55,53" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      </Icon>
+      <Icon Name="iap1" Position="0,-249.039999999999" GEnd="1,0" Visible="False" Background="iap1" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(3, true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="free_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      </Icon>
+      <Icon Name="iap2" Position="0,-95.0399999999995" GEnd="1,0" Visible="False" Background="iap2" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(25, true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="stack_of_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="text" Position="-86,12" GEnd="1,0" Colour="#FF000000" Visible="False" Size="237,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="NOT AVAILABLE" FontFace="Arial" FontSize="30" FontWeight="1" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="iap3" Position="0,58.9600000000005" GEnd="1,0" Visible="False" Background="iap3" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(100, true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="pouch_of_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="text" Position="-86,12" GEnd="1,0" Colour="#FF000000" Visible="False" Size="237,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="NOT AVAILABLE" FontFace="Arial" FontSize="30" FontWeight="1" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="iap4" Position="0,212.960000000001" GEnd="1,0" Visible="False" Background="iap4" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(1000, true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="chest_of_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="text" Position="-86,12" GEnd="1,0" Colour="#FF000000" Visible="False" Size="237,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="NOT AVAILABLE" FontFace="Arial" FontSize="30" FontWeight="1" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="cancel_button" Position="0,403.760000000001" GEnd="1,0" Visible="False" Background="continue_button" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="ShowShop(false);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+    </Icon>
+    <Icon Name="noads_dlg" Position="0,152" GEnd="1,0" Visible="False" ExportVisible="False" Background="ads_unavailable" Size="499,286" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="adserror_dlg" Position="0,152" GEnd="1,0" Visible="False" ExportVisible="False" Background="ads_error" Size="499,286" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="nopurchase_dlg" Position="0,152" GEnd="1,0" Visible="False" ExportVisible="False" Background="purchase_failed" Size="499,197" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+  </Scene>
+  <Scene Name="mainmenu" Position="0,0" Layer="2" CanvasSize="768,1024" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" ClipShape="" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Physics="False" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnCreate="b5.app.started = GameLoaded;" OnKeyBack="Call &quot;backPressed&quot;">
+    <TimelineCollection Name="hide">
+      <Timeline Prop="x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="1" V="0" />
+        <Kf T="0.5" D="0" V="1532" />
+      </Timeline>
+    </TimelineCollection>
+    <TimelineCollection Name="show">
+      <Timeline Prop="x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="2" V="1532" />
+        <Kf T="0.5" D="0" V="0" />
+      </Timeline>
+    </TimelineCollection>
+    <Icon Name="background" Position="0,0" GEnd="1,0" Background="bg0" Size="768,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="title" Position="0,-369.6" Scale="1.07,1.07" GEnd="1,0" Background="title" Size="700,224" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="20,20,20,20" DockScreen="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="pulse">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="7" V="1" />
+          <Kf T="1" D="0" E="8" V="1.07" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="7" V="1" />
+          <Kf T="1" D="0" E="8" V="1.07" />
+          <Kf T="2" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="play_button" Position="0,20.856" GEnd="1,0" Background="play_button" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" SelectedColour="#FF969696" OnTapped="newGame();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="reset_button" Position="0,430.856" GEnd="1,0" Background="reset_button" Size="280,92" AlphaMode="4" ScaleMethod="0" CompositeOp="0" SelectedColour="#FF969696" OnTapped="ResetGamePressed();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="challenge_button" Position="0,-110.144" GEnd="1,0" Background="challenge" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" SelectedColour="#FF969696" OnTapped="window.shuffle_match.ChallengeFriendPressed();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="leaderboard_button" Position="0,151.856" GEnd="1,0" Background="leaderboard_button" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" SelectedColour="#FF969696" OnTapped="ShowLeaderboard(true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="shop_button" Position="0,282.856" GEnd="1,0" Background="shop_button" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" SelectedColour="#FF969696" OnTapped="ShowShop(true);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="instructions" Position="0,0" GEnd="1,0" Colour="#40FFFFFF" Visible="False" ExportVisible="False" Background="overlay" Size="768,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" IgnoreAtlasSize="True" Active="False" OnTapped="this.visible = false;&#xD;&#xA;this.active = false;" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="dlg" Position="0,0" GEnd="1,0" Visible="False" Background="instructions" Size="500,397" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    </Icon>
+    <Icon Name="challenged_dlg" Position="0,341.76" GEnd="1,0" Visible="False" ExportVisible="False" Background="challenged_dlg" Size="499,286" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.65" D="0" E="23" V="1" />
+          <Kf T="2" D="0" V="0.001" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.65" D="0" E="23" V="1" />
+          <Kf T="2" D="0" V="0.001" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="photo" Position="-147.8,22.96" GEnd="1,0" Visible="False" Size="130,130" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      <Label Name="name" Position="-32.96,-3.84" GEnd="1,0" Colour="#FF000000" Visible="False" Size="90,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      <Label Name="bestscore" Position="-33.68,77.64" GEnd="1,0" Colour="#FF000000" Visible="False" Size="92,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="score" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+    </Icon>
+    <Icon Name="reset_dialog" Position="0,0" GEnd="1,0" Colour="#00FFFFFF" Visible="False" ExportVisible="False" Size="768,1024" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Active="False" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="bg" Position="0,0" GEnd="1,0" Visible="False" Background="reset_dialog" Size="451,361" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      <Icon Name="reset_button" Position="145,189" GEnd="1,0" Visible="False" Background="reset_button" Size="280,92" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="ResetGame();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="cancel_button" Position="-145,189" GEnd="1,0" Visible="False" Background="cancel_button" Size="280,92" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="CancelResetGame();&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+    </Icon>
+    <Icon Name="shop_dialog" Position="0,0" GEnd="1,0" Colour="#00FFFFFF" Visible="False" ExportVisible="False" Size="768,1024" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Active="False" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="bg" Position="0,0" GEnd="1,0" CornerRadius="60" Visible="False" Background="bg0" Size="768,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      <Icon Name="rect" Position="-9.2,-62.56" GEnd="1,0" Colour="#C8FFFFFF" CornerRadius="60" Visible="False" Size="600,700" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="coin3" Position="-67.0399999999999,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="coin2" Position="2.96000000000013,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="coin1" Position="72.9600000000002,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="coin0" Position="142.96,-296.92" GEnd="1,0" Visible="False" Background="d0" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,80,0" UseParentOpacity="False" IgnoreAtlasSize="True" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Icon Name="icon" Position="-141.12,-298.08" GEnd="1,0" Visible="False" Background="coin" Size="55,53" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      </Icon>
+      <Icon Name="iap1" Position="0,-249.039999999999" GEnd="1,0" Visible="False" Background="iap1" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(3);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="free_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+      </Icon>
+      <Icon Name="iap2" Position="0,-95.0399999999995" GEnd="1,0" Visible="False" Background="iap2" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(25);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="stack_of_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="text" Position="-84,12" GEnd="1,0" Colour="#FF000000" Visible="False" Size="237,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="NOT AVAILABLE" FontFace="Arial" FontSize="30" FontWeight="1" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="iap3" Position="0,58.9600000000005" GEnd="1,0" Visible="False" Background="iap3" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(100);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="pouch_of_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="text" Position="-84,12" GEnd="1,0" Colour="#FF000000" Visible="False" Size="237,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="NOT AVAILABLE" FontFace="Arial" FontSize="30" FontWeight="1" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="iap4" Position="0,212.960000000001" GEnd="1,0" Visible="False" Background="iap4" Size="400,134" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="BuyCoins(1000);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="icon" Position="-134.64,12.76" GEnd="1,0" Visible="False" Background="chest_of_coins" Size="70,70" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="text" Position="-84,12" GEnd="1,0" Colour="#FF000000" Visible="False" Size="237,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="NOT AVAILABLE" FontFace="Arial" FontSize="30" FontWeight="1" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="cancel_button" Position="0,403.760000000001" GEnd="1,0" Visible="False" Background="continue_button" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" SelectedColour="#FF969696" OnTapped="ShowShop(false);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+    </Icon>
+    <Icon Name="dialy_reward" Position="0,0" GEnd="1,0" Colour="#80FFFFFF" Visible="False" ExportVisible="False" Background="overlay" Size="768,1024" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Active="False" OnTapped="b5.app.findResource('tap', 'sound').play();&#xD;&#xA;DismissDaily();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="bg" Position="0,0" GEnd="1,0" Visible="False" Background="free_daily" Size="451,361" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    </Icon>
+    <Icon Name="noads_dlg" Position="0,152" GEnd="1,0" Visible="False" ExportVisible="False" Background="ads_unavailable" Size="499,286" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="nopurchase_dlg" Position="0,152" GEnd="1,0" Visible="False" ExportVisible="False" Background="purchase_failed" Size="499,197" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Active="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="show">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="0.001" />
+          <Kf T="0.4" D="0" V="1" />
+          <Kf T="1.7" D="0" E="23" V="1" />
+          <Kf T="2.05" D="0" V="0.001" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+  </Scene>
+  <Scene Name="leaderboard" Position="1532,0" Layer="2" CanvasSize="768,1024" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" Load="False" ClipShape="" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Physics="False" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnKeyBack="Call &quot;backPressed&quot;">
+    <TimelineCollection Name="hide">
+      <Timeline Prop="x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="1" V="0" />
+        <Kf T="0.5" D="0" V="1532" />
+      </Timeline>
+    </TimelineCollection>
+    <TimelineCollection Name="show">
+      <Timeline Prop="x" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+        <Kf T="0" D="0" E="2" V="1532" />
+        <Kf T="0.5" D="0" V="0" />
+      </Timeline>
+    </TimelineCollection>
+    <Icon Name="background" Position="0,0" GEnd="1,0" Background="bg0" Size="768,1024" AlphaMode="4" ScaleMethod="3" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="continue_button" Position="0,445.256" GEnd="1,0" Background="continue_button" Size="399,131" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,0,10" DockScreen="True" SelectedColour="#FF969696" OnTapped="ShowLeaderboard(false);&#xD;&#xA;this.playTimeline('click');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Docking="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <TimelineCollection Name="click">
+        <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" E="14" V="1" />
+          <Kf T="0.35" D="0" V="1.1" />
+          <Kf T="0.5" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="top_panel" Position="0,0" GEnd="1,0" Size="768,160" AlphaMode="4" ScaleMethod="3" CompositeOp="0" Margin="0,0,10,0" DockScreen="True" Tappable="True" Docking="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <Icon Name="friends_button" Position="-171.599999999999,-31.543999999999" GEnd="1,0" Background="friends_button" Size="193,77" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,10,0" SelectedColour="#FF969696" OnTapped="SetLeaderboard('friends');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="marker" Position="0,0" GEnd="1,0" Colour="#00FFFFFF" Background="button_selector" Size="192,76" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.35" D="0" V="255" />
+            </Timeline>
+          </TimelineCollection>
+          <TimelineCollection Name="hide">
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+              <Kf T="0" D="0" V="255" />
+              <Kf T="0.35" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="global_button" Position="-171.599999999999,38.456000000001" GEnd="1,0" Background="global_button" Size="193,77" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,85,0" SelectedColour="#FF969696" OnTapped="SetLeaderboard('global');&#xD;&#xA;b5.app.findResource('tap', 'sound').play();" Tappable="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <TimelineCollection Name="click">
+          <Timeline Prop="sx" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="14" V="1" />
+            <Kf T="0.35" D="0" V="1.1" />
+            <Kf T="0.5" D="0" V="1" />
+          </Timeline>
+        </TimelineCollection>
+        <Icon Name="marker" Position="0,0" GEnd="1,0" Background="button_selector" Size="192,76" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+          <TimelineCollection Name="show">
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+              <Kf T="0" D="0" V="0" />
+              <Kf T="0.35" D="0" V="255" />
+            </Timeline>
+          </TimelineCollection>
+          <TimelineCollection Name="hide">
+            <Timeline Prop="opacity" Destroy="False" ChildAnim="False" AutoPlay="False" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+              <Kf T="0" D="0" V="255" />
+              <Kf T="0.35" D="0" V="0" />
+            </Timeline>
+          </TimelineCollection>
+        </Icon>
+      </Icon>
+      <Icon Name="rank_holder" Position="110,6" GEnd="1,0" Background="rank_box" Size="336,160" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Margin="0,0,10,0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Label Name="rank" Position="0,0" GEnd="1,0" Colour="#FF314A63" Size="8,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text=" " FontFace="Arial" FontSize="26" FontWeight="2" AlignH="1" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="0,35" GEnd="1,0" Colour="#FF314A63" Size="8,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text=" " FontFace="Arial" FontSize="26" FontWeight="2" AlignH="1" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+    </Icon>
+    <Icon Name="listbox" Position="1.6,16.2" GEnd="1,0" Colour="#C85F9EA0" CornerRadius="20" Size="600,720" AlphaMode="4" ScaleMethod="3" CompositeOp="0" Virtual="True" RenderAs="2" ScrollRange="0,-2000,0,2000" Tappable="True" ClipChildren="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+      <Icon Name="entry1" Position="5,-266.6" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry2" Position="5,-105.6" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry3" Position="5,55.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry4" Position="5,216.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry5" Position="5,377.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry6" Position="5,538.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.298" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry7" Position="5,699.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry8" Position="5,860.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry9" Position="5,1021.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry10" Position="5,1182.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry11" Position="5,1343.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry12" Position="5,1504.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry13" Position="5,1665.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry14" Position="5,1826.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry15" Position="5,1987.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry16" Position="5,2148.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.298" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry17" Position="5,2309.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry18" Position="5,2470.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry19" Position="5,2631.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+      <Icon Name="entry20" Position="5,2792.4" GEnd="1,0" Background="leaderboard_entry" Size="550,161" AlphaMode="4" ScaleMethod="0" CompositeOp="0" UseParentOpacity="False" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+        <Icon Name="photo" Position="-188.4,-4.8" GEnd="1,0" Size="100,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+        <Label Name="rank" Position="-90.2,-50.2983333333334" GEnd="1,0" Colour="#FF1F4163" Size="80,34" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="30" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="name" Position="-90.2,0.39999999999993" GEnd="1,0" Colour="#FF1F4163" Size="78,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="name" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+        <Label Name="score" Position="-90.2,42.3016666666667" GEnd="1,0" Colour="#FF1F4163" Size="69,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Text="0000" FontFace="Arial" FontSize="26" FontWeight="2" AlignH="0" AlignV="1" LineHeight="0" Padding="0" WrapWidth="0" />
+      </Icon>
+    </Icon>
+  </Scene>
+</xml>
