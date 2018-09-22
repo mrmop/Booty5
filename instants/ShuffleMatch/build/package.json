@@ -1,0 +1,12 @@
+{
+  "name": "ShuffleMatch",
+  "version": "1.0.0",
+  "description": "ShuffleMatch Facebook Instants Game",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-minify": "^3.5.0"
+  }
+}
