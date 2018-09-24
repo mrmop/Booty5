@@ -551,6 +551,9 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
             actor.atlas = brush;
     }
 
+    if (item.Pd !== undefined)
+        actor.padding = item.Pd;
+
     if (item.DA !== undefined && brush !== null)
     {
         actor.playAnim(item.DA);
@@ -810,8 +813,6 @@ b5.Xoml.prototype.parseLabel = function(parent, item)
     actor.text_baseline = item.AlignV;
     this.parseActor(actor, parent, item);
 
-    if (item.Pd !== undefined)
-        actor.padding = item.Pd;
     if (item.Lh !== undefined)
         actor.line_height = item.Lh;
     if (item.Ca === true)

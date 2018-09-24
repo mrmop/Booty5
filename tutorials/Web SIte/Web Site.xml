@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" GridSnap="64" SnapInclusionRange="100000" VirtualResolution="1400,400" VirtualScreenVisible="True" ProjectPath="G:\AppEasy\html5\engine\tutorials\Web SIte" />
+  <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
+  <WebProperties Setname="Default" Description="Booty5" TargetFrameRate="60" PrettyPrint="False" Smoothing="True" ForceRounding="False" AdaptivePhysics="False" PreventDefault="True" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Instants="False" Box2D="False" Droidscript="False" SocketIO="False" DragonBones="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" TileMapIterleave="False" ExportTestJS="True" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Image Name="text1" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\text1.png" />
+  <Image Name="text3" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\text3.png" />
+  <Image Name="text4" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\text4.png" />
+  <Image Name="text2" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\text2.png" />
+  <Image Name="textures" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\textures.png" />
+  <Image Name="booty5_logo" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\booty5_logo.png" />
+  <Brush Name="text1" Rect="0,0,572,45" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="text1" BrushType="0" />
+  <Brush Name="text3" Rect="0,0,381,45" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="text3" BrushType="0" />
+  <Brush Name="text4" Rect="0,0,152,45" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="text4" BrushType="0" />
+  <Brush Name="text2" Rect="0,0,473,45" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="text2" BrushType="0" />
+  <Brush Name="bg_grad" Rect="0,0,32,32" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" BrushType="1">
+    <ColourStop a="255" r="0" g="255" b="255" selected="false" value="0" />
+    <ColourStop a="255" r="100" g="149" b="237" selected="false" value="0.5" />
+    <ColourStop a="255" r="30" g="144" b="255" selected="false" value="1" />
+  </Brush>
+  <Brush Name="balloon" Rect="575,604,281,507" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="building1" Rect="1427,622,190,306" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="building2" Rect="1825,828,190,281" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="building3" Rect="1429,930,190,306" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="building4" Rect="1621,828,202,297" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="cloud1" Rect="2,1140,419,188" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="cloud2" Rect="857,1191,311,170" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="cloud3" Rect="858,1007,341,182" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="fence" Rect="1597,348,355,249" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="floer3" Rect="1858,1111,143,142" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="floer4" Rect="1315,1238,134,130" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="flower1" Rect="1170,1218,143,142" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="flower2" Rect="1451,1238,134,130" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="grass1" Rect="1201,1003,226,213" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="grass2" Rect="423,1140,211,197" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="iceball" Rect="1621,1127,235,235" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="mushroom" Rect="636,1113,219,188" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="plane" Rect="1005,2,649,311" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="rock" Rect="1619,599,299,227" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="spaceship" Rect="1005,315,590,305" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="sun" Rect="1656,2,338,344" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="tree1" Rect="591,2,412,600" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="tree2" Rect="858,622,323,383" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="tree3" Rect="1183,622,242,379" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="tree4" Rect="2,2,587,563" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="world" Rect="2,567,571,571" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="textures" BrushType="0" />
+  <Brush Name="booty5_logo" Rect="0,0,200,256" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="booty5_logo" BrushType="0" />
+  <Script Name="Common.js" ScriptType="1" Load="True" Location="G:\AppEasy\html5\engine\tutorials\Web SIte\Common.js" />
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1400,400" CanvasFit="4" TouchPan="0" Extents="-1000,-500,2000,1000" ClipChildren="True" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <TimelineCollection Name="anim1">
+      <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="8">
+        <Kf T="0" D="0" V="0" />
+        <Kf T="0.5" D="0" V="9.2" />
+        <Kf T="0.6" D="0" V="-2.3" />
+        <Kf T="0.7" D="0" V="6.8999999999999995" />
+        <Kf T="0.8" D="0" V="-2.3" />
+        <Kf T="0.9" D="0" V="4.6" />
+        <Kf T="1" D="0" V="0" />
+      </Timeline>
+      <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="8">
+        <Kf T="0" D="0" V="0" />
+        <Kf T="0.5" D="0" V="-2.3" />
+        <Kf T="0.6" D="0" V="-6.8999999999999995" />
+        <Kf T="0.7" D="0" V="-20.700000000000003" />
+        <Kf T="0.8" D="0" V="-11.500000000000002" />
+        <Kf T="0.9" D="0" V="-2.3000000000000025" />
+        <Kf T="1" D="0" V="0" />
+      </Timeline>
+    </TimelineCollection>
+    <Icon Name="sky" Position="0,0" GEnd="0,1" Frozen="True" Background="bg_grad" Size="1400,400" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Cache="True" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+    <Icon Name="text2" Position="-402.400000000001,-468.2" GEnd="1,0" Origin="-286,0" Layer="2" Background="text1" Size="572,45" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="4">
+          <Kf T="0" D="0" V="-402.40000000000111" />
+          <Kf T="1" D="0" V="-402.40000000000111" />
+        </Timeline>
+        <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="4">
+          <Kf T="0" D="0" V="-468.2" />
+          <Kf T="1" D="0" V="-162.2" />
+        </Timeline>
+        <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="4">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="4">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="text3" Position="-451.900000000001,-423.2" GEnd="1,0" Origin="-236,0" Layer="2" Background="text2" Size="473,45" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="5">
+          <Kf T="0" D="0" V="-451.90000000000106" />
+          <Kf T="1" D="0" V="-451.90000000000106" />
+        </Timeline>
+        <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="5">
+          <Kf T="0" D="0" V="-423.2" />
+          <Kf T="1" D="0" V="-117.19999999999999" />
+        </Timeline>
+        <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="5">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="5">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="text4" Position="-497.900000000001,-378.2" GEnd="1,0" Origin="-190,0" Layer="2" Background="text3" Size="381,45" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="6">
+          <Kf T="0" D="0" V="-497.90000000000111" />
+          <Kf T="1" D="0" V="-497.90000000000111" />
+        </Timeline>
+        <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="6">
+          <Kf T="0" D="0" V="-378.2" />
+          <Kf T="1" D="0" V="-72.199999999999989" />
+        </Timeline>
+        <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="6">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="6">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="text5" Position="-612.400000000001,-333.2" GEnd="1,0" Origin="-76,0" Layer="2" Background="text4" Size="152,45" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="7">
+          <Kf T="0" D="0" V="-612.400000000001" />
+          <Kf T="1" D="0" V="-612.400000000001" />
+        </Timeline>
+        <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="7">
+          <Kf T="0" D="0" V="-333.2" />
+          <Kf T="1" D="0" V="-27.199999999999992" />
+        </Timeline>
+        <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="7">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="7">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="1" D="0" V="1" />
+          <Kf T="1.2" D="0" V="1.2" />
+          <Kf T="1.4" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+    <Icon Name="world1" Position="0,0" GEnd="1,0" Background="world" Size="571,571" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="-10" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="-1094.9999999999982" />
+          <Kf T="1" D="0" V="-881.69999999999641" />
+          <Kf T="3" D="0" V="-20.399999999997995" />
+        </Timeline>
+        <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="0" D="0" V="681.30000000000018" />
+          <Kf T="1" D="0" V="38.69999999999991" />
+          <Kf T="3" D="0" V="19.800000000000164" />
+        </Timeline>
+        <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="3" D="0" V="1" />
+          <Kf T="4" D="0" V="0.5" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="0">
+          <Kf T="3" D="0" V="1" />
+          <Kf T="4" D="0" V="0.5" />
+        </Timeline>
+      </TimelineCollection>
+      <Icon Name="fence1" Position="210.4,-284" Scale="0.5,0.5" Angle="-53" GEnd="1,0" Origin="0,124" Background="fence" Size="355,249" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="building2" Position="76.7999999999998,-411.000000000001" Scale="0.75,0.75" Angle="-17" GEnd="1,0" Origin="0,153" Background="building1" Size="190,306" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="1">
+            <Kf T="0" D="0" E="1" V="0.75" />
+            <Kf T="1" D="0" E="2" V="1" />
+            <Kf T="2" D="0" V="0.75" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="building3" Position="-211.400000000001,12.6000000000006" Scale="0.75,0.75" Angle="129" GEnd="1,0" Origin="0,140" Background="building2" Size="190,281" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="1" V="0.75" />
+            <Kf T="0.8" D="0" E="2" V="1" />
+            <Kf T="1.6" D="0" V="0.75" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="building4" Position="126.2,77.0000000000005" Scale="0.75,0.75" Angle="207" GEnd="1,0" Origin="0,153" Background="building3" Size="190,306" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="angle" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="207" />
+            <Kf T="0.5" D="0" V="215" />
+            <Kf T="1" D="0" V="207" />
+            <Kf T="1.5" D="0" V="201" />
+            <Kf T="2" D="0" V="207" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="1" V="0.75" />
+            <Kf T="1" D="0" E="2" V="1" />
+            <Kf T="2" D="0" V="0.75" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="building5" Position="-59.2000000000002,-410.6" Scale="0.75,0.75" Angle="11" GEnd="1,0" Origin="0,145" Background="building4" Size="202,297" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="1" V="0.75" />
+            <Kf T="1" D="0" E="2" V="1" />
+            <Kf T="2" D="0" V="0.75" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="rock1" Position="-264.8,-137.6" Scale="0.75,0.75" Angle="84" GEnd="1,0" Origin="0,113" Background="rock" Size="299,227" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="grass2" Position="-234.4,-208" Scale="0.5,0.5" Angle="74" GEnd="1,0" Origin="-15,106" Background="grass1" Size="226,213" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="grass3" Position="-250.8,-21.8" Scale="0.5,0.5" Angle="93" GEnd="1,0" Origin="0,93" Background="grass2" Size="211,197" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="angle" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="105" />
+            <Kf T="1" D="0" V="97" />
+            <Kf T="2" D="0" V="85" />
+            <Kf T="3" D="0" V="93" />
+            <Kf T="4" D="0" V="105" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="flower3" Position="-194.6,22.4000000000001" Scale="0.5,0.5" GEnd="1,0" Background="flower2" Size="134,130" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="-20" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="flower2" Position="-173.6,-68.6" Scale="0.5,0.5" GEnd="1,0" Background="flower1" Size="143,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="20" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="floer4" Position="148.4,67.2" Scale="0.5,0.5" GEnd="1,0" Background="floer3" Size="143,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="mushroom1" Position="264.8,-92.7999999999999" Scale="0.5,0.5" Angle="-89" GEnd="1,0" Origin="0,94" Background="mushroom" Size="219,188" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="1" V="264.80000000000024" />
+            <Kf T="0.5" D="0" E="2" V="287.80000000000024" />
+            <Kf T="0.7" D="0" V="264.8" />
+          </Timeline>
+          <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" E="1" V="-92.79999999999994" />
+            <Kf T="0.5" D="0" E="2" V="-92.79999999999994" />
+            <Kf T="0.7" D="0" V="-92.8" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="tree3" Position="228.2,-67.2" Scale="0.5,0.5" Angle="-119" GEnd="1,0" Origin="0,191" Background="tree2" Size="323,383" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="iceball1" Position="447.7,-486.6" GEnd="1,0" Background="iceball" Size="235,235" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="30" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="sun1" Position="-605.3,439.5" GEnd="1,0" Background="sun" Size="338,344" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="20" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="spaceship1" Position="-643.099999999998,795.9" Scale="0.5,0.5" Angle="50" GEnd="1,0" Background="spaceship" Size="590,305" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" Velocity="10,0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="x" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="-643.09999999999786" />
+            <Kf T="4" D="0" V="677.20000000000312" />
+            <Kf T="5" D="0" V="733.075000000003" />
+            <Kf T="6.5" D="0" V="203.38072473946198" />
+            <Kf T="9" D="0" V="-643.1" />
+          </Timeline>
+          <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="795.90000000000032" />
+            <Kf T="4" D="0" V="-745.80000000000064" />
+            <Kf T="5" D="0" V="-810.52500000000009" />
+            <Kf T="6.5" D="0" V="-209.22295405640654" />
+            <Kf T="9" D="0" V="795.9" />
+          </Timeline>
+          <Timeline Prop="angle" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="50" />
+            <Kf T="4" D="0" V="50" />
+            <Kf T="5" D="0" V="227" />
+            <Kf T="9" D="0" V="227" />
+          </Timeline>
+          <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0.5" />
+            <Kf T="1.2" D="0" V="0.5" />
+            <Kf T="2" D="0" V="0.78749999999999609" />
+            <Kf T="2.8" D="0" V="0.5" />
+            <Kf T="6.5" D="0" V="0.19499999999999917" />
+            <Kf T="7.5" D="0" V="0.5" />
+            <Kf T="9" D="0" V="0.5" />
+          </Timeline>
+          <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0.5" />
+            <Kf T="1.2" D="0" V="0.5" />
+            <Kf T="2" D="0" V="0.78749999999999609" />
+            <Kf T="2.8" D="0" V="0.5" />
+            <Kf T="6.5" D="0" V="0.19499999999999917" />
+            <Kf T="7.5" D="0" V="0.5" />
+            <Kf T="9" D="0" V="0.5" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="balloon1" Position="7.49999999999999,-854" Scale="0.5,0.5" Angle="1" GEnd="1,0" Origin="0,850" Background="balloon" Size="281,507" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="-10" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+        <TimelineCollection Name="anim1">
+          <Timeline Prop="sx" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="0.5" />
+            <Kf T="1" D="0" V="0.65" />
+            <Kf T="2" D="0" V="0.5" />
+          </Timeline>
+          <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="0" TimeScale="1" Delay="0">
+            <Kf T="0" D="0" V="-844.56" />
+            <Kf T="4" D="0" V="-927.06" />
+            <Kf T="8" D="0" V="-844.56" />
+          </Timeline>
+        </TimelineCollection>
+      </Icon>
+      <Icon Name="cloud2" Position="-94.5000000000005,-127.5" Scale="0.5,0.5" GEnd="1,0" Background="cloud1" Size="419,188" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="10" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="cloud3" Position="129,-57.3000000000002" Scale="0.5,0.5" GEnd="1,0" Background="cloud2" Size="311,170" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="10" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+      <Icon Name="cloud4" Position="-101.4,87.8999999999998" Scale="0.5,0.5" GEnd="1,0" Background="cloud3" Size="341,182" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" AngularVelocity="10" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0" />
+    </Icon>
+    <Icon Name="booty5_logo1" Position="569.7,-527.9" GEnd="1,0" Origin="0,128" Layer="1" Background="booty5_logo" Size="200,256" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" Padding="0">
+      <TimelineCollection Name="anim1">
+        <Timeline Prop="y" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="8">
+          <Kf T="0" D="0" V="-527.89999999999986" />
+          <Kf T="0.5" D="0" V="70.100000000000136" />
+        </Timeline>
+        <Timeline Prop="sy" Destroy="True" ChildAnim="False" AutoPlay="True" Deactivate="False" Tween="True" Repeat="1" TimeScale="1" Delay="8">
+          <Kf T="0" D="0" V="1" />
+          <Kf T="0.5" D="0" V="1" />
+          <Kf T="0.6" D="0" V="0.5" />
+          <Kf T="0.7" D="0" V="1" />
+        </Timeline>
+      </TimelineCollection>
+    </Icon>
+  </Scene>
+</xml>

@@ -173,8 +173,9 @@ b5.LabelActor.prototype.drawToCache = function()
 {
     var disp = b5.app.display;
     var cache = null;
-    var w = this.w + (this.padding * 2);
-    var h = this.h + (this.padding * 2);
+    var pad = this.padding * 2;
+    var w = this.w + pad;
+    var h = this.h + pad;
     var ox = 0;
     var oy = 0;
     if (this.merge_cache)
@@ -189,9 +190,10 @@ b5.LabelActor.prototype.drawToCache = function()
     }
     if (cache === null)
     {
+        var pr = b5.app.pixel_ratio;
         cache = disp.createCache();
-        cache.width = (w * b5.app.pixel_ratio) | 0;
-        cache.height = (h * b5.app.pixel_ratio) | 0;
+        cache.width = (w * pr) | 0;
+        cache.height = (h * pr) | 0;
     }
 
     disp.setCache(cache);

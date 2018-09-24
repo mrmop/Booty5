@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:670c882c28e7bfc4ae268428c239fd46:08d35196737782c7ab8604b895f040cf:2a288f7160b778d75d6fb3a0e2108afb$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="textures.png" width="2019" height="1371">
+    <sprite n="balloon.png" x="575" y="604" w="281" h="507" pX="0.5" pY="0.5"/>
+    <sprite n="building1.png" x="1427" y="622" w="190" h="306" pX="0.5" pY="0.5"/>
+    <sprite n="building2.png" x="1825" y="828" w="190" h="281" pX="0.5" pY="0.5"/>
+    <sprite n="building3.png" x="1429" y="930" w="190" h="306" pX="0.5" pY="0.5"/>
+    <sprite n="building4.png" x="1621" y="828" w="202" h="297" pX="0.5" pY="0.5"/>
+    <sprite n="cloud1.png" x="2" y="1140" w="419" h="188" pX="0.5" pY="0.5"/>
+    <sprite n="cloud2.png" x="857" y="1191" w="311" h="170" pX="0.5" pY="0.5"/>
+    <sprite n="cloud3.png" x="858" y="1007" w="341" h="182" pX="0.5" pY="0.5"/>
+    <sprite n="fence.png" x="1597" y="348" w="355" h="249" pX="0.5" pY="0.5"/>
+    <sprite n="floer3.png" x="1858" y="1111" w="143" h="142" pX="0.5" pY="0.5"/>
+    <sprite n="floer4.png" x="1315" y="1238" w="134" h="130" pX="0.5" pY="0.5"/>
+    <sprite n="flower1.png" x="1170" y="1218" w="143" h="142" pX="0.5" pY="0.5"/>
+    <sprite n="flower2.png" x="1451" y="1238" w="134" h="130" pX="0.5" pY="0.5"/>
+    <sprite n="grass1.png" x="1201" y="1003" w="226" h="213" pX="0.5" pY="0.5"/>
+    <sprite n="grass2.png" x="423" y="1140" w="211" h="197" pX="0.5" pY="0.5"/>
+    <sprite n="iceball.png" x="1621" y="1127" w="235" h="235" pX="0.5" pY="0.5"/>
+    <sprite n="mushroom.png" x="636" y="1113" w="219" h="188" pX="0.5" pY="0.5"/>
+    <sprite n="plane.png" x="1005" y="2" w="649" h="311" pX="0.5" pY="0.5"/>
+    <sprite n="rock.png" x="1619" y="599" w="299" h="227" pX="0.5" pY="0.5"/>
+    <sprite n="spaceship.png" x="1005" y="315" w="590" h="305" pX="0.5" pY="0.5"/>
+    <sprite n="sun.png" x="1656" y="2" w="338" h="344" pX="0.5" pY="0.5"/>
+    <sprite n="tree1.png" x="591" y="2" w="412" h="600" pX="0.5" pY="0.5"/>
+    <sprite n="tree2.png" x="858" y="622" w="323" h="383" pX="0.5" pY="0.5"/>
+    <sprite n="tree3.png" x="1183" y="622" w="242" h="379" pX="0.5" pY="0.5"/>
+    <sprite n="tree4.png" x="2" y="2" w="587" h="563" pX="0.5" pY="0.5"/>
+    <sprite n="world.png" x="2" y="567" w="571" h="571" pX="0.5" pY="0.5"/>
+</TextureAtlas>

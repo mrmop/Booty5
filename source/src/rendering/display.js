@@ -60,7 +60,7 @@ b5.Display.prototype.clear = function(transparent)
     var app = b5.app;
     var ctx = this.context;
 	var pr = b5.app.pixel_ratio;
-    ctx.setTransform(1 * pr, 0, 0, 1 * pr, 0, 0);
+    ctx.setTransform(pr, 0, 0, pr, 0, 0);
     ctx.clearRect(0, 0, app.display_width, app.display_height);
 /*	if (transparent)
     {

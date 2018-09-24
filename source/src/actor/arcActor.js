@@ -161,8 +161,9 @@ b5.ArcActor.prototype.drawToCache = function()
 {
     var disp = b5.app.display;
     var cache = null;
-    var w = this.w;
-    var h = this.h;
+    var pad = this.padding * 2;
+    var w = this.w + pad;
+    var h = this.h + pad;
     var ox = 0;
     var oy = 0;
     if (this.merge_cache)
@@ -177,18 +178,19 @@ b5.ArcActor.prototype.drawToCache = function()
     }
     if (cache === null)
     {
+        var pr = b5.app.pixel_ratio;
         cache = disp.createCache();
-        if (this.stroke_filled && this.stroke_style !== "")
+/*        if (this.stroke_filled && this.stroke_style !== "")
         {
             w += this.stroke_thickness;
             h += this.stroke_thickness;
             ox = (this.stroke_thickness / 2 + 0.5) << 0;
             oy = (this.stroke_thickness / 2 + 0.5) << 0;
-        }
-        cache.width = w;
-        cache.height = h;
+        }*/
+        cache.width = (w * pr) | 0;
+        cache.height = (h * pr) | 0;
     }
-
+    
     disp.setCache(cache);
     // Render the actor
     if (this.filled && this.fill_style !== "")
@@ -198,7 +200,7 @@ b5.ArcActor.prototype.drawToCache = function()
     if (this.stroke_filled)
         disp.setLineWidth(this.stroke_thickness);
 
-    disp.setTransform(1,0,0,1, ox+this.w / 2, oy+this.h / 2);
+    disp.setTransform(1,0,0,1, ox + w/2, oy + h/2);
     disp.drawArc(0,0, this.radius, this.start_angle, this.end_angle, this.filled);
     disp.setCache(null);
 

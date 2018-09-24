@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xml>
-  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" GridSnap="64" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" ProjectPath="G:\AppEasy\html5\engine\tutorials\Parallax Scrolling" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" PrettyPrint="False" Smoothing="True" ForceRounding="False" AdaptivePhysics="False" PreventDefault="True" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Instants="False" Box2D="True" Droidscript="False" SocketIO="False" DragonBones="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" TileMapIterleave="False" ExportTestJS="True" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
   <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
-  <Image Name="tree" Location="E:\AppEasy\html5\tutorials\Parallax Scrolling\tree.png" />
-  <Image Name="building" Location="E:\AppEasy\html5\tutorials\Parallax Scrolling\building.png" />
-  <Image Name="crate" Location="E:\AppEasy\html5\tutorials\Parallax Scrolling\crate.png" />
-  <Image Name="ground" Location="E:\AppEasy\html5\tutorials\Parallax Scrolling\ground.png" />
-  <Brush Name="tree" Rect="0,0,217,247" ScaleArea="0,0,0,0" Image="tree" BrushType="0" />
-  <Brush Name="building" Rect="0,0,286,484" ScaleArea="0,0,0,0" Image="building" BrushType="0" />
-  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Image="crate" BrushType="0" />
-  <Brush Name="ground" Rect="0,0,512,125" ScaleArea="0,0,0,0" Image="ground" BrushType="0" />
-  <Scene Name="noname" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="3" Extents="-1000,-500,2000,1000" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" WorldScale="">
-    <Icon Name="bg" Position="0,0" GEnd="1,0" Colour="#FF87CEFA" Size="1400,768" AlphaMode="4" CompositeOp="0" RenderAs="2" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="building1" Position="-611.6,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="building2" Position="-177.76,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="building3" Position="277.2,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="building4" Position="635.36,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree1" Position="-377.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree7" Position="-594.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree8" Position="-811.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree9" Position="-1028.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree2" Position="-160.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree3" Position="56.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree4" Position="273.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree5" Position="490.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree6" Position="707.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="tree10" Position="924.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="ground1" Position="-256,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="ground4" Position="-768,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="ground2" Position="256,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="ground3" Position="768,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="crate1" Position="-538.56,195.64" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Depth="0.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="crate2" Position="43.74,188" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Depth="0.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="crate3" Position="622.16,188" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" Depth="0.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
+  <Image Name="tree" Location="G:\AppEasy\html5\engine\tutorials\Parallax Scrolling\tree.png" />
+  <Image Name="building" Location="G:\AppEasy\html5\engine\tutorials\Parallax Scrolling\building.png" />
+  <Image Name="crate" Location="G:\AppEasy\html5\engine\tutorials\Parallax Scrolling\crate.png" />
+  <Image Name="ground" Location="G:\AppEasy\html5\engine\tutorials\Parallax Scrolling\ground.png" />
+  <Brush Name="tree" Rect="0,0,217,247" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="tree" BrushType="0" />
+  <Brush Name="building" Rect="0,0,286,484" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="building" BrushType="0" />
+  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="crate" BrushType="0" />
+  <Brush Name="ground" Rect="0,0,512,125" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="ground" BrushType="0" />
+  <Scene Name="noname" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="3" Extents="-1000,-500,2000,1000" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <Icon Name="bg" Position="0,0" GEnd="1,0" Colour="#FF87CEFA" Size="1400,768" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" IgnoreCamera="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="building1" Position="-611.6,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="building2" Position="-177.76,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="building3" Position="277.2,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="building4" Position="635.36,24.6400000000001" GEnd="1,0" Background="building" Size="286,484" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree1" Position="-377.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree7" Position="-594.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree8" Position="-811.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree9" Position="-1028.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree2" Position="-160.28,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree3" Position="56.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree4" Position="273.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree5" Position="490.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree6" Position="707.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="tree10" Position="924.72,157.44" GEnd="1,0" Background="tree" Size="217,247" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="1.25" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ground1" Position="-256,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ground4" Position="-768,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ground2" Position="256,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ground3" Position="768,321.5" GEnd="1,0" Background="ground" Size="512,125" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="crate1" Position="-538.56,195.64" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="0.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="crate2" Position="43.74,188" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="0.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="crate3" Position="622.16,188" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Depth="0.5" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
   </Scene>
 </xml>

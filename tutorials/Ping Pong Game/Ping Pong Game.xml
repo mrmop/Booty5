@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xml>
-  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" GridSnap="64" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" ProjectPath="G:\AppEasy\html5\engine\tutorials\Ping Pong Game" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" CocoonJS="False" ExportMKB="False" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" PrettyPrint="False" Smoothing="True" ForceRounding="False" AdaptivePhysics="False" PreventDefault="True" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Instants="False" Box2D="True" Droidscript="False" SocketIO="False" DragonBones="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" TileMapIterleave="False" ExportTestJS="True" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
   <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
-  <Script Name="common" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Ping Pong Game\common.js" />
-  <Sound Name="bat_hit" Location="E:\AppEasy\html5\tutorials\Ping Pong Game\bat_hit.wav" />
-  <Image Name="bat" Location="E:\AppEasy\html5\tutorials\Ping Pong Game\bat.png" />
-  <Image Name="ball" Location="E:\AppEasy\html5\tutorials\Ping Pong Game\ball.png" />
-  <Brush Name="bat" Rect="0,0,98,29" ScaleArea="0,0,0,0" Image="bat" BrushType="0" />
-  <Brush Name="ball" Rect="0,0,17,17" ScaleArea="0,0,0,0" Image="ball" BrushType="0" />
-  <Scene Name="gamearea" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnCreate="CreateGame(this);" OnTick="UpdateGame(this);" WorldScale="">
-    <Icon Name="player1" Position="5.04000000000002,271.04" GEnd="1,0" Background="bat" Size="98,29" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="player2" Position="5.04000000000002,-309.12" Angle="180" GEnd="1,0" Background="bat" Size="98,29" AlphaMode="4" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" />
-    <Icon Name="ball1" Position="-0.559999999999968,1.12000000000002" GEnd="1,0" Background="ball" Size="17,17" AlphaMode="4" CompositeOp="0" Type="0" Velocity="50,300" WrapPosition="False" ShadowColour="#FF000000" />
+  <Script Name="common" ScriptType="1" Load="True" Location="G:\AppEasy\html5\engine\tutorials\Ping Pong Game\common.js" />
+  <Sound Name="bat_hit" Location="G:\AppEasy\html5\engine\tutorials\Ping Pong Game\bat_hit.wav" />
+  <Image Name="bat" Location="G:\AppEasy\html5\engine\tutorials\Ping Pong Game\bat.png" />
+  <Image Name="ball" Location="G:\AppEasy\html5\engine\tutorials\Ping Pong Game\ball.png" />
+  <Brush Name="bat" Rect="0,0,98,29" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="bat" BrushType="0" />
+  <Brush Name="ball" Rect="0,0,17,17" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="ball" BrushType="0" />
+  <Scene Name="gamearea" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="0,0,0,0" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333" OnCreate="CreateGame(this);" OnTick="UpdateGame(this);">
+    <Icon Name="player1" Position="5.04000000000002,271.04" GEnd="1,0" Background="bat" Size="98,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="player2" Position="5.04000000000002,-309.12" Angle="180" GEnd="1,0" Background="bat" Size="98,29" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
+    <Icon Name="ball1" Position="-0.559999999999968,1.12000000000002" GEnd="1,0" Background="ball" Size="17,17" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" Velocity="50,300" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
   </Scene>
 </xml>

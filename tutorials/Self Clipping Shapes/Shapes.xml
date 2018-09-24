@@ -1,56 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xml>
-  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" GridSnap="64" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" ProjectPath="G:\AppEasy\html5\engine\tutorials\Self Clipping Shapes" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" PrettyPrint="True" Smoothing="False" ForceRounding="True" AdaptivePhysics="False" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Box2D="True" Droidscript="False" SocketIO="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" ExportTestJS="True" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" PrettyPrint="True" Smoothing="False" ForceRounding="True" AdaptivePhysics="False" PreventDefault="True" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Instants="False" Box2D="True" Droidscript="False" SocketIO="False" DragonBones="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" TileMapIterleave="False" ExportTestJS="True" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
   <Bookmark Index="1" Position="237.86,-290.19,0" Scale="2.4" />
   <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
-  <Image Name="crate" Location="E:\AppEasy\html5\tutorials\Self Clipping Shapes\crate.png" />
-  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Offset="0,0" Export="true" Image="crate" BrushType="0" />
+  <Image Name="crate" Location="G:\AppEasy\html5\engine\tutorials\Self Clipping Shapes\crate.png" />
+  <Brush Name="crate" Rect="0,0,157,142" ScaleArea="0,0,0,0" Offset="0,0,0,0" Export="true" Image="crate" BrushType="0" />
   <Shape Name="ground" ShapeType="2" Width="32" Height="32" Absolute="false" IsPath="false" Vertices="538,289,541,-19,288,208,54,261,-128,122,-91,6,-102,-50,-155,49,-431,63,-540,-256,-596,-92,-518,343," />
   <Material Name="static" MaterialType="0" Density="1" Friction="0.1" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
   <Material Name="dynamic" MaterialType="1" Density="1" Friction="0.1" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
   <Scene Name="gamescene" Position="0,0" Frozen="True" CanvasSize="1024,768" CanvasFit="4" TouchPan="0" Extents="-512,-384,1024,768" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
-    <Icon Name="ground" Position="-6,81" GEnd="1,0" Colour="#FFFF7F50" Background="crate" Size="1000,500" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" SelfClip="True" ClipShape="ground" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="ground" Position="-6,81" GEnd="1,0" Colour="#FFFF7F50" Background="crate" Size="1000,500" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" SelfClip="True" ClipShape="ground" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Shape="ground" Material="static" />
     </Icon>
-    <Icon Name="crate2" Position="-94.7999999999999,-192.96" Angle="-10" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate2" Position="-94.7999999999999,-192.96" Angle="-10" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate6" Position="-170.527141548379,-353.96" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate6" Position="-170.527141548379,-353.96" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate9" Position="0.47285845162088,-383.882796533957" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate9" Position="0.47285845162088,-383.882796533957" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" AngularVelocity="100" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate7" Position="-13.6043450144222,-326.96" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate7" Position="-13.6043450144222,-326.96" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate8" Position="24.3956549855778,-173.882796533957" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate8" Position="24.3956549855778,-173.882796533957" Angle="-10" GEnd="1,0" Background="crate" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate4" Position="-291.16,-249.6" Angle="8" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate4" Position="-291.16,-249.6" Angle="8" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate3" Position="128.44,-267.84" Angle="-28" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate3" Position="128.44,-267.84" Angle="-28" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="crate5" Position="317.12,-231.36" Angle="44" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="crate5" Position="317.12,-231.36" Angle="44" GEnd="1,0" Background="crate" Size="157,142" AlphaMode="4" ScaleMethod="0" CompositeOp="0" IgnoreAtlasSize="True" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="noname1" Position="-95,-325" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="noname1" Position="-95,-325" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="noname2" Position="250,-353" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="noname2" Position="250,-353" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="noname3" Position="208,-159" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="noname3" Position="208,-159" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="noname4" Position="99,-155" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="noname4" Position="99,-155" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
-    <Icon Name="noname5" Position="131,-391" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
+    <Icon Name="noname5" Position="131,-391" GEnd="1,0" Colour="#FFD2691E" Size="50,50" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="dynamic" />
     </Icon>
   </Scene>

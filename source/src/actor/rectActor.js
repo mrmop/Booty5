@@ -164,8 +164,9 @@ b5.RectActor.prototype.drawToCache = function()
 {
     var disp = b5.app.display;
     var cache = null;
-    var w = this.w;
-    var h = this.h;
+    var pad = this.padding * 2;
+    var w = this.w + pad;
+    var h = this.h + pad;
     var ox = 0;
     var oy = 0;
     if (this.merge_cache)
@@ -180,16 +181,17 @@ b5.RectActor.prototype.drawToCache = function()
     }
     if (cache === null)
     {
+        var pr = b5.app.pixel_ratio;
         cache = disp.createCache();
-        if (this.stroke_filled && this.stroke_style !== "")
+/*        if (this.stroke_filled && this.stroke_style !== "")
         {
             w += this.stroke_thickness;
             h += this.stroke_thickness;
             ox = this.stroke_thickness >> 1;
             oy = this.stroke_thickness >> 1;
-        }
-        cache.width = w;
-        cache.height = h;
+        }*/
+        cache.width = (w * pr) | 0;
+        cache.height = (h * pr) | 0;
     }
 
     disp.setCache(cache);
@@ -201,7 +203,7 @@ b5.RectActor.prototype.drawToCache = function()
     if (this.stroke_filled)
         disp.setLineWidth(this.stroke_thickness);
 
-    disp.setTransform(1,0,0,1, w / 2 + ox, h / 2 + oy);
+    disp.setTransform(1,0,0,1, ox + w / 2, oy + h / 2);
     if (this.corner_radius !== 0)
         disp.drawRoundRect(-w / 2, -h / 2, this.w, this.h, this.corner_radius, this.filled);
     else

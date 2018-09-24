@@ -1,3 +1,7 @@
+v1.5.7
+------
+* Cache padding fixes
+
 v1.5.6
 ------
 * Tideed up the repo

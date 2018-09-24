@@ -1,89 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xml>
-  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" />
+  <Globals ImportPrecision="3" ExportPrecision="3" ObjectMoveSpeed="10" ObjectRotateSpeed="5" ObjectScaleSpeed="0.05" ObjectMouseRotateSpeed="1" SnapXDistance="3" SnapYDistance="3" GridSnap="64" SnapInclusionRange="100000" VirtualResolution="1024,768" VirtualScreenVisible="True" ProjectPath="G:\AppEasy\html5\engine\tutorials\Car Demo" />
   <MarmProperties Setname="Default" ae_DebugInfo="1" ae_EncrptionKey="add_your_own_key" ae_FacebookAppID="add_your_own_facebook_app_id" extra_deployment="android-extra-strings='(app_id,fb_app_id)'" icf_MemSize="20971520" icf_VirtualLetterbox="False" icf_VirtualResolution="False" icf_DataCacheSize="307200" icf_VertCacheSize="51200" icf_UnIndexedStreamMax="25600" />
-  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" ClearCanvas="True" CanvasScaleMethod="3" Box2D="True" JQuery="False" />
-  <Shape Name="hill" ShapeType="2" Width="32" Height="32" Absolute="false" Vertices="-179,0,-107,-43,-16,-69,105,-41,182,0," />
+  <WebProperties Setname="Default" Description="MyGame" TargetFrameRate="60" PrettyPrint="False" Smoothing="True" ForceRounding="False" AdaptivePhysics="False" PreventDefault="True" DisableShadows="False" WaitResources="True" ClearCanvas="True" FillWindow="True" CanvasScaleMethod="3" Instants="False" Box2D="True" Droidscript="False" SocketIO="False" DragonBones="False" JQuery="False" CocoonJS="False" CreateJS="False" ExportMKB="False" UseWebAudio="True" TileMapIterleave="False" ExportTestJS="True" LoadingBackgroundColour="#FFFFFFFF" LoadingBarBGColour="#FF5050FF" LoadingBarColour="#FFFFFFFF" LoadingImage="loading.png" />
+  <Bookmark Index="1" Position="-1686.4,92.1999999999996,0" Scale="0.8" />
+  <Bookmark Index="2" Position="1303.46,-297.87,0" Scale="2.4" />
+  <Shape Name="hill" ShapeType="2" Width="32" Height="32" Absolute="false" IsPath="false" Vertices="-179,0,-107,-43,-16,-69,105,-41,182,0," />
   <Material Name="floor" MaterialType="0" Density="1" Friction="10" Restitution="0.1" GravityScale="1" IsBullet="false" FixedRotation="false" />
   <Material Name="car" MaterialType="1" Density="1" Friction="1" Restitution="0.2" GravityScale="1" IsBullet="false" FixedRotation="false" />
   <Material Name="wheel" MaterialType="1" Density="1" Friction="0.4" Restitution="1" GravityScale="1" IsBullet="false" FixedRotation="false" />
   <Material Name="box" MaterialType="1" Density="1" Friction="0.1" Restitution="1" GravityScale="1" IsBullet="false" FixedRotation="false" />
   <Script Name="Common.js" ScriptType="1" Load="True" Location="E:\AppEasy\html5\tutorials\Car Demo\Common.js" />
-  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="3" Extents="-5000,-1000,10000,2000" TargetX="car" TargetY="car" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WorldScale="10,10" PhysicsTimestep="0.0333333333333333">
-    <Icon Name="floor2" Position="847.6,334" Colour="#FFFF7F50" Size="2000,100" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+  <Scene Name="gamescene" Position="0,0" CanvasSize="1024,768" CanvasFit="4" TouchPan="3" Extents="-5000,-1000,10000,2000" TargetX="car" TargetY="car" FollowSpeed="1,1" VelocityDamping="0.8,0.8" Gravity="0,10" WScale="20" PhysicsTimestep="0.0333333333333333">
+    <Icon Name="floor2" Position="847.6,334" GEnd="1,0" Colour="#FFFF7F50" Size="2000,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="floor" />
     </Icon>
-    <Icon Name="floor3" Position="1822.6,34" Colour="#FFFF7F50" Size="50,500" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="floor3" Position="1822.6,34" GEnd="1,0" Colour="#FFFF7F50" Size="50,500" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="floor" />
     </Icon>
-    <Icon Name="floor1" Position="-1117.14318527469,127.18092914555" Angle="-12" Colour="#FFFF7F50" Size="2000,100" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="floor1" Position="-1117.14318527469,127.18092914555" Angle="-12" GEnd="1,0" Colour="#FFFF7F50" Size="2000,100" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="floor" />
     </Icon>
-    <Icon Name="car" Position="-1450,-79.1999999999998" Angle="-12" Colour="#FF6495ED" Size="200,40" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="car" Position="-1450,-79.1999999999998" Angle="-12" GEnd="1,0" Colour="#FF6495ED" Size="200,40" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="car" />
     </Icon>
-    <Icon Name="car1" Position="-1450.77282343998,-130.1" Angle="-12" Colour="#FFFF6347" Size="60,60" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="car1" Position="-1450.77282343998,-130.1" Angle="-12" GEnd="1,0" Colour="#FFFF6347" Size="60,60" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="car" />
     </Icon>
-    <Icon Name="car2" Position="-1392.30926594689,-117.7" Angle="-12" Colour="#FF7CFC00" Size="60,60" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="car2" Position="-1392.30926594689,-117.7" Angle="-12" GEnd="1,0" Colour="#FF7CFC00" Size="60,60" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="car" />
     </Icon>
-    <Icon Name="car3" Position="-1383.60878485681,-177.1" Angle="-12" Colour="#FF7B68EE" Size="60,60" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="car3" Position="-1383.60878485681,-177.1" Angle="-12" GEnd="1,0" Colour="#FF7B68EE" Size="60,60" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="car" />
     </Icon>
-    <Icon Name="back_wheel" Position="-1532.7,-42.6999999999999" Angle="-13" Colour="#FFFFFF00" Size="60,60" AlphaMode="4" RenderAs="1" Type="0" WrapPosition="False">
+    <Icon Name="back_wheel" Position="-1532.7,-42.6999999999999" Angle="-13" GEnd="1,0" Colour="#FFFFFF00" Size="60,60" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="wheel" />
       <Joint Type="2" ActorB="car" MotorEnabled="True" LowerLimit="-2" UpperLimit="2" MotorSpeed="200" MaxMotorTorque="-250" Axis="0,1" />
-      <Icon Name="noname1" Position="0,0" Colour="#FFDC143C" Size="32,32" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False" />
+      <Icon Name="noname1" Position="0,0" GEnd="1,0" Colour="#FFDC143C" Size="32,32" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
     </Icon>
-    <Icon Name="front_wheel" Position="-1391.8,-12.6999999999999" Angle="-13" Colour="#FFFFFF00" Size="60,60" AlphaMode="4" RenderAs="1" Type="0" WrapPosition="False">
+    <Icon Name="front_wheel" Position="-1391.8,-12.6999999999999" Angle="-13" GEnd="1,0" Colour="#FFFFFF00" Size="60,60" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="1" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="wheel" />
       <Joint Type="2" ActorB="car" MotorEnabled="True" LowerLimit="-2" UpperLimit="2" MotorSpeed="200" MaxMotorTorque="-250" Axis="0,1" />
-      <Icon Name="noname2" Position="0,0" Colour="#FF006400" Size="32,32" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False" />
+      <Icon Name="noname2" Position="0,0" GEnd="1,0" Colour="#FF006400" Size="32,32" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16" />
     </Icon>
-    <Icon Name="box1" Position="-1432.5,-161.6" Angle="-12" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box1" Position="-1432.5,-161.6" Angle="-12" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box2" Position="-1427.6,-184.660592915516" Angle="-12" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box2" Position="-1427.6,-184.660592915516" Angle="-12" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box4" Position="511.599999999999,178.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box4" Position="511.599999999999,178.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box5" Position="511.599999999999,188.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box5" Position="511.599999999999,188.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box6" Position="511.599999999999,198.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box6" Position="511.599999999999,198.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box7" Position="511.599999999999,208.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box7" Position="511.599999999999,208.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box8" Position="511.599999999999,218.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box8" Position="511.599999999999,218.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box9" Position="511.599999999999,228.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box9" Position="511.599999999999,228.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box10" Position="511.599999999999,238.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box10" Position="511.599999999999,238.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box11" Position="511.599999999999,248.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box11" Position="511.599999999999,248.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box12" Position="511.599999999999,258.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box12" Position="511.599999999999,258.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box13" Position="511.599999999999,268.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box13" Position="511.599999999999,268.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box14" Position="511.599999999999,278.039407084484" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box14" Position="511.599999999999,278.039407084484" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="box3" Position="-1430.4,-174.360592915516" Angle="-12" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" RenderAs="2" Type="0" WrapPosition="False">
+    <Icon Name="box3" Position="-1430.4,-174.360592915516" Angle="-12" GEnd="1,0" Colour="#FF1E90FF" Size="10,10" AlphaMode="4" ScaleMethod="0" CompositeOp="0" RenderAs="2" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Material="box" />
     </Icon>
-    <Icon Name="hump" Position="157.9,249.5" Colour="#FFFF7F50" Size="32,32" Geometry="hill" AlphaMode="4" Type="0" WrapPosition="False">
+    <Icon Name="hump" Position="157.9,249.5" GEnd="1,0" Colour="#FFFF7F50" Size="32,32" Geometry="hill" AlphaMode="4" ScaleMethod="0" CompositeOp="0" Type="0" WrapPosition="False" ShadowColour="#FF000000" DisplaySize="16,16">
       <Fixture Shape="hill" Material="floor" />
     </Icon>
   </Scene>
