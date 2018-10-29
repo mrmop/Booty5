@@ -2312,12 +2312,12 @@ b5.Actor.prototype.overlapsRect = function(rect)
 {
 	var w1 = this.w;
 	var h1 = this.h;
-	var w2 = rect.x1 + rect.x2;
-	var h2 = rect.y1 + rect.y2;
+	var w2 = rect.x2 - rect.x1;
+	var h2 = rect.y2 - rect.y1;
 	var x1 = this.x - w1 / 2;
 	var y1 = this.y - h1 / 2;
-	var x2 = rect.x1 - w2 / 2;
-	var y2 = rect.y1 - h2 / 2;
+	var x2 = rect.x1;
+	var y2 = rect.y1;
 
 	return !((y1 + h1 < y2) || (y1 > y2 + h2) || (x1 > x2 + w2) || (x1 + w1 < x2));
 };

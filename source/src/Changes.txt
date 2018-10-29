@@ -1,3 +1,8 @@
+v1.5.8
+------
+* Fixed issue where audio would not work on Android Chrome
+* Added a minimal version of FBInstants which can be used to replace FBInstant for deployment to platforms other than Instant Games
+
 v1.5.7
 ------
 * Cache padding fixes

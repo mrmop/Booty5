@@ -47,6 +47,36 @@ b5.Instants.prototype.Init = function()
         this.purchasingSupported = true;
 };
 
+b5.Instants.prototype.StartInit = function(done_callback)
+{
+    FBInstant.initializeAsync().then(function()
+	{
+        FBInstant.logEvent('FB Init Success');
+        if (done_callback !== undefined)
+            done_callback();
+    });
+};
+
+b5.Instants.prototype.StartGame = function(done_callback)
+{
+    FBInstant.startGameAsync().then(function()
+    {
+        if (b5.app.total_load_errors > 0)
+            FBInstant.logEvent('FB Load Errors');
+        else
+            FBInstant.logEvent('FB Load Finished');
+        if (done_callback !== undefined)
+            done_callback(true);
+    }).catch(function(e) {
+        done_callback(false);
+    });
+};
+
+b5.Instants.prototype.SetLoadingProgress = function(perc)
+{
+    FBInstant.setLoadingProgress(perc);
+};
+
 b5.Instants.prototype.GetLocale = function()
 {
     return FBInstant.getLocale();
@@ -604,6 +634,7 @@ b5.Instants.prototype.CreateShortcut = function(done_callback)
     });
 }
 
+b5.Instants.instance = new b5.Instants();
 
 
 

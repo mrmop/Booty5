@@ -63,11 +63,19 @@ b5.Sound = function(name, location, reuse)
  * @type {object}
  */
 b5.Sound.context = null;
-
-b5.Sound.mp3_supported = false;
-b5.Sound.ogg_supported = false;
-b5.Sound.wav_supported = false;
+b5.Sound.blocked = false;
 b5.Sound.muted = false;
+
+b5.Sound.unblock = function()
+{
+	if (b5.Sound.blocked)
+	{
+		b5.Sound.context.resume().then(function()
+		{
+			b5.Sound.blocked = false;
+		});
+	}
+}
 
 /**
  * Initialises the sound system
@@ -76,27 +84,25 @@ b5.Sound.muted = false;
  */
 b5.Sound.init = function(app)
 {
-    b5.Sound.ogg_supported = new Audio().canPlayType("audio/ogg") !== "";
-    b5.Sound.mp3_supported = new Audio().canPlayType("audio/mpeg") !== "";
-    b5.Sound.wav_supported = new Audio().canPlayType("audio/wav") !== "";
-    if (app.use_web_audio)
+    try
     {
-        try
-        {
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (window.AudioContext === undefined)
-                return false;
-            b5.Sound.context = new AudioContext();
-        }
-        catch(e)
-        {
-            if (b5.app.instants)
-                FBInstant.logEvent('Web audio error');
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (window.AudioContext === undefined)
             return false;
+        b5.Sound.context = new AudioContext();
+
+        if (b5.Sound.context.state === "suspended")
+        {
+            b5.Sound.blocked = true;
         }
-        return true;
     }
-    return false;
+    catch(e)
+    {
+        if (b5.app.instants)
+            FBInstant.logEvent('Web audio error');
+        return false;
+    }
+    return true;
 };
 
 /**
@@ -106,64 +112,36 @@ b5.Sound.init = function(app)
  */
 b5.Sound.isSupported = function(filename)
 {
-    var type = filename.substr(filename.lastIndexOf('.') + 1);
-    if (type === "ogg" && b5.Sound.ogg_supported)
-        return true;
-    if (type === "mp3" && b5.Sound.mp3_supported)
-        return true;
-    if (type === "wav" && b5.Sound.wav_supported)
-        return true;
-
-    return false;
+    return true;
 };
 
 /**
  * Loads the sound
  */
-b5.Sound.prototype.load = function(force)
+b5.Sound.prototype.load = function(force, done_callback)
 {
     var debug = b5.app.debug;
     //var snd;
     var that = this;
     var filename = this.location;
     var auto_play = this.auto_play;
-/*    if (!b5.Sound.isSupported(filename))
-    {
-        filename = this.location2;
-        if (!b5.Sound.isSupported(filename))
+
+    if (!b5.Utils.loadJSON(filename, false, function(data) {
+        if (data !== null)
         {
-            if (b5.app.debug)
+            b5.Sound.context.decodeAudioData(data, function(buffer) {
+                that.buffer = buffer;
+                b5.app.onResourceLoaded(that, false);
+                if (auto_play)
+                    that.play(force);
+                if (done_callback !== undefined)
+                    done_callback(this);
+            }, function(e)
             {
-                console.log("Warning: Unsupported audio formats")
-                b5.app.onResourceLoaded(that, true);
-            }
-            return;
+                console.log(e)
+            });
         }
-    }*/
-    if (b5.app.use_web_audio)
-    {
-        if (!b5.Utils.loadJSON(filename, false, function(data) {
-            if (data !== null)
-            {
-                b5.Sound.context.decodeAudioData(data, function(buffer) {
-                    that.buffer = buffer;
-                    b5.app.onResourceLoaded(that, false);
-                    if (auto_play)
-                        that.play(force);
-                }, function(e)
-                {
-                    console.log(e)
-                });
-            }
-            else
-            {
-                that.load_retry++;
-                if (that.load_retry > 3)
-                    b5.app.onResourceLoaded(that, true);
-                else
-                    that.load();
-            }
-        }, true))
+        else
         {
             that.load_retry++;
             if (that.load_retry > 3)
@@ -171,35 +149,14 @@ b5.Sound.prototype.load = function(force)
             else
                 that.load();
         }
-    }
-/*    else
+    }, true))
     {
-        snd = new Audio();
-        if (this.loop)
-        {
-            if (typeof snd.loop === "boolean")
-                snd.loop = true;
-            else
-            {
-                snd.addEventListener('ended', function() {
-                    this.currentTime = 0;
-                    this.play(force);
-                }, false);
-            }
-        }
-        snd.onerror = function() {
-            snd.onerror = null;
+        that.load_retry++;
+        if (that.load_retry > 3)
             b5.app.onResourceLoaded(that, true);
-        };
-        snd.oncanplaythrough = function() {
-            snd.oncanplaythrough = null;
-            b5.app.onResourceLoaded(that, false);
-            if (auto_play)
-                that.play(force);
-        };
-        snd.src = filename;
+        else
+            that.load();
     }
-    this.snd = snd;*/
 };
 
 /**
@@ -210,38 +167,20 @@ b5.Sound.prototype.play = function(force)
 {
     if (force != true && b5.Sound.muted)
         return null;
-    if (b5.app.use_web_audio)
-    {
-        if (this.buffer === null)
-            return null;
-        var context = b5.Sound.context;
-        var source = context.createBufferSource();
-        var gain = context.createGain();
-        source.buffer = this.buffer;
-        source.loop = this.loop;
-        source.connect(gain);
-        gain.connect(context.destination);
-        gain.gain.value = 1;
-        source.start(0);
-        if (this.auto_play)
-            this.snd = { source: source, gain: gain };
-        return { source: source, gain: gain };
-    }
-
-    /*var snd = null;
-    if (this.reuse)
-        snd = this.snd;
-    if (snd === null)
-    {
-        if (!this.reuse)
-        {
-            this.load();
-            snd = this.snd;
-        }
-    }
-    if (snd !== null)
-        snd.play();
-    return snd;*/
+    if (this.buffer === null)
+        return null;
+    var context = b5.Sound.context;
+    var source = context.createBufferSource();
+    var gain = context.createGain();
+    source.buffer = this.buffer;
+    source.loop = this.loop;
+    source.connect(gain);
+    gain.connect(context.destination);
+    gain.gain.value = 1;
+    source.start(0);
+    if (this.auto_play)
+        this.snd = { source: source, gain: gain };
+    return { source: source, gain: gain };
 };
 
 /**
@@ -252,10 +191,7 @@ b5.Sound.prototype.stop = function()
     var snd = this.snd;
     if (snd === null || snd === undefined)
         return;
-    if (b5.app.use_web_audio)
-    {
-        snd = snd.source;
-    }
+    snd = snd.source;
     snd.stop();
 };
 
@@ -267,11 +203,7 @@ b5.Sound.prototype.pause = function()
     var snd = this.snd;
     if (snd === null || snd === undefined)
         return;
-    if (b5.app.use_web_audio)
-    {
-        return; // Pause not suported
-    }
-    snd.pause();
+//    snd.pause();
 };
 
 /**

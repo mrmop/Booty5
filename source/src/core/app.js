@@ -424,6 +424,7 @@ b5.App.prototype.onTouchStart = function(e)
 b5.App.prototype.onTouchEnd = function(e)
 {
     var app = b5.app;
+	b5.Sound.unblock();
     if (app.touch_supported)
     {
         e.stopPropagation();

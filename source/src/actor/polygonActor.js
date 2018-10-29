@@ -190,7 +190,7 @@ b5.PolygonActor.prototype.drawToCache = function()
         disp.setStrokeStyle(this.stroke_style);
     if (this.stroke_filled)
         disp.setLineWidth(this.stroke_thickness);
-    disp.setTransform(1,0,0,1, ox + w/2, oy + h/2);
+    disp.setTransform(1,0,0,1, ox + w / 2, oy + h / 2);
     disp.drawPolygon(0,0, this.points, this.filled);
     disp.setCache(null);
 
