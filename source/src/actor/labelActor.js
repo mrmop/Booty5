@@ -212,10 +212,18 @@ b5.LabelActor.prototype.drawToCache = function()
     if (this.stroke_filled)
         disp.setLineWidth(this.stroke_thickness);
     disp.setTransform(1,0,0,1, 0,0);
+    if (this.text_align === "center")
+        ox += w/2;
+    else if (this.text_align === "right")
+        ox += w;
+    if (this.text_baseline === "middle")
+        oy += h/2;
+    else if (this.text_baseline === "bottom")
+        oy += h;
     if (this.stroke_filled)
-        disp.drawText(this.text, ox + w/2, oy + h/2, this.line_height, false);
+        disp.drawText(this.text, ox, oy, this.line_height, false);
     if (this.filled)
-        disp.drawText(this.text, ox + w/2, oy + h/2, this.line_height, true);
+        disp.drawText(this.text, ox, oy, this.line_height, true);
     disp.setCache(null);
 
     this.cache_canvas = cache;
