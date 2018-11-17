@@ -1529,6 +1529,11 @@ b5.Actor.prototype.updateTransform = function()
 		var r = this.rotation;
 		var sx = this.scale_x;
 		var sy = this.scale_y;
+		if (this.parent === null)
+		{
+			sx *= scene.scale;
+			sy *= scene.scale;
+		}
 		var sm = this.scale_method;
 		if (sm !== 0)
 		{
@@ -2036,7 +2041,7 @@ b5.Actor.prototype.dirty = function()
  * - scroll_pos_y {number} - Canvas scroll Y position
  * - scroll_vx {number} - Canvas scroll X velocity
  * - scroll_vy {number} - Canvas scroll Y velocity
- * - scroll_range {number} - Scrollable range of canvas (left, top, width, height)
+ * - scroll_range {array} - Scrollable range of canvas (left, top, width, height)
  *
  * Child actors that apply docking will be docked to this container instead of the scene
  */

@@ -143,6 +143,7 @@
  * @property {number}                   y                       - Scene y axis position
  * @property {number}                   w                       - Scene width (default 1024)
  * @property {number}                   h                       - Scene canvas height (default 768)
+ * @property {number}                   scale                   - Amount to scale scene
  * @property {boolean}                  clip_children           - If set to true then actors will be clipped against extents of this scene (default true)
  * @property {b5.Shape}                 clip_shape              - If none null and clipping is enabled then children will be clipped against shape (clip origin is at centre of canvas), if set via _clip_shape then instance of shape or string based path to shape can be used (default is null)
  * @property {number}                   camera_x                - Camera x position
@@ -193,6 +194,7 @@ b5.Scene = function()
     this.y = 0;						// Scene y axis position
     this.w = 1024;					// Scene canvas width
     this.h = 768;					// Scene canvas height
+    this.scale = 1;					// Amount to scale scene
     this.clip_children = true;		// If set to true then actors will be clipped against extents of this scene
     this.clip_shape = null;         // If none null and clipping is enabled then children will be clipped against shape (clip origin is at centre of canvas)
     this.camera_x = 0;				// Camera x position
@@ -606,7 +608,7 @@ b5.Scene.prototype.draw = function()
         return;
 
     var app = this.app;
-    var dscale = app.canvas_scale;
+    var dscale = app.canvas_scale * this.scale;
     var disp = app.display;
     if (this.clip_children)
     {

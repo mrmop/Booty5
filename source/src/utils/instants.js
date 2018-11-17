@@ -113,6 +113,10 @@ b5.Instants.prototype.GetConnectedPlayers = function(done_callback)
     .then(function(players) {
         if (done_callback !== undefined)
             done_callback(players);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 };
 
@@ -127,6 +131,10 @@ b5.Instants.prototype.GetContextPlayers = function(done_callback)
     .then(function(players) {
         if (done_callback !== undefined)
             done_callback(players);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 };
 
@@ -138,7 +146,7 @@ b5.Instants.prototype.ChooseContext = function(done_callback)
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -151,7 +159,7 @@ b5.Instants.prototype.ChooseContextWithOptions = function(options, done_callback
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -164,7 +172,7 @@ b5.Instants.prototype.SwitchContext = function(context_id, done_callback)
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -177,7 +185,7 @@ b5.Instants.prototype.CreateContext = function(player_id, done_callback)
             done_callback(true, FBInstant.context.getID());
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -189,6 +197,10 @@ b5.Instants.prototype.SetPlayerData = function(data_object, done_callback)
         if (done_callback !== undefined)
             done_callback(true);
         Log("Player data set");
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(false);
     });
 };
 
@@ -201,7 +213,7 @@ b5.Instants.prototype.GetPlayerData = function(property_array, done_callback)
         Log("Player data loaded");
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback();
     });
 };
@@ -240,6 +252,10 @@ b5.Instants.prototype.PostCustomUpdate = function(title, image64, message, custo
         Log("Message was sent successfully");
         if (done_callback !== undefined)
             done_callback();
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback();
     });
 };
 
@@ -252,6 +268,10 @@ b5.Instants.prototype.PostLeaderboardUpdate = function(leaderboard, message, don
     })
     .then(function(){
         Log("Leaderboard message was sent successfully");
+        if (done_callback !== undefined)
+            done_callback();
+    }).catch(function(error) {
+        Log(error);
         if (done_callback !== undefined)
             done_callback();
     });
@@ -271,7 +291,7 @@ b5.Instants.prototype.ShareCustom = function(intent, image, message, data, done_
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -351,6 +371,10 @@ b5.Instants.prototype.CanMatchPlayer = function(done_callback)
         .then(canMatch => {
             if (done_callback !== undefined)
                 done_callback(canMatch);
+        }).catch(function(error) {
+            Log(error);
+            if (done_callback !== undefined)
+                done_callback(false);
         });
 }
 
@@ -567,6 +591,10 @@ b5.Instants.prototype.GetProducts = function(done_callback)
     {
         if (done_callback !== undefined)
             done_callback(catalog);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 }
 
@@ -576,6 +604,10 @@ b5.Instants.prototype.GetUnconsumedProducts = function(done_callback)
     {
         if (done_callback !== undefined)
             done_callback(purchases);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 }
 
