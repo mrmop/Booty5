@@ -34,6 +34,7 @@
  * - onBeginTouch(touch_pos) - Called when the Scene is touched
  * - onEndTouch(touch_pos) - Called when the Scene has stop being touched
  * - onMoveTouch(touch_pos) - Called when a touch is moved over the Scene
+ * - onWheel(event) - Called when hte mouse wheel is used
  * - onKeyPress(event) - Called when a key is pressed and this scene has focus
  * - onKeyDown(event) - Called when a key is pressed down and this scene has focus
  * - onKeyUp(event) - Called when a key is released and this scene has focus
@@ -537,6 +538,16 @@ b5.Scene.prototype.onMoveTouchBase = function(touch_pos)
         if ((app.touch_drag_x * app.touch_drag_x + app.touch_drag_y * app.touch_drag_y) > this.min_panning)
             this.panning = true;
     }
+};
+/**
+ * Callback that is called when the mouse wheel is used
+ * @private
+ * @param e {object} Wheel event object
+ */
+b5.Scene.prototype.onWheelBase = function(e)
+{
+    if (this.onWheel !== undefined)
+        this.onWheel(e);
 };
 
 //

@@ -43,6 +43,8 @@
  * - onEndTouch(touch_pos) - Called when the user stops touching display and this actor was beneath last touch point
  * - onLostTouchFocus(touch_pos) - Called if actor was touched on initial begin touch event when the user stops touching display, even if this actor is not under touch point
  * - onMoveTouch(touch_pos) - Called when a touch is moved over the Actor
+ * - onHover(touch_pos) - Called if the user hovers over this actor
+ * - onHoverEnd(touch_pos) - Called if the user stops hovering over this actor
  * - onCollisionStart(contact) - Called when the Actor started colliding with another
  * - onCollisionEnd(contact) - Called when the Actor stopped colliding with another
  *
@@ -1104,7 +1106,8 @@ b5.Actor.prototype.onEndTouchBase = function(touch_pos)
  */
 b5.Actor.prototype.onMoveTouchBase = function(touch_pos)
 {
-	this.touchmove = true;
+	if (this.touching)
+		this.touchmove = true;
 	// Bubble event to parent if enabled
 	if (this.bubbling && this.parent !== null)
 		this.parent.onMoveTouchBase(touch_pos);
@@ -1837,7 +1840,7 @@ b5.Actor.prototype.baseUpdate = function(dt)
 {
 	if (!this.active)
 		return;
-
+	
 	if (this.onTick !== undefined)
 		this.onTick(dt);
 

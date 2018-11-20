@@ -188,6 +188,8 @@ b5.Xoml.prototype.parseScene = function(parent, item)
         scene.onEndTouch = Function("touch_pos", item.OnEndTouch);
     if (item.OnMoveTouch !== undefined)
         scene.onMoveTouch = Function("touch_pos", item.OnMoveTouch);
+    if (item.OnWheel !== undefined)
+        scene.onWheel = Function("e", item.OnWheel);
     if (item.OnKeyPress !== undefined)
         scene.onKeyPress = Function("e", item.OnKeyPress);
     if (item.OnKeyDown !== undefined)
@@ -610,6 +612,10 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         actor.touchable = true;
         actor.onLostTouchFocus = Function("touch_pos", item.OnL);
     }
+    if (item.OnH !== undefined)
+        actor.onHover = Function("touch_pos", item.OnH);
+    if (item.OnHE !== undefined)
+        actor.onHoverEnd = Function("touch_pos", item.OnHE);
     if (item.OnCS !== undefined)
         actor.onCollisionStart = Function("contact", item.OnCS);
     if (item.OnCE !== undefined)

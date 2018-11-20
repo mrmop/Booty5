@@ -191,6 +191,7 @@ b5.App = function(canvas, web_audio)
     this.adaptive_physics = false;  // When true physics update will be ran more than once if frame rate falls below target
     this.focus_scene = null;		// Scene that has current input focus
     this.focus_scene2 = null;		// Scene that has will receive touch events if focus scene does not process them
+    this.hover_focus = null;        // Actor with current hover focus
     this.clear_canvas = false;		// If true then canvas will be cleared each frame
     this.touch_focus = null;		// The Actor that has the current touch focus
     this.prevent_default = false;   // Set to true to prevent bropwser from receiving touch events
@@ -251,6 +252,10 @@ b5.App = function(canvas, web_audio)
         canvas.addEventListener("mouseup", this.onTouchEnd, false);
         canvas.addEventListener("mouseout", this.onTouchEnd, false);
 //    }
+    var wheel_event =   "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+                        document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+                        "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+    canvas.addEventListener(wheel_event, this.onWheel, false);
     window.addEventListener("keypress", this.onKeyPress, false);
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
@@ -504,7 +509,41 @@ b5.App.prototype.onTouchMove = function(e)
         var actor = app.findHitActor(app.touch_pos);
         if (actor != null)
             actor.onMoveTouchBase(app.touch_pos);
+        if (app.hover_focus !== null)
+        {
+            if (app.hover_focus.onHover !== undefined)
+                app.hover_focus.onHoverEnd(app.touch_pos);
+        }
+        app.hover_focus = actor;
+        if (actor.onHover !== undefined)
+            actor.onHover(app.touch_pos);
     }
+};
+
+/**
+ * Callback that is called when the mouse wheel is used
+ * @private
+ * @param e {object} Touch event object
+ */
+b5.App.prototype.onWheel = function(e)
+{
+    var app = b5.app;
+    if (app.touch_supported)
+    {
+        e.stopPropagation();
+        if (app.prevent_default)
+            e.preventDefault();
+    }
+
+    // Get touch pos
+    var focus1 = app.focus_scene;
+    var focus2 = app.focus_scene2;
+
+    // Handle scene touch
+    if (focus1 != null)
+        focus1.onWheelBase(e);
+    if (focus2 != null)
+        focus2.onWheelBase(e);
 };
 
 //
