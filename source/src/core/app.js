@@ -325,35 +325,35 @@ b5.App.FitSmallest = 6;
 /**
  * Callback that is called when the user presses a key, key event is passed onto the current focus scene
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.App.prototype.onKeyPress = function(e)
+b5.App.prototype.onKeyPress = function(event)
 {
     var app = b5.app;
     if (app.focus_scene != null)
-        app.focus_scene.onKeyPressBase(e);
+        app.focus_scene.onKeyPressBase(event);
 };
 /**
  * Callback that is called when the user presses down a key, key event is passed onto the current focus scene
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.App.prototype.onKeyDown = function(e)
+b5.App.prototype.onKeyDown = function(event)
 {
     var app = b5.app;
     if (app.focus_scene != null)
-        app.focus_scene.onKeyDownBase(e);
+        app.focus_scene.onKeyDownBase(event);
 };
 /**
  * Callback that is called when the user releases a key, key event is passed onto the current focus scene
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.App.prototype.onKeyUp = function(e)
+b5.App.prototype.onKeyUp = function(event)
 {
     var app = b5.app;
     if (app.focus_scene != null)
-        app.focus_scene.onKeyUpBase(e);
+        app.focus_scene.onKeyUpBase(event);
 };
 
 //
@@ -515,7 +515,7 @@ b5.App.prototype.onTouchMove = function(e)
                 app.hover_focus.onHoverEnd(app.touch_pos);
         }
         app.hover_focus = actor;
-        if (actor.onHover !== undefined)
+        if (actor !== null && actor.onHover !== undefined)
             actor.onHover(app.touch_pos);
     }
 };

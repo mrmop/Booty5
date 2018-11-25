@@ -189,13 +189,13 @@ b5.Xoml.prototype.parseScene = function(parent, item)
     if (item.OnMoveTouch !== undefined)
         scene.onMoveTouch = Function("touch_pos", item.OnMoveTouch);
     if (item.OnWheel !== undefined)
-        scene.onWheel = Function("e", item.OnWheel);
+        scene.onWheel = Function("event", item.OnWheel);
     if (item.OnKeyPress !== undefined)
-        scene.onKeyPress = Function("e", item.OnKeyPress);
+        scene.onKeyPress = Function("event", item.OnKeyPress);
     if (item.OnKeyDown !== undefined)
-        scene.onKeyDown = Function("e", item.OnKeyDown);
+        scene.onKeyDown = Function("event", item.OnKeyDown);
     if (item.OnKeyUp !== undefined)
-        scene.onKeyUp = Function("e", item.OnKeyUp);
+        scene.onKeyUp = Function("event", item.OnKeyUp);
 
     if (scene.onCreate !== undefined)
         scene.onCreate();

@@ -2193,6 +2193,17 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 			}
 			else
 				act.y += dy;
+			// Disable actors out of range
+			var aw = act.w / 2;
+			var ah = act.h / 2;
+			if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+			{
+				act._av = false;
+			}
+			else
+			{
+				act._av = true;
+			}
 			act.dirty();
 		}
 	}

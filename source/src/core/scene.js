@@ -449,32 +449,32 @@ b5.Scene.prototype.sendToBack = function()
 /**
  * Callback that is called by the App when the user presses a key and this scene has the primary focus
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.Scene.prototype.onKeyPressBase = function(e)
+b5.Scene.prototype.onKeyPressBase = function(event)
 {
     if (this.onKeyPress !== undefined)
-        this.onKeyPress(e);
+        this.onKeyPress(event);
 };
 /**
  * Callback that is called by the App when the user presses down a key and this scene has the primary focus
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.Scene.prototype.onKeyDownBase = function(e)
+b5.Scene.prototype.onKeyDownBase = function(event)
 {
     if (this.onKeyDown !== undefined)
-        this.onKeyDown(e);
+        this.onKeyDown(event);
 };
 /**
  * Callback that is called by the App when the user releases a key and this scene has the primary focus
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.Scene.prototype.onKeyUpBase = function(e)
+b5.Scene.prototype.onKeyUpBase = function(event)
 {
     if (this.onKeyUp !== undefined)
-        this.onKeyUp(e);
+        this.onKeyUp(event);
 };
 
 //

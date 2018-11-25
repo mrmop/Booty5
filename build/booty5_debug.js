@@ -1929,6 +1929,8 @@ b5.TasksManager.prototype.execute = function()
  * - onEndTouch(touch_pos) - Called when the user stops touching display and this actor was beneath last touch point
  * - onLostTouchFocus(touch_pos) - Called if actor was touched on initial begin touch event when the user stops touching display, even if this actor is not under touch point
  * - onMoveTouch(touch_pos) - Called when a touch is moved over the Actor
+ * - onHover(touch_pos) - Called if the user hovers over this actor
+ * - onHoverEnd(touch_pos) - Called if the user stops hovering over this actor
  * - onCollisionStart(contact) - Called when the Actor started colliding with another
  * - onCollisionEnd(contact) - Called when the Actor stopped colliding with another
  *
@@ -2990,7 +2992,8 @@ b5.Actor.prototype.onEndTouchBase = function(touch_pos)
  */
 b5.Actor.prototype.onMoveTouchBase = function(touch_pos)
 {
-	this.touchmove = true;
+	if (this.touching)
+		this.touchmove = true;
 	// Bubble event to parent if enabled
 	if (this.bubbling && this.parent !== null)
 		this.parent.onMoveTouchBase(touch_pos);
@@ -3415,6 +3418,11 @@ b5.Actor.prototype.updateTransform = function()
 		var r = this.rotation;
 		var sx = this.scale_x;
 		var sy = this.scale_y;
+		if (this.parent === null)
+		{
+			sx *= scene.scale;
+			sy *= scene.scale;
+		}
 		var sm = this.scale_method;
 		if (sm !== 0)
 		{
@@ -3718,7 +3726,7 @@ b5.Actor.prototype.baseUpdate = function(dt)
 {
 	if (!this.active)
 		return;
-
+	
 	if (this.onTick !== undefined)
 		this.onTick(dt);
 
@@ -3922,7 +3930,7 @@ b5.Actor.prototype.dirty = function()
  * - scroll_pos_y {number} - Canvas scroll Y position
  * - scroll_vx {number} - Canvas scroll X velocity
  * - scroll_vy {number} - Canvas scroll Y velocity
- * - scroll_range {number} - Scrollable range of canvas (left, top, width, height)
+ * - scroll_range {array} - Scrollable range of canvas (left, top, width, height)
  *
  * Child actors that apply docking will be docked to this container instead of the scene
  */
@@ -4071,6 +4079,17 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 			}
 			else
 				act.y += dy;
+			// Disable actors out of range
+			var aw = act.w / 2;
+			var ah = act.h / 2;
+			if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+			{
+				act._av = false;
+			}
+			else
+			{
+				act._av = true;
+			}
 			act.dirty();
 		}
 	}
@@ -4732,10 +4751,18 @@ b5.LabelActor.prototype.drawToCache = function()
     if (this.stroke_filled)
         disp.setLineWidth(this.stroke_thickness);
     disp.setTransform(1,0,0,1, 0,0);
+    if (this.text_align === "center")
+        ox += w/2;
+    else if (this.text_align === "right")
+        ox += w;
+    if (this.text_baseline === "middle")
+        oy += h/2;
+    else if (this.text_baseline === "bottom")
+        oy += h;
     if (this.stroke_filled)
-        disp.drawText(this.text, ox + w/2, oy + h/2, this.line_height, false);
+        disp.drawText(this.text, ox, oy, this.line_height, false);
     if (this.filled)
-        disp.drawText(this.text, ox + w/2, oy + h/2, this.line_height, true);
+        disp.drawText(this.text, ox, oy, this.line_height, true);
     disp.setCache(null);
 
     this.cache_canvas = cache;
@@ -6023,6 +6050,7 @@ b5.App = function(canvas, web_audio)
     this.adaptive_physics = false;  // When true physics update will be ran more than once if frame rate falls below target
     this.focus_scene = null;		// Scene that has current input focus
     this.focus_scene2 = null;		// Scene that has will receive touch events if focus scene does not process them
+    this.hover_focus = null;        // Actor with current hover focus
     this.clear_canvas = false;		// If true then canvas will be cleared each frame
     this.touch_focus = null;		// The Actor that has the current touch focus
     this.prevent_default = false;   // Set to true to prevent bropwser from receiving touch events
@@ -6083,6 +6111,10 @@ b5.App = function(canvas, web_audio)
         canvas.addEventListener("mouseup", this.onTouchEnd, false);
         canvas.addEventListener("mouseout", this.onTouchEnd, false);
 //    }
+    var wheel_event =   "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+                        document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+                        "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+    canvas.addEventListener(wheel_event, this.onWheel, false);
     window.addEventListener("keypress", this.onKeyPress, false);
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
@@ -6152,35 +6184,35 @@ b5.App.FitSmallest = 6;
 /**
  * Callback that is called when the user presses a key, key event is passed onto the current focus scene
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.App.prototype.onKeyPress = function(e)
+b5.App.prototype.onKeyPress = function(event)
 {
     var app = b5.app;
     if (app.focus_scene != null)
-        app.focus_scene.onKeyPressBase(e);
+        app.focus_scene.onKeyPressBase(event);
 };
 /**
  * Callback that is called when the user presses down a key, key event is passed onto the current focus scene
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.App.prototype.onKeyDown = function(e)
+b5.App.prototype.onKeyDown = function(event)
 {
     var app = b5.app;
     if (app.focus_scene != null)
-        app.focus_scene.onKeyDownBase(e);
+        app.focus_scene.onKeyDownBase(event);
 };
 /**
  * Callback that is called when the user releases a key, key event is passed onto the current focus scene
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.App.prototype.onKeyUp = function(e)
+b5.App.prototype.onKeyUp = function(event)
 {
     var app = b5.app;
     if (app.focus_scene != null)
-        app.focus_scene.onKeyUpBase(e);
+        app.focus_scene.onKeyUpBase(event);
 };
 
 //
@@ -6336,7 +6368,41 @@ b5.App.prototype.onTouchMove = function(e)
         var actor = app.findHitActor(app.touch_pos);
         if (actor != null)
             actor.onMoveTouchBase(app.touch_pos);
+        if (app.hover_focus !== null)
+        {
+            if (app.hover_focus.onHover !== undefined)
+                app.hover_focus.onHoverEnd(app.touch_pos);
+        }
+        app.hover_focus = actor;
+        if (actor !== null && actor.onHover !== undefined)
+            actor.onHover(app.touch_pos);
     }
+};
+
+/**
+ * Callback that is called when the mouse wheel is used
+ * @private
+ * @param e {object} Touch event object
+ */
+b5.App.prototype.onWheel = function(e)
+{
+    var app = b5.app;
+    if (app.touch_supported)
+    {
+        e.stopPropagation();
+        if (app.prevent_default)
+            e.preventDefault();
+    }
+
+    // Get touch pos
+    var focus1 = app.focus_scene;
+    var focus2 = app.focus_scene2;
+
+    // Handle scene touch
+    if (focus1 != null)
+        focus1.onWheelBase(e);
+    if (focus2 != null)
+        focus2.onWheelBase(e);
 };
 
 //
@@ -6932,6 +6998,7 @@ b5.App.prototype.removeTask = function(task_name)
  * - onBeginTouch(touch_pos) - Called when the Scene is touched
  * - onEndTouch(touch_pos) - Called when the Scene has stop being touched
  * - onMoveTouch(touch_pos) - Called when a touch is moved over the Scene
+ * - onWheel(event) - Called when hte mouse wheel is used
  * - onKeyPress(event) - Called when a key is pressed and this scene has focus
  * - onKeyDown(event) - Called when a key is pressed down and this scene has focus
  * - onKeyUp(event) - Called when a key is released and this scene has focus
@@ -7041,6 +7108,7 @@ b5.App.prototype.removeTask = function(task_name)
  * @property {number}                   y                       - Scene y axis position
  * @property {number}                   w                       - Scene width (default 1024)
  * @property {number}                   h                       - Scene canvas height (default 768)
+ * @property {number}                   scale                   - Amount to scale scene
  * @property {boolean}                  clip_children           - If set to true then actors will be clipped against extents of this scene (default true)
  * @property {b5.Shape}                 clip_shape              - If none null and clipping is enabled then children will be clipped against shape (clip origin is at centre of canvas), if set via _clip_shape then instance of shape or string based path to shape can be used (default is null)
  * @property {number}                   camera_x                - Camera x position
@@ -7091,6 +7159,7 @@ b5.Scene = function()
     this.y = 0;						// Scene y axis position
     this.w = 1024;					// Scene canvas width
     this.h = 768;					// Scene canvas height
+    this.scale = 1;					// Amount to scale scene
     this.clip_children = true;		// If set to true then actors will be clipped against extents of this scene
     this.clip_shape = null;         // If none null and clipping is enabled then children will be clipped against shape (clip origin is at centre of canvas)
     this.camera_x = 0;				// Camera x position
@@ -7344,32 +7413,32 @@ b5.Scene.prototype.sendToBack = function()
 /**
  * Callback that is called by the App when the user presses a key and this scene has the primary focus
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.Scene.prototype.onKeyPressBase = function(e)
+b5.Scene.prototype.onKeyPressBase = function(event)
 {
     if (this.onKeyPress !== undefined)
-        this.onKeyPress(e);
+        this.onKeyPress(event);
 };
 /**
  * Callback that is called by the App when the user presses down a key and this scene has the primary focus
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.Scene.prototype.onKeyDownBase = function(e)
+b5.Scene.prototype.onKeyDownBase = function(event)
 {
     if (this.onKeyDown !== undefined)
-        this.onKeyDown(e);
+        this.onKeyDown(event);
 };
 /**
  * Callback that is called by the App when the user releases a key and this scene has the primary focus
  * @private
- * @param e {object} The key event
+ * @param event {object} The key event
  */
-b5.Scene.prototype.onKeyUpBase = function(e)
+b5.Scene.prototype.onKeyUpBase = function(event)
 {
     if (this.onKeyUp !== undefined)
-        this.onKeyUp(e);
+        this.onKeyUp(event);
 };
 
 //
@@ -7433,6 +7502,16 @@ b5.Scene.prototype.onMoveTouchBase = function(touch_pos)
         if ((app.touch_drag_x * app.touch_drag_x + app.touch_drag_y * app.touch_drag_y) > this.min_panning)
             this.panning = true;
     }
+};
+/**
+ * Callback that is called when the mouse wheel is used
+ * @private
+ * @param e {object} Wheel event object
+ */
+b5.Scene.prototype.onWheelBase = function(e)
+{
+    if (this.onWheel !== undefined)
+        this.onWheel(e);
 };
 
 //
@@ -7504,7 +7583,7 @@ b5.Scene.prototype.draw = function()
         return;
 
     var app = this.app;
-    var dscale = app.canvas_scale;
+    var dscale = app.canvas_scale * this.scale;
     var disp = app.display;
     if (this.clip_children)
     {
@@ -8106,12 +8185,14 @@ b5.Xoml.prototype.parseScene = function(parent, item)
         scene.onEndTouch = Function("touch_pos", item.OnEndTouch);
     if (item.OnMoveTouch !== undefined)
         scene.onMoveTouch = Function("touch_pos", item.OnMoveTouch);
+    if (item.OnWheel !== undefined)
+        scene.onWheel = Function("event", item.OnWheel);
     if (item.OnKeyPress !== undefined)
-        scene.onKeyPress = Function("e", item.OnKeyPress);
+        scene.onKeyPress = Function("event", item.OnKeyPress);
     if (item.OnKeyDown !== undefined)
-        scene.onKeyDown = Function("e", item.OnKeyDown);
+        scene.onKeyDown = Function("event", item.OnKeyDown);
     if (item.OnKeyUp !== undefined)
-        scene.onKeyUp = Function("e", item.OnKeyUp);
+        scene.onKeyUp = Function("event", item.OnKeyUp);
 
     if (scene.onCreate !== undefined)
         scene.onCreate();
@@ -8528,6 +8609,10 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         actor.touchable = true;
         actor.onLostTouchFocus = Function("touch_pos", item.OnL);
     }
+    if (item.OnH !== undefined)
+        actor.onHover = Function("touch_pos", item.OnH);
+    if (item.OnHE !== undefined)
+        actor.onHoverEnd = Function("touch_pos", item.OnHE);
     if (item.OnCS !== undefined)
         actor.onCollisionStart = Function("contact", item.OnCS);
     if (item.OnCE !== undefined)
@@ -10680,6 +10765,10 @@ b5.Instants.prototype.GetConnectedPlayers = function(done_callback)
     .then(function(players) {
         if (done_callback !== undefined)
             done_callback(players);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 };
 
@@ -10694,6 +10783,10 @@ b5.Instants.prototype.GetContextPlayers = function(done_callback)
     .then(function(players) {
         if (done_callback !== undefined)
             done_callback(players);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 };
 
@@ -10705,7 +10798,7 @@ b5.Instants.prototype.ChooseContext = function(done_callback)
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -10718,7 +10811,7 @@ b5.Instants.prototype.ChooseContextWithOptions = function(options, done_callback
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -10731,7 +10824,7 @@ b5.Instants.prototype.SwitchContext = function(context_id, done_callback)
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -10744,7 +10837,7 @@ b5.Instants.prototype.CreateContext = function(player_id, done_callback)
             done_callback(true, FBInstant.context.getID());
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -10756,6 +10849,10 @@ b5.Instants.prototype.SetPlayerData = function(data_object, done_callback)
         if (done_callback !== undefined)
             done_callback(true);
         Log("Player data set");
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(false);
     });
 };
 
@@ -10768,7 +10865,7 @@ b5.Instants.prototype.GetPlayerData = function(property_array, done_callback)
         Log("Player data loaded");
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback();
     });
 };
@@ -10807,6 +10904,10 @@ b5.Instants.prototype.PostCustomUpdate = function(title, image64, message, custo
         Log("Message was sent successfully");
         if (done_callback !== undefined)
             done_callback();
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback();
     });
 };
 
@@ -10819,6 +10920,10 @@ b5.Instants.prototype.PostLeaderboardUpdate = function(leaderboard, message, don
     })
     .then(function(){
         Log("Leaderboard message was sent successfully");
+        if (done_callback !== undefined)
+            done_callback();
+    }).catch(function(error) {
+        Log(error);
         if (done_callback !== undefined)
             done_callback();
     });
@@ -10838,7 +10943,7 @@ b5.Instants.prototype.ShareCustom = function(intent, image, message, data, done_
             done_callback(true);
     }).catch(function(error) {
         Log(error);
-        if (done_callback != null)
+        if (done_callback !== undefined)
             done_callback(false, error);
     });
 };
@@ -10918,6 +11023,10 @@ b5.Instants.prototype.CanMatchPlayer = function(done_callback)
         .then(canMatch => {
             if (done_callback !== undefined)
                 done_callback(canMatch);
+        }).catch(function(error) {
+            Log(error);
+            if (done_callback !== undefined)
+                done_callback(false);
         });
 }
 
@@ -11134,6 +11243,10 @@ b5.Instants.prototype.GetProducts = function(done_callback)
     {
         if (done_callback !== undefined)
             done_callback(catalog);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 }
 
@@ -11143,6 +11256,10 @@ b5.Instants.prototype.GetUnconsumedProducts = function(done_callback)
     {
         if (done_callback !== undefined)
             done_callback(purchases);
+    }).catch(function(error) {
+        Log(error);
+        if (done_callback !== undefined)
+            done_callback(null);
     });
 }
 
