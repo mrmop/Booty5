@@ -787,7 +787,8 @@ b5.Xoml.prototype.parseIcon = function(parent, item)
             actor.scroll_pos_y = item.SPos[1];
         }
     }
-
+    if (item.ClV !== undefined)
+        actor.clip_virtual = item.ClV;
     if (item.IAS !== undefined)
         actor.ignore_atlas_size = item.IAS;
     if (item.SCl !== undefined)
@@ -827,6 +828,8 @@ b5.Xoml.prototype.parseLabel = function(parent, item)
         actor.merge_cache = true;
     if (item.Rd === true)
         actor.round_pixels = true;
+    if (item.Mw !== undefined)
+        actor.max_width = item.Mw;
 
     if (actor.onCreate !== undefined)
         actor.onCreate();

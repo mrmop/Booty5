@@ -75,7 +75,24 @@ b5.RectActor.prototype.draw = function()
         this.cache = false;
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
-        return;
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
+		return;
+	}
 
     // Render the actor
     var cache = this.cache_canvas;

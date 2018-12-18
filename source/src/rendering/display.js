@@ -190,12 +190,90 @@ b5.Display.prototype.drawText = function(text, x, y, line_height, filled)
     }
 };
 
-b5.Display.prototype.meaureText = function(text)
+b5.Display.prototype.drawTextWrap = function(text, x, y, max_width, line_height, filled, text_baseline)
+{
+    if (max_width === 0)
+    {
+        this.drawText(text, x, y, line_height, filled);
+        return;
+    }
+    text = "" + text;
+	var num_lines = this.measureTextLines(text, max_width);
+    if (num_lines > 1)
+    {
+        if (text_baseline === "middle")
+            y -= (line_height * num_lines) / 2 - line_height / 2;
+    }
+    var ctx = this.context;
+    if (this.cache_ctx !== null)
+        ctx = this.cache_ctx;
+    var lines = text.split("\n");
+    for (var t = 0; t < lines.length; t++)
+    {
+        var line = "";
+        var words = lines[t].split(" ");
+        for (var t2 = 0; t2 < words.length; t2++)
+        {
+            var tline = line + words[t2] + " ";
+            var metrics = ctx.measureText(tline);
+            if (metrics.width > max_width)
+            {
+                if (filled)
+                    ctx.fillText(line, x, y);
+                else
+                    ctx.strokeText(line, x, y);
+                line = words[t2] + " ";
+                y += line_height;
+            }
+            else
+            {
+                line = tline;
+            }
+        }
+        if (filled)
+            ctx.fillText(line, x, y);
+        else
+            ctx.strokeText(line, x, y);
+        y += line_height;
+    }
+};
+
+b5.Display.prototype.measureText = function(text)
 {
     var ctx = this.context;
     if (this.cache_ctx !== null)
         ctx = this.cache_ctx;
     return ctx.measureText(text);
+};
+
+b5.Display.prototype.measureTextLines = function(text, max_width)
+{
+    if (max_width === 0)
+        return 1;
+    var ctx = this.context;
+    if (this.cache_ctx !== null)
+        ctx = this.cache_ctx;
+    var lines = text.split("\n");
+    var count = 0;
+    for (var t = 0; t < lines.length; t++)
+    {
+        var line = "";
+        var words = lines[t].split(" ");
+        for (var t2 = 0; t2 < words.length; t2++)
+        {
+            var tline = line + words[t2] + " ";
+            var metrics = ctx.measureText(tline);
+            if (metrics.width > max_width)
+            {
+                line = words[t2] + " ";
+                count++;
+            }
+            else
+                line = tline;
+        }
+        count++;
+    }
+    return count;
 };
 
 b5.Display.prototype.setTransform = function(m11, m12, m21, m22, dx, dy)

@@ -47,6 +47,7 @@
  * - onHoverEnd(touch_pos) - Called if the user stops hovering over this actor
  * - onCollisionStart(contact) - Called when the Actor started colliding with another
  * - onCollisionEnd(contact) - Called when the Actor stopped colliding with another
+ * - onAVChanged(visible) - Called when the active-visible state of an actor changes via the _av property
  *
  * For an actor to be processed and rendered you must add it to a added to a {@link b5.Scene} or another {@link b5.Actor}
  * that is part of a scene hierarchy
@@ -252,6 +253,7 @@
  * @property {boolean}                  self_clip           - If set to true then this actor will be clipped against its own clipping shape (default is false)
  * @property {boolean}                  orphaned            - If set to true then this actor will not use its parent actors transform, scene transform will be used instead (default is false)
  * @property {boolean}                  virtual             - If true then actor will be classed as a container with a virtual canvas that can scroll and stack its content (default is false)
+ * @property {boolean}                  clip_virtual        - f true then children with virtual actors will be clipped by rect
  * @property {boolean}                  shadow              - If set to true then shadow will be added to text (default is false)
  * @property {number}                   shadow_x            - Shadow x axis offset (default is 0)
  * @property {number}                   shadow_y            - Shadow y axis offset (default is 0)
@@ -343,6 +345,7 @@ b5.Actor = function(virtual)
 	this.self_clip = false;		    // If set to true then this actor will be clipped against its own clipping shape
 	this.orphaned = false;          // If set to true then this actor will not use its parent actors transform, scene transform will be used instead
 	this.virtual = false;           // If true then actor will be classed as a container with a virtual canvas that can scroll and stack its content
+	this.clip_virtual = true;		// If true then children with virtual actors will be clipped by rect
 	this.shadow = false;            // If set to true then shadow will be added to text
 	this.shadow_x = 0;              // Shadow x axis offset
 	this.shadow_y = 0;              // Shadow y axis offset
@@ -491,7 +494,12 @@ Object.defineProperty(b5.Actor.prototype, "_clip_shape", {
 	set: function(value) { if (this.clip_shape !== value) { this.clip_shape = b5.Utils.resolveResource(value, "shape"); } }
 });
 Object.defineProperty(b5.Actor.prototype, "_av", {
-	set: function(value) { this.visible = value; this.active = value; }
+	set: function(value)
+	{
+		if (value !== this.visible && this.onAVChanged !== undefined)
+			this.onAVChanged(value);
+		this.visible = value; this.active = value;
+	}
 });
 
 /**
@@ -1634,7 +1642,24 @@ b5.Actor.prototype.draw = function()
 		this.cache = false;
 	}
 	if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
 		return;
+	}
 
 	var cache = this.cache_canvas;
 	var scene = this.scene;
@@ -1741,6 +1766,21 @@ b5.Actor.prototype.draw = function()
 };
 
 /**
+ * Reset cache state of actor and all children
+ */
+b5.Actor.prototype.resetCache = function()
+{
+	this.cache = true;
+	var count = this.actors.length;
+	if (count > 0)
+	{
+		var acts = this.actors;
+		for (var t = 0; t < count; t++)
+			acts[t].resetCache();
+	}
+};
+
+/**
  * Renders this actor to a cache which can speed up rendering it the next frame
  */
 b5.Actor.prototype.drawToCache = function()
@@ -1778,11 +1818,21 @@ b5.Actor.prototype.drawToCache = function()
 		cache.height = this.h;
 	}
 	disp.setCache(cache);
+
+	if (this.self_clip)
+	{
+		this.setClipping(ox + this.ow / 2, oy + this.oh / 2);
+	}
+		
 	if (atlas !== null)
 		disp.drawAtlasImage(atlas.bitmap.image, src.x, src.y, src.w, src.h, ox, oy, this.w, this.h);
 	else
 	if (this.bitmap !== null)
 		disp.drawImage(this.bitmap.image, ox, oy, this.w, this.h);
+
+	if (this.self_clip)
+		disp.restoreContext();
+
 	disp.setCache(null);
 
 	this.cache_canvas = cache;
@@ -2194,19 +2244,43 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 			else
 				act.y += dy;
 			// Disable actors out of range
-			var aw = act.w / 2;
-			var ah = act.h / 2;
-			if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+			if (this.clip_virtual)
 			{
-				act._av = false;
+				var aw = act.w / 2;
+				var ah = act.h / 2;
+				if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+				{
+					act._av = false;
+				}
+				else
+				{
+					act._av = true;
+				}
 			}
-			else
-			{
-				act._av = true;
-			}
+			act.touching = false;
 			act.dirty();
 		}
 	}
+};
+
+/**
+ * Check if actor inside virtual actor is clipped out of visible range
+ * @public
+ */
+b5.Actor.prototype.Virtual_isClipped = function(actor)
+{
+	if (!this.clip_virtual)
+		return false;
+
+	var w = this.w * this.scale_x / 2;
+	var h = this.h * this.scale_y / 2;
+	var aw = actor.w / 2;
+	var ah = actor.h / 2;
+	if (actor.y < -h - ah || actor.y > h + ah || actor.x < -w - aw || actor.x > w + aw)
+	{
+		return true;
+	}
+	return false;
 };
 
 /**
@@ -2288,7 +2362,7 @@ b5.Actor.prototype.setClipping = function(x, y)
 	{
 		var type = this.type;
 		if (type === b5.Actor.Type_Arc)
-			disp.clipArc(0,0, this.radius, 0, 2 * Math.PI);
+			disp.clipArc(x + clip_margin[0], y + clip_margin[1], this.radius, 0, 2 * Math.PI);
 		else
 		if (type === b5.Actor.Type_Polygon)
 			disp.clipPolygon(this.points);
@@ -2302,7 +2376,7 @@ b5.Actor.prototype.setClipping = function(x, y)
 			disp.clipRect(x + clip_margin[0], y + clip_margin[1], shape.width - clip_margin[2] - clip_margin[0], shape.height - clip_margin[3] - clip_margin[1]);
 		else
 		if (type === b5.Shape.TypeCircle)
-			disp.clipArc(0,0, shape.width, 0, 2 * Math.PI);
+			disp.clipArc(x + clip_margin[0], y + clip_margin[1], shape.width, 0, 2 * Math.PI);
 		else
 		if (type === b5.Shape.TypePolygon)
 			disp.clipPolygon(shape.vertices);

@@ -35,6 +35,8 @@
  * @property {string}                   fill_style                          - Style used to fill the label (default is #ffffff)
  * @property {string}                   stroke_style                        - Stroke used to draw none filled label (default is #ffffff)
  * @property {number}                   stroke_thickness                    - Stroke thickness for none filled (default is #ffffff)
+ * @property {number}                   line_height                         - Height of line (default 16)
+ * @property {number}                   max_width                           - Maximum width of line (default 0 = no word wrapping)
  * @property {boolean}                  filled                              - If true then label interior will be filled otherwise empty (default is true)
  * @property {boolean}                  stroke_filled                       - If true then stroke will be drawn (default is true)
  *
@@ -50,9 +52,10 @@ b5.LabelActor = function()
     this.fill_style = "#ffffff";        // Fill style
     this.stroke_style = "#ffffff";      // Stroke used to draw none filled
     this.stroke_thickness = 1;          // Stroke thickness for none filled
+    this.line_height = 16;              // Height of a line of text
+    this.max_width = 0;                 // Maximum line width
     this.filled = true;                 // If true then text will be drawn filled, otherwise none filled
     this.stroke_filled = false;	        // if true then a stroke will be drawn
-    this.line_height = 16;              // Height of a line of text
     
     // Call constructor
     b5.Actor.call(this);
@@ -90,7 +93,24 @@ b5.LabelActor.prototype.draw = function()
         this.cache = false;
     }
     if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
-        return;
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
+		return;
+	}
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -143,9 +163,9 @@ b5.LabelActor.prototype.draw = function()
     if (cache === null)
     {
 		if (this.stroke_filled)
-			disp.drawText(this.text, 0,0, this.line_height, false);
+			disp.drawTextWrap(this.text, 0,0, this.max_width, this.line_height, false, this.text_baseline);
 		if (this.filled)
-			disp.drawText(this.text, 0,0, this.line_height, true);
+			disp.drawTextWrap(this.text, 0,0, this.max_width, this.line_height, true, this.text_baseline);
     }
     else
     {
@@ -221,9 +241,9 @@ b5.LabelActor.prototype.drawToCache = function()
     else if (this.text_baseline === "bottom")
         oy += h;
     if (this.stroke_filled)
-        disp.drawText(this.text, ox, oy, this.line_height, false);
+        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
     if (this.filled)
-        disp.drawText(this.text, ox, oy, this.line_height, true);
+        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
     disp.setCache(null);
 
     this.cache_canvas = cache;

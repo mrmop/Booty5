@@ -557,7 +557,7 @@ b5.Instants.prototype.CreateScreenshotCache = function(height)
     this.shotCache.width = canvas.width * (this.shotCache.height / canvas.height);
 }
 
-b5.Instants.prototype.GetScreenshot = function(image)
+b5.Instants.prototype.GetScreenshot = function(image, type, quality)
 {
     var disp = b5.app.display;
     if (this.shotCache === null)
@@ -572,7 +572,10 @@ b5.Instants.prototype.GetScreenshot = function(image)
         disp.setTransform(scale,0,0,scale, 0,0);
         disp.drawImage(canvas, 0, 0);
         disp.setCache(null);
-        return this.shotCache.toDataURL("image/png");
+		if (type === "jpeg")
+			return this.shotCache.toDataURL("image/jpeg", quality);
+		else
+			return this.shotCache.toDataURL("image/png");
     }
     catch (ex)
     {
@@ -662,6 +665,11 @@ b5.Instants.prototype.CreateShortcut = function(done_callback)
                 if (done_callback !== undefined)
                     done_callback(false);
             });
+        }
+        else
+        {
+            if (done_callback !== undefined)
+                done_callback(false);
         }
     });
 }
