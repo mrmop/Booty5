@@ -201,6 +201,7 @@ b5.PolygonActor.prototype.drawToCache = function()
 
     disp.setCache(cache);
     // Render the actor
+	this.preDrawCached();
     if (this.filled && this.fill_style !== "")
         disp.setFillStyle(this.fill_style);
     if (this.stroke_filled && this.stroke_style !== "")
@@ -209,6 +210,8 @@ b5.PolygonActor.prototype.drawToCache = function()
         disp.setLineWidth(this.stroke_thickness);
     disp.setTransform(1,0,0,1, ox + w / 2, oy + h / 2);
     disp.drawPolygon(0,0, this.points, this.filled);
+	this.postDrawCached();
+    
     disp.setCache(null);
 
     this.cache_canvas = cache;

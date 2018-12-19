@@ -1823,13 +1823,16 @@ b5.Actor.prototype.drawToCache = function()
 	{
 		this.setClipping(ox + this.ow / 2, oy + this.oh / 2);
 	}
-		
+
+	this.preDrawCached();
+	
 	if (atlas !== null)
 		disp.drawAtlasImage(atlas.bitmap.image, src.x, src.y, src.w, src.h, ox, oy, this.w, this.h);
 	else
 	if (this.bitmap !== null)
 		disp.drawImage(this.bitmap.image, ox, oy, this.w, this.h);
 
+	this.postDrawCached();
 	if (this.self_clip)
 		disp.restoreContext();
 
@@ -1860,6 +1863,29 @@ b5.Actor.prototype.preDraw = function()
  * Called after rendering the actor to perform various post-draw activities such as disabling shadows and resetting composite operations
  */
 b5.Actor.prototype.postDraw = function()
+{
+	var disp = b5.app.display;
+	if (this.shadow) disp.setShadowOff();
+	if (this.composite_op !== null)
+		disp.setGlobalCompositeOp("source-over");
+};
+
+/**
+ * Called before rendering the cached actor to perform various pre-draw activities such as setting opacity, shadows and composite operations
+ */
+b5.Actor.prototype.preDrawCached = function()
+{
+	var disp = b5.app.display;
+	if (this.shadow)
+		disp.setShadow(this.shadow_x, this.shadow_y, this.shadow_colour, this.shadow_blur);
+	if (this.composite_op !== null)
+		disp.setGlobalCompositeOp(this.composite_op);
+};
+
+/**
+ * Called after rendering the cached actor to perform various post-draw activities such as disabling shadows and resetting composite operations
+ */
+b5.Actor.prototype.postDrawCached = function()
 {
 	var disp = b5.app.display;
 	if (this.shadow) disp.setShadowOff();

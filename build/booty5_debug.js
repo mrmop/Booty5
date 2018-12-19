@@ -1933,6 +1933,7 @@ b5.TasksManager.prototype.execute = function()
  * - onHoverEnd(touch_pos) - Called if the user stops hovering over this actor
  * - onCollisionStart(contact) - Called when the Actor started colliding with another
  * - onCollisionEnd(contact) - Called when the Actor stopped colliding with another
+ * - onAVChanged(visible) - Called when the active-visible state of an actor changes via the _av property
  *
  * For an actor to be processed and rendered you must add it to a added to a {@link b5.Scene} or another {@link b5.Actor}
  * that is part of a scene hierarchy
@@ -2138,6 +2139,7 @@ b5.TasksManager.prototype.execute = function()
  * @property {boolean}                  self_clip           - If set to true then this actor will be clipped against its own clipping shape (default is false)
  * @property {boolean}                  orphaned            - If set to true then this actor will not use its parent actors transform, scene transform will be used instead (default is false)
  * @property {boolean}                  virtual             - If true then actor will be classed as a container with a virtual canvas that can scroll and stack its content (default is false)
+ * @property {boolean}                  clip_virtual        - f true then children with virtual actors will be clipped by rect
  * @property {boolean}                  shadow              - If set to true then shadow will be added to text (default is false)
  * @property {number}                   shadow_x            - Shadow x axis offset (default is 0)
  * @property {number}                   shadow_y            - Shadow y axis offset (default is 0)
@@ -2229,6 +2231,7 @@ b5.Actor = function(virtual)
 	this.self_clip = false;		    // If set to true then this actor will be clipped against its own clipping shape
 	this.orphaned = false;          // If set to true then this actor will not use its parent actors transform, scene transform will be used instead
 	this.virtual = false;           // If true then actor will be classed as a container with a virtual canvas that can scroll and stack its content
+	this.clip_virtual = true;		// If true then children with virtual actors will be clipped by rect
 	this.shadow = false;            // If set to true then shadow will be added to text
 	this.shadow_x = 0;              // Shadow x axis offset
 	this.shadow_y = 0;              // Shadow y axis offset
@@ -2377,7 +2380,12 @@ Object.defineProperty(b5.Actor.prototype, "_clip_shape", {
 	set: function(value) { if (this.clip_shape !== value) { this.clip_shape = b5.Utils.resolveResource(value, "shape"); } }
 });
 Object.defineProperty(b5.Actor.prototype, "_av", {
-	set: function(value) { this.visible = value; this.active = value; }
+	set: function(value)
+	{
+		if (value !== this.visible && this.onAVChanged !== undefined)
+			this.onAVChanged(value);
+		this.visible = value; this.active = value;
+	}
 });
 
 /**
@@ -3520,7 +3528,24 @@ b5.Actor.prototype.draw = function()
 		this.cache = false;
 	}
 	if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
 		return;
+	}
 
 	var cache = this.cache_canvas;
 	var scene = this.scene;
@@ -3627,6 +3652,21 @@ b5.Actor.prototype.draw = function()
 };
 
 /**
+ * Reset cache state of actor and all children
+ */
+b5.Actor.prototype.resetCache = function()
+{
+	this.cache = true;
+	var count = this.actors.length;
+	if (count > 0)
+	{
+		var acts = this.actors;
+		for (var t = 0; t < count; t++)
+			acts[t].resetCache();
+	}
+};
+
+/**
  * Renders this actor to a cache which can speed up rendering it the next frame
  */
 b5.Actor.prototype.drawToCache = function()
@@ -3664,11 +3704,24 @@ b5.Actor.prototype.drawToCache = function()
 		cache.height = this.h;
 	}
 	disp.setCache(cache);
+
+	if (this.self_clip)
+	{
+		this.setClipping(ox + this.ow / 2, oy + this.oh / 2);
+	}
+
+	this.preDrawCached();
+	
 	if (atlas !== null)
 		disp.drawAtlasImage(atlas.bitmap.image, src.x, src.y, src.w, src.h, ox, oy, this.w, this.h);
 	else
 	if (this.bitmap !== null)
 		disp.drawImage(this.bitmap.image, ox, oy, this.w, this.h);
+
+	this.postDrawCached();
+	if (this.self_clip)
+		disp.restoreContext();
+
 	disp.setCache(null);
 
 	this.cache_canvas = cache;
@@ -3696,6 +3749,29 @@ b5.Actor.prototype.preDraw = function()
  * Called after rendering the actor to perform various post-draw activities such as disabling shadows and resetting composite operations
  */
 b5.Actor.prototype.postDraw = function()
+{
+	var disp = b5.app.display;
+	if (this.shadow) disp.setShadowOff();
+	if (this.composite_op !== null)
+		disp.setGlobalCompositeOp("source-over");
+};
+
+/**
+ * Called before rendering the cached actor to perform various pre-draw activities such as setting opacity, shadows and composite operations
+ */
+b5.Actor.prototype.preDrawCached = function()
+{
+	var disp = b5.app.display;
+	if (this.shadow)
+		disp.setShadow(this.shadow_x, this.shadow_y, this.shadow_colour, this.shadow_blur);
+	if (this.composite_op !== null)
+		disp.setGlobalCompositeOp(this.composite_op);
+};
+
+/**
+ * Called after rendering the cached actor to perform various post-draw activities such as disabling shadows and resetting composite operations
+ */
+b5.Actor.prototype.postDrawCached = function()
 {
 	var disp = b5.app.display;
 	if (this.shadow) disp.setShadowOff();
@@ -4080,19 +4156,43 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 			else
 				act.y += dy;
 			// Disable actors out of range
-			var aw = act.w / 2;
-			var ah = act.h / 2;
-			if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+			if (this.clip_virtual)
 			{
-				act._av = false;
+				var aw = act.w / 2;
+				var ah = act.h / 2;
+				if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+				{
+					act._av = false;
+				}
+				else
+				{
+					act._av = true;
+				}
 			}
-			else
-			{
-				act._av = true;
-			}
+			act.touching = false;
 			act.dirty();
 		}
 	}
+};
+
+/**
+ * Check if actor inside virtual actor is clipped out of visible range
+ * @public
+ */
+b5.Actor.prototype.Virtual_isClipped = function(actor)
+{
+	if (!this.clip_virtual)
+		return false;
+
+	var w = this.w * this.scale_x / 2;
+	var h = this.h * this.scale_y / 2;
+	var aw = actor.w / 2;
+	var ah = actor.h / 2;
+	if (actor.y < -h - ah || actor.y > h + ah || actor.x < -w - aw || actor.x > w + aw)
+	{
+		return true;
+	}
+	return false;
 };
 
 /**
@@ -4174,7 +4274,7 @@ b5.Actor.prototype.setClipping = function(x, y)
 	{
 		var type = this.type;
 		if (type === b5.Actor.Type_Arc)
-			disp.clipArc(0,0, this.radius, 0, 2 * Math.PI);
+			disp.clipArc(x + clip_margin[0], y + clip_margin[1], this.radius, 0, 2 * Math.PI);
 		else
 		if (type === b5.Actor.Type_Polygon)
 			disp.clipPolygon(this.points);
@@ -4188,7 +4288,7 @@ b5.Actor.prototype.setClipping = function(x, y)
 			disp.clipRect(x + clip_margin[0], y + clip_margin[1], shape.width - clip_margin[2] - clip_margin[0], shape.height - clip_margin[3] - clip_margin[1]);
 		else
 		if (type === b5.Shape.TypeCircle)
-			disp.clipArc(0,0, shape.width, 0, 2 * Math.PI);
+			disp.clipArc(x + clip_margin[0], y + clip_margin[1], shape.width, 0, 2 * Math.PI);
 		else
 		if (type === b5.Shape.TypePolygon)
 			disp.clipPolygon(shape.vertices);
@@ -4364,8 +4464,25 @@ b5.ArcActor.prototype.draw = function()
         this.cache = false;
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
+    {
+        var count = this.actors.length;
+        if (count > 0)
+        {
+            var acts = this.actors;
+            if (this.draw_reverse)
+            {
+                for (var t = count - 1; t >= 0; t--)
+                    acts[t].draw();
+            }
+            else
+            {
+                for (var t = 0; t < count; t++)
+                    acts[t].draw();
+            }
+        }
         return;
-
+    }
+    
     // Render the actor
     var cache = this.cache_canvas;
     var scene = this.scene;
@@ -4474,6 +4591,7 @@ b5.ArcActor.prototype.drawToCache = function()
     }
     
     disp.setCache(cache);
+	this.preDrawCached();
     // Render the actor
     if (this.filled && this.fill_style !== "")
         disp.setFillStyle(this.fill_style);
@@ -4484,6 +4602,8 @@ b5.ArcActor.prototype.drawToCache = function()
 
     disp.setTransform(1,0,0,1, ox + w/2, oy + h/2);
     disp.drawArc(0,0, this.radius, this.start_angle, this.end_angle, this.filled);
+	this.postDrawCached();
+    
     disp.setCache(null);
 
     this.cache_canvas = cache;
@@ -4574,6 +4694,8 @@ b5.ArcActor.prototype.hitTest = function(position)
  * @property {string}                   fill_style                          - Style used to fill the label (default is #ffffff)
  * @property {string}                   stroke_style                        - Stroke used to draw none filled label (default is #ffffff)
  * @property {number}                   stroke_thickness                    - Stroke thickness for none filled (default is #ffffff)
+ * @property {number}                   line_height                         - Height of line (default 16)
+ * @property {number}                   max_width                           - Maximum width of line (default 0 = no word wrapping)
  * @property {boolean}                  filled                              - If true then label interior will be filled otherwise empty (default is true)
  * @property {boolean}                  stroke_filled                       - If true then stroke will be drawn (default is true)
  *
@@ -4589,9 +4711,10 @@ b5.LabelActor = function()
     this.fill_style = "#ffffff";        // Fill style
     this.stroke_style = "#ffffff";      // Stroke used to draw none filled
     this.stroke_thickness = 1;          // Stroke thickness for none filled
+    this.line_height = 16;              // Height of a line of text
+    this.max_width = 0;                 // Maximum line width
     this.filled = true;                 // If true then text will be drawn filled, otherwise none filled
     this.stroke_filled = false;	        // if true then a stroke will be drawn
-    this.line_height = 16;              // Height of a line of text
     
     // Call constructor
     b5.Actor.call(this);
@@ -4629,7 +4752,24 @@ b5.LabelActor.prototype.draw = function()
         this.cache = false;
     }
     if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
-        return;
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
+		return;
+	}
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -4682,9 +4822,9 @@ b5.LabelActor.prototype.draw = function()
     if (cache === null)
     {
 		if (this.stroke_filled)
-			disp.drawText(this.text, 0,0, this.line_height, false);
+			disp.drawTextWrap(this.text, 0,0, this.max_width, this.line_height, false, this.text_baseline);
 		if (this.filled)
-			disp.drawText(this.text, 0,0, this.line_height, true);
+			disp.drawTextWrap(this.text, 0,0, this.max_width, this.line_height, true, this.text_baseline);
     }
     else
     {
@@ -4737,6 +4877,7 @@ b5.LabelActor.prototype.drawToCache = function()
 
     disp.setCache(cache);
     // Render the actor
+	this.preDrawCached();
     if (this.font !== "")
         disp.setFont(this.font);
     if (this.textAlign !== "")
@@ -4760,9 +4901,11 @@ b5.LabelActor.prototype.drawToCache = function()
     else if (this.text_baseline === "bottom")
         oy += h;
     if (this.stroke_filled)
-        disp.drawText(this.text, ox, oy, this.line_height, false);
+        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
     if (this.filled)
-        disp.drawText(this.text, ox, oy, this.line_height, true);
+        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
+	this.postDrawCached();
+    
     disp.setCache(null);
 
     this.cache_canvas = cache;
@@ -5192,7 +5335,24 @@ b5.PolygonActor.prototype.draw = function()
         this.cache = false;
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
-        return;
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
+		return;
+	}
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -5301,6 +5461,7 @@ b5.PolygonActor.prototype.drawToCache = function()
 
     disp.setCache(cache);
     // Render the actor
+	this.preDrawCached();
     if (this.filled && this.fill_style !== "")
         disp.setFillStyle(this.fill_style);
     if (this.stroke_filled && this.stroke_style !== "")
@@ -5309,6 +5470,8 @@ b5.PolygonActor.prototype.drawToCache = function()
         disp.setLineWidth(this.stroke_thickness);
     disp.setTransform(1,0,0,1, ox + w / 2, oy + h / 2);
     disp.drawPolygon(0,0, this.points, this.filled);
+	this.postDrawCached();
+    
     disp.setCache(null);
 
     this.cache_canvas = cache;
@@ -5395,7 +5558,24 @@ b5.RectActor.prototype.draw = function()
         this.cache = false;
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
-        return;
+	{
+		var count = this.actors.length;
+		if (count > 0)
+		{
+			var acts = this.actors;
+			if (this.draw_reverse)
+			{
+				for (var t = count - 1; t >= 0; t--)
+					acts[t].draw();
+			}
+			else
+			{
+				for (var t = 0; t < count; t++)
+					acts[t].draw();
+			}
+		}
+		return;
+	}
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -5516,6 +5696,7 @@ b5.RectActor.prototype.drawToCache = function()
 
     disp.setCache(cache);
     // Render the actor
+	this.preDrawCached();
     if (this.filled && this.fill_style !== "")
         disp.setFillStyle(this.fill_style);
     if (this.stroke_filled && this.stroke_style !== "")
@@ -5528,6 +5709,7 @@ b5.RectActor.prototype.drawToCache = function()
         disp.drawRoundRect(-w / 2, -h / 2, this.w, this.h, this.corner_radius, this.filled);
     else
         disp.drawRect(-w / 2, -h / 2, this.w, this.h, this.filled);
+	this.postDrawCached();
     disp.setCache(null);
 
     this.cache_canvas = cache;
@@ -8784,7 +8966,8 @@ b5.Xoml.prototype.parseIcon = function(parent, item)
             actor.scroll_pos_y = item.SPos[1];
         }
     }
-
+    if (item.ClV !== undefined)
+        actor.clip_virtual = item.ClV;
     if (item.IAS !== undefined)
         actor.ignore_atlas_size = item.IAS;
     if (item.SCl !== undefined)
@@ -8824,6 +9007,8 @@ b5.Xoml.prototype.parseLabel = function(parent, item)
         actor.merge_cache = true;
     if (item.Rd === true)
         actor.round_pixels = true;
+    if (item.Mw !== undefined)
+        actor.max_width = item.Mw;
 
     if (actor.onCreate !== undefined)
         actor.onCreate();
@@ -9175,12 +9360,90 @@ b5.Display.prototype.drawText = function(text, x, y, line_height, filled)
     }
 };
 
-b5.Display.prototype.meaureText = function(text)
+b5.Display.prototype.drawTextWrap = function(text, x, y, max_width, line_height, filled, text_baseline)
+{
+    if (max_width === 0)
+    {
+        this.drawText(text, x, y, line_height, filled);
+        return;
+    }
+    text = "" + text;
+	var num_lines = this.measureTextLines(text, max_width);
+    if (num_lines > 1)
+    {
+        if (text_baseline === "middle")
+            y -= (line_height * num_lines) / 2 - line_height / 2;
+    }
+    var ctx = this.context;
+    if (this.cache_ctx !== null)
+        ctx = this.cache_ctx;
+    var lines = text.split("\n");
+    for (var t = 0; t < lines.length; t++)
+    {
+        var line = "";
+        var words = lines[t].split(" ");
+        for (var t2 = 0; t2 < words.length; t2++)
+        {
+            var tline = line + words[t2] + " ";
+            var metrics = ctx.measureText(tline);
+            if (metrics.width > max_width)
+            {
+                if (filled)
+                    ctx.fillText(line, x, y);
+                else
+                    ctx.strokeText(line, x, y);
+                line = words[t2] + " ";
+                y += line_height;
+            }
+            else
+            {
+                line = tline;
+            }
+        }
+        if (filled)
+            ctx.fillText(line, x, y);
+        else
+            ctx.strokeText(line, x, y);
+        y += line_height;
+    }
+};
+
+b5.Display.prototype.measureText = function(text)
 {
     var ctx = this.context;
     if (this.cache_ctx !== null)
         ctx = this.cache_ctx;
     return ctx.measureText(text);
+};
+
+b5.Display.prototype.measureTextLines = function(text, max_width)
+{
+    if (max_width === 0)
+        return 1;
+    var ctx = this.context;
+    if (this.cache_ctx !== null)
+        ctx = this.cache_ctx;
+    var lines = text.split("\n");
+    var count = 0;
+    for (var t = 0; t < lines.length; t++)
+    {
+        var line = "";
+        var words = lines[t].split(" ");
+        for (var t2 = 0; t2 < words.length; t2++)
+        {
+            var tline = line + words[t2] + " ";
+            var metrics = ctx.measureText(tline);
+            if (metrics.width > max_width)
+            {
+                line = words[t2] + " ";
+                count++;
+            }
+            else
+                line = tline;
+        }
+        count++;
+    }
+    return count;
 };
 
 b5.Display.prototype.setTransform = function(m11, m12, m21, m22, dx, dy)
@@ -11209,7 +11472,7 @@ b5.Instants.prototype.CreateScreenshotCache = function(height)
     this.shotCache.width = canvas.width * (this.shotCache.height / canvas.height);
 }
 
-b5.Instants.prototype.GetScreenshot = function(image)
+b5.Instants.prototype.GetScreenshot = function(image, type, quality)
 {
     var disp = b5.app.display;
     if (this.shotCache === null)
@@ -11224,7 +11487,10 @@ b5.Instants.prototype.GetScreenshot = function(image)
         disp.setTransform(scale,0,0,scale, 0,0);
         disp.drawImage(canvas, 0, 0);
         disp.setCache(null);
-        return this.shotCache.toDataURL("image/png");
+		if (type === "jpeg")
+			return this.shotCache.toDataURL("image/jpeg", quality);
+		else
+			return this.shotCache.toDataURL("image/png");
     }
     catch (ex)
     {
@@ -11314,6 +11580,11 @@ b5.Instants.prototype.CreateShortcut = function(done_callback)
                 if (done_callback !== undefined)
                     done_callback(false);
             });
+        }
+        else
+        {
+            if (done_callback !== undefined)
+                done_callback(false);
         }
     });
 }

@@ -213,6 +213,7 @@ b5.RectActor.prototype.drawToCache = function()
 
     disp.setCache(cache);
     // Render the actor
+	this.preDrawCached();
     if (this.filled && this.fill_style !== "")
         disp.setFillStyle(this.fill_style);
     if (this.stroke_filled && this.stroke_style !== "")
@@ -225,6 +226,7 @@ b5.RectActor.prototype.drawToCache = function()
         disp.drawRoundRect(-w / 2, -h / 2, this.w, this.h, this.corner_radius, this.filled);
     else
         disp.drawRect(-w / 2, -h / 2, this.w, this.h, this.filled);
+	this.postDrawCached();
     disp.setCache(null);
 
     this.cache_canvas = cache;

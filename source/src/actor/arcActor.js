@@ -209,6 +209,7 @@ b5.ArcActor.prototype.drawToCache = function()
     }
     
     disp.setCache(cache);
+	this.preDrawCached();
     // Render the actor
     if (this.filled && this.fill_style !== "")
         disp.setFillStyle(this.fill_style);
@@ -219,6 +220,8 @@ b5.ArcActor.prototype.drawToCache = function()
 
     disp.setTransform(1,0,0,1, ox + w/2, oy + h/2);
     disp.drawArc(0,0, this.radius, this.start_angle, this.end_angle, this.filled);
+	this.postDrawCached();
+    
     disp.setCache(null);
 
     this.cache_canvas = cache;

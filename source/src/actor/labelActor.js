@@ -218,6 +218,7 @@ b5.LabelActor.prototype.drawToCache = function()
 
     disp.setCache(cache);
     // Render the actor
+	this.preDrawCached();
     if (this.font !== "")
         disp.setFont(this.font);
     if (this.textAlign !== "")
@@ -244,6 +245,8 @@ b5.LabelActor.prototype.drawToCache = function()
         disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
     if (this.filled)
         disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
+	this.postDrawCached();
+    
     disp.setCache(null);
 
     this.cache_canvas = cache;
