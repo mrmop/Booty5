@@ -1,3 +1,9 @@
+v1.5.9
+------
+* Added support for radial gradients
+* Updated caching
+* Added sujpport for pause / resume app detection
+
 v1.5.8
 ------
 * Fixed issue where audio would not work on Android Chrome

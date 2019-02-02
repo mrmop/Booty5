@@ -40,6 +40,8 @@
  * @property {b5.App|b5.Scene}          parent          - Parent resource manager (internal)
  * @property {object[]}                 stops           - Array of colour stops (internal)
  * @property {string}                   name            - Name of this gradient resource
+ * @property {number[]}                 rad_pos         - Radial gradient position
+ * @property {number[]}                 rad_radius      - Radial gradient radii
  */
 b5.Gradient = function(name, colour_stops)
 {
@@ -120,7 +122,11 @@ b5.Gradient.prototype.createStyle = function(w, h, start, end)
         y1 = y1 * h - h / 2;
         x2 = x2 * w - w / 2;
         y2 = y2 * h - h / 2;
-        var grad = b5.app.display.context.createLinearGradient(x1, y1, x2, y2);
+        var grad;
+        if (this.rad_pos !== undefined)
+            grad = b5.app.display.context.createRadialGradient(this.rad_pos[0] * w, this.rad_pos[1] * w, this.rad_radius[0] * w, this.rad_pos[2] * w, this.rad_pos[3] * w, this.rad_radius[1] * w);
+        else
+            grad = b5.app.display.context.createLinearGradient(x1, y1, x2, y2);
         for (var t = 0; t < this.stops.length; t++)
         {
             var s = this.stops[t];

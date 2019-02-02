@@ -1,3 +1,410 @@
+// Add Page Visibility API support to old browsers by focus/blur hack.
+//
+// Include this script _before_ Visibility.js.
+//
+// Note, that this hack doesn’t correctly emulate Page Visibility API:
+// when user change focus from browser to another window (browser and your
+// page may stay visible), this hack will decide, that you page is hidden.
+//
+// For Firefox 5–9 it will be better to use MozVisibility hack without
+// this issue. See <https://github.com/private-face/mozvisibility>.
+;(function (document) {
+    if ( document.visibilityState || document.webkitVisibilityState ) {
+        return;
+    }
+
+    document.hidden = false;
+    document.visibilityState = 'visible';
+
+    var event = null
+    var i = 0
+    var fireEvent = function () {
+        if( document.createEvent ) {
+            if ( !event ) {
+                event = document.createEvent('HTMLEvents');
+                event.initEvent('visibilitychange', true, true);
+            }
+            document.dispatchEvent(event);
+        } else {
+            if ( typeof(Visibility) == 'object' ) {
+                Visibility._change.call(Visibility, { });
+            }
+        }
+    }
+
+    var onFocus = function () {
+        document.hidden = false;
+        document.visibilityState = 'visible';
+        fireEvent();
+    };
+    var onBlur  = function () {
+        document.hidden = true;
+        document.visibilityState = 'hidden';
+        fireEvent();
+    }
+
+    if ( document.addEventListener ) {
+        window.addEventListener('focus', onFocus, true);
+        window.addEventListener('blur',  onBlur,  true);
+    } else {
+        document.attachEvent('onfocusin',  onFocus);
+        document.attachEvent('onfocusout', onBlur);
+    }
+})(document);
+
+;(function (global) {
+    var lastId = -1;
+
+    // Visibility.js allow you to know, that your web page is in the background
+    // tab and thus not visible to the user. This library is wrap under
+    // Page Visibility API. It fix problems with different vendor prefixes and
+    // add high-level useful functions.
+    var self = {
+
+        // Call callback only when page become to visible for user or
+        // call it now if page is visible now or Page Visibility API
+        // doesn’t supported.
+        //
+        // Return false if API isn’t supported, true if page is already visible
+        // or listener ID (you can use it in `unbind` method) if page isn’t
+        // visible now.
+        //
+        //   Visibility.onVisible(function () {
+        //       startIntroAnimation();
+        //   });
+        onVisible: function (callback) {
+            var support = self.isSupported();
+            if ( !support || !self.hidden() ) {
+                callback();
+                return support;
+            }
+
+            var listener = self.change(function (e, state) {
+                if ( !self.hidden() ) {
+                    self.unbind(listener);
+                    callback();
+                }
+            });
+            return listener;
+        },
+
+        // Call callback when visibility will be changed. First argument for
+        // callback will be original event object, second will be visibility
+        // state name.
+        //
+        // Return listener ID to unbind listener by `unbind` method.
+        //
+        // If Page Visibility API doesn’t supported method will be return false
+        // and callback never will be called.
+        //
+        //   Visibility.change(function(e, state) {
+        //       Statistics.visibilityChange(state);
+        //   });
+        //
+        // It is just proxy to `visibilitychange` event, but use vendor prefix.
+        change: function (callback) {
+            if ( !self.isSupported() ) {
+                return false;
+            }
+            lastId += 1;
+            var number = lastId;
+            self._callbacks[number] = callback;
+            self._listen();
+            return number;
+        },
+
+        // Remove `change` listener by it ID.
+        //
+        //   var id = Visibility.change(function(e, state) {
+        //       firstChangeCallback();
+        //       Visibility.unbind(id);
+        //   });
+        unbind: function (id) {
+            delete self._callbacks[id];
+        },
+
+        // Call `callback` in any state, expect “prerender”. If current state
+        // is “prerender” it will wait until state will be changed.
+        // If Page Visibility API doesn’t supported, it will call `callback`
+        // immediately.
+        //
+        // Return false if API isn’t supported, true if page is already after
+        // prerendering or listener ID (you can use it in `unbind` method)
+        // if page is prerended now.
+        //
+        //   Visibility.afterPrerendering(function () {
+        //       Statistics.countVisitor();
+        //   });
+        afterPrerendering: function (callback) {
+            var support   = self.isSupported();
+            var prerender = 'prerender';
+
+            if ( !support || prerender != self.state() ) {
+                callback();
+                return support;
+            }
+
+            var listener = self.change(function (e, state) {
+                if ( prerender != state ) {
+                    self.unbind(listener);
+                    callback();
+                }
+            });
+            return listener;
+        },
+
+        // Return true if page now isn’t visible to user.
+        //
+        //   if ( !Visibility.hidden() ) {
+        //       VideoPlayer.play();
+        //   }
+        //
+        // It is just proxy to `document.hidden`, but use vendor prefix.
+        hidden: function () {
+            return !!(self._doc.hidden || self._doc.webkitHidden);
+        },
+
+        // Return visibility state: 'visible', 'hidden' or 'prerender'.
+        //
+        //   if ( 'prerender' == Visibility.state() ) {
+        //       Statistics.pageIsPrerendering();
+        //   }
+        //
+        // Don’t use `Visibility.state()` to detect, is page visible, because
+        // visibility states can extend in next API versions.
+        // Use more simpler and general `Visibility.hidden()` for this cases.
+        //
+        // It is just proxy to `document.visibilityState`, but use
+        // vendor prefix.
+        state: function () {
+            return self._doc.visibilityState       ||
+                   self._doc.webkitVisibilityState ||
+                   'visible';
+        },
+
+        // Return true if browser support Page Visibility API.
+        // refs: https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+        //
+        //   if ( Visibility.isSupported() ) {
+        //       Statistics.startTrackingVisibility();
+        //       Visibility.change(function(e, state)) {
+        //           Statistics.trackVisibility(state);
+        //       });
+        //   }
+        isSupported: function () {
+            return self._doc.hidden !== undefined || self._doc.webkitHidden !== undefined;
+        },
+
+        // Link to document object to change it in tests.
+        _doc: document || {},
+
+        // Callbacks from `change` method, that wait visibility changes.
+        _callbacks: { },
+
+        // Listener for `visibilitychange` event.
+        _change: function(event) {
+            var state = self.state();
+
+            for ( var i in self._callbacks ) {
+                self._callbacks[i].call(self._doc, event, state);
+            }
+        },
+
+        // Set listener for `visibilitychange` event.
+        _listen: function () {
+            if ( self._init ) {
+                return;
+            }
+
+            var event = 'visibilitychange';
+            if ( self._doc.webkitVisibilityState ) {
+                event = 'webkit' + event;
+            }
+
+            var listener = function () {
+                self._change.apply(self, arguments);
+            };
+            if ( self._doc.addEventListener ) {
+                self._doc.addEventListener(event, listener);
+            } else {
+                self._doc.attachEvent(event, listener);
+            }
+            self._init = true;
+        }
+
+    };
+
+    if ( typeof(module) != 'undefined' && module.exports ) {
+        module.exports = self;
+    } else {
+        global.Visibility = self;
+    }
+
+})(this);
+
+;(function (window) {
+    var lastTimer = -1;
+
+    var install = function (Visibility) {
+
+        // Run callback every `interval` milliseconds if page is visible and
+        // every `hiddenInterval` milliseconds if page is hidden.
+        //
+        //   Visibility.every(60 * 1000, 5 * 60 * 1000, function () {
+        //       checkNewMails();
+        //   });
+        //
+        // You can skip `hiddenInterval` and callback will be called only if
+        // page is visible.
+        //
+        //   Visibility.every(1000, function () {
+        //       updateCountdown();
+        //   });
+        //
+        // It is analog of `setInterval(callback, interval)` but use visibility
+        // state.
+        //
+        // It return timer ID, that you can use in `Visibility.stop(id)` to stop
+        // timer (`clearInterval` analog).
+        // Warning: timer ID is different from interval ID from `setInterval`,
+        // so don’t use it in `clearInterval`.
+        //
+        // On change state from hidden to visible timers will be execute.
+        Visibility.every = function (interval, hiddenInterval, callback) {
+            Visibility._time();
+
+            if ( !callback ) {
+                callback = hiddenInterval;
+                hiddenInterval = null;
+            }
+
+            lastTimer += 1;
+            var number = lastTimer;
+
+            Visibility._timers[number] = {
+                visible:  interval,
+                hidden:   hiddenInterval,
+                callback: callback
+            };
+            Visibility._run(number, false);
+
+            if ( Visibility.isSupported() ) {
+                Visibility._listen();
+            }
+            return number;
+        };
+
+        // Stop timer from `every` method by it ID (`every` method return it).
+        //
+        //   slideshow = Visibility.every(5 * 1000, function () {
+        //       changeSlide();
+        //   });
+        //   $('.stopSlideshow').click(function () {
+        //       Visibility.stop(slideshow);
+        //   });
+        Visibility.stop = function(id) {
+            if ( !Visibility._timers[id] ) {
+                return false;
+            }
+            Visibility._stop(id);
+            delete Visibility._timers[id];
+            return true;
+        };
+
+        // Callbacks and intervals added by `every` method.
+        Visibility._timers = { };
+
+        // Initialize variables on page loading.
+        Visibility._time = function () {
+            if ( Visibility._timed ) {
+                return;
+            }
+            Visibility._timed     = true;
+            Visibility._wasHidden = Visibility.hidden();
+
+            Visibility.change(function () {
+                Visibility._stopRun();
+                Visibility._wasHidden = Visibility.hidden();
+            });
+        };
+
+        // Try to run timer from every method by it’s ID. It will be use
+        // `interval` or `hiddenInterval` depending on visibility state.
+        // If page is hidden and `hiddenInterval` is null,
+        // it will not run timer.
+        //
+        // Argument `runNow` say, that timers must be execute now too.
+        Visibility._run = function (id, runNow) {
+            var interval,
+                timer = Visibility._timers[id];
+
+            if ( Visibility.hidden() ) {
+                if ( null === timer.hidden ) {
+                    return;
+                }
+                interval = timer.hidden;
+            } else {
+                interval = timer.visible;
+            }
+
+            var runner = function () {
+                timer.last = new Date();
+                timer.callback.call(window);
+            }
+
+            if ( runNow ) {
+                var now  = new Date();
+                var last = now - timer.last ;
+
+                if ( interval > last ) {
+                    timer.delay = setTimeout(function () {
+                        timer.id = setInterval(runner, interval);
+                        runner();
+                    }, interval - last);
+                } else {
+                    timer.id = setInterval(runner, interval);
+                    runner();
+                }
+
+            } else {
+              timer.id = setInterval(runner, interval);
+            }
+        };
+
+        // Stop timer from `every` method by it’s ID.
+        Visibility._stop = function (id) {
+            var timer = Visibility._timers[id];
+            clearInterval(timer.id);
+            clearTimeout(timer.delay);
+            delete timer.id;
+            delete timer.delay;
+        };
+
+        // Listener for `visibilitychange` event.
+        Visibility._stopRun = function (event) {
+            var isHidden  = Visibility.hidden(),
+                wasHidden = Visibility._wasHidden;
+
+            if ( (isHidden && !wasHidden) || (!isHidden && wasHidden) ) {
+                for ( var i in Visibility._timers ) {
+                    Visibility._stop(i);
+                    Visibility._run(i, !isHidden);
+                }
+            }
+        };
+
+        return Visibility;
+    }
+
+    if ( typeof(module) != 'undefined' && module.exports ) {
+        module.exports = install(require('./visibility.core'));
+    } else {
+        install(window.Visibility || require('./visibility.core'))
+    }
+
+})(window);
+
+
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -2148,6 +2555,7 @@ b5.TasksManager.prototype.execute = function()
  * @property {string}                   composite_op        - Composite operation (default is null)
  * @property {boolean}                  cache               - If true then resource will be rendered to a cached canvas (default is false)
  * @property {boolean}                  merge_cache         - If true then resource will be rendered to parent cached canvas (default is false)
+ * @property {boolean}                  cached              - Cached if true
  * @property {boolean}                  round_pixels        - If set to true then vertices will be rounded before rendered which can boost performance, but there will be a loss in precision (default is false)
  * @property {number}                   padding             - Text padding (used when caching)
  * @property {number}                   scale_method        - Scale method used to fit actor to screen
@@ -2239,6 +2647,7 @@ b5.Actor = function(virtual)
 	this.shadow_colour = "#000000"; // Shadow colour
 	this.composite_op = null;       // Composite operation
 	this.cache = false;             // If true then resource will be rendered to a cached canvas
+	this.cached = false;
 	this.merge_cache = false;       // If true then resource will be rendered to parent cached canvas
 	this.round_pixels = false;      // If set to true then vertices will be rounded before rendered which can boost performance, but there will be a loss in precision
     this.padding = 0;	            // Amount of pixel padding to add around the actor when caching
@@ -3553,6 +3962,9 @@ b5.Actor.prototype.draw = function()
 	var dscale = app.canvas_scale;
 	var disp = app.display;
 	this.preDraw();
+	var ps = b5.app.pixel_ratio;
+	if (cache === null)
+		ps = 1;
 
 	// Get source image coordinates from the atlas
 	var src = null;
@@ -3575,8 +3987,8 @@ b5.Actor.prototype.draw = function()
 			this.prev_frame = this.current_frame;
 		}
 	}
-	var mx = app.canvas_cx + scene.x * dscale;
-	var my = app.canvas_cy + scene.y * dscale;
+	var mx = app.canvas_cx + scene.x * dscale / ps;
+	var my = app.canvas_cy + scene.y * dscale / ps;
 	if (this.ow === undefined)
 	{
 		this.ow = this.w;
@@ -3608,7 +4020,7 @@ b5.Actor.prototype.draw = function()
 	disp.setTransform(trans[0] * dscale, trans[1] * dscale, trans[2] * dscale, trans[3] * dscale, tx, ty);
 
 	if (self_clip)
-		this.setClipping(-cx, -cy);
+		this.setClipping(0,0);
 
 	if (cache === null)
 	{
@@ -3652,10 +4064,22 @@ b5.Actor.prototype.draw = function()
 };
 
 /**
+ * Enables caching on an actor
+ */
+b5.Actor.prototype.enableCache = function(merge)
+{
+	this.cache = true;
+	this.cached = true;
+	this.merge_cache = merge;
+};
+
+/**
  * Reset cache state of actor and all children
  */
 b5.Actor.prototype.resetCache = function()
 {
+	if (!this.cached)
+		return;
 	this.cache = true;
 	var count = this.actors.length;
 	if (count > 0)
@@ -3669,7 +4093,7 @@ b5.Actor.prototype.resetCache = function()
 /**
  * Renders this actor to a cache which can speed up rendering it the next frame
  */
-b5.Actor.prototype.drawToCache = function()
+/*b5.Actor.prototype.drawToCache = function()
 {
 	var disp = b5.app.display;
 	var cache = null;
@@ -3725,6 +4149,84 @@ b5.Actor.prototype.drawToCache = function()
 	disp.setCache(null);
 
 	this.cache_canvas = cache;
+};*/
+b5.Actor.prototype.drawToCache = function()
+{
+	var disp = b5.app.display;
+	var cache = null;
+	var parent = null;
+	if (this.merge_cache)
+	{
+		var parent = this.findFirstCachedParent();
+		if (parent !== null)
+		{
+			cache = parent.cache_canvas;
+		}
+	}
+
+	// Get source image coordinates from the atlas
+	var src = null;
+	var atlas = this.atlas;
+	if (atlas !== null)
+	{
+		if (this.anim_frames !== null)
+			src = atlas.getFrame(this.anim_frames[this.current_frame << 0]);
+		else
+			src = atlas.getFrame(this.current_frame << 0);
+	}
+
+	var ps = b5.app.pixel_ratio;
+	if (cache === null)
+	{
+        cache = disp.createCache();
+        cache.width = (this.ow * ps) | 0;
+        cache.height = (this.oh * ps) | 0;
+	}
+	disp.setCache(cache);
+
+	var cx = this.ow / 2;
+	var cy = this.oh / 2;
+	var scene = this.scene;
+	var trans = [];
+	var r = this.rotation;
+	var cos = Math.cos(r);
+	var sin = Math.sin(r);
+	var dscale = 1 / ps;
+	var sx = this.scale_x;
+	var sy = this.scale_y;
+	trans[0] = cos * sx;
+	trans[1] = sin * sx;
+	trans[2] = -sin * sy;
+	trans[3] = cos * sy;
+	trans[4] = this.x + cache.width / 2 - this.ox * this.ow;
+	trans[5] = this.y + cache.height / 2 - this.oy * this.oh;
+	var pre_mat = [1, 0, 0, 1, this.ox * this.ow, this.oy * this.oh];
+	b5.Maths.preMulMatrix(trans, pre_mat);
+
+	if (this.self_clip)
+	{
+		disp.setTransform(1,0,0,1, 0,0);
+		this.setClipping(trans[4], trans[5]);
+	}
+
+	this.preDrawCached();
+	
+
+	disp.setTransform(trans[0] * dscale, trans[1] * dscale, trans[2] * dscale, trans[3] * dscale, trans[4], trans[5]);
+	
+	if (atlas !== null)
+		disp.drawAtlasImage(atlas.bitmap.image, src.x, src.y, src.w, src.h, -cx, -cy, this.w, this.h);
+	else
+	if (this.bitmap !== null)
+		disp.drawImage(this.bitmap.image, -cx, -cy, this.w, this.h);
+	this.postDrawCached();
+	if (this.self_clip)
+		disp.restoreContext();
+
+	disp.setCache(null);
+
+	if (this.cached && !this.merge_cache)
+		this.cache_canvas = cache;
 };
 
 /**
@@ -3737,8 +4239,11 @@ b5.Actor.prototype.preDraw = function()
 		this.accum_opacity = this.opacity * this.scene.opacity;
 	else
 		this.accum_opacity = this.parent.accum_opacity * this.opacity;
-	disp.setGlobalAlpha(this.accum_opacity);
-
+	if (this.type === b5.Actor.Type_Image)
+		disp.setGlobalAlpha(this.accum_opacity);
+	else
+		disp.setGlobalAlpha(1);
+	
 	if (this.shadow)
 		disp.setShadow(this.shadow_x, this.shadow_y, this.shadow_colour, this.shadow_blur);
 	if (this.composite_op !== null)
@@ -4169,7 +4674,8 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 					act._av = true;
 				}
 			}
-			act.touching = false;
+			if (Math.abs(this.scroll_vx) > 1 || Math.abs(this.scroll_vy) > 1)
+				act.touching = false;
 			act.dirty();
 		}
 	}
@@ -4900,10 +5406,39 @@ b5.LabelActor.prototype.drawToCache = function()
         oy += h/2;
     else if (this.text_baseline === "bottom")
         oy += h;
-    if (this.stroke_filled)
-        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
-    if (this.filled)
-        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
+	if (this.merge_cache)
+    {
+        var scene = this.scene;
+        var trans = [];
+        var r = this.rotation;
+        var cos = Math.cos(r);
+        var sin = Math.sin(r);
+        var dscale = 1;
+        var sx = this.scale_x;
+        var sy = this.scale_y;
+        trans[0] = cos * sx;
+        trans[1] = sin * sx;
+        trans[2] = -sin * sy;
+        trans[3] = cos * sy;
+            trans[4] = this.x + cache.width / 2 - this.ox * this.ow;
+        trans[5] = this.y + cache.height / 2 - this.oy * this.oh;
+        var pre_mat = [1, 0, 0, 1, this.ox * this.ow, this.oy * this.oh];
+        b5.Maths.preMulMatrix(trans, pre_mat);
+        disp.setTransform(trans[0] * dscale, trans[1] * dscale, trans[2] * dscale, trans[3] * dscale, trans[4], trans[5]);
+        if (this.stroke_filled)
+            disp.drawTextWrap(this.text, 0, 0, this.max_width, this.line_height, false, this.text_baseline);
+        if (this.filled)
+            disp.drawTextWrap(this.text, 0, 0, this.max_width, this.line_height, true, this.text_baseline);
+        disp.setTransform(1,0,0,1, 0, 0);
+    }
+    else
+    {
+        disp.setTransform(1,0,0,1, 0, 0);
+        if (this.stroke_filled)
+            disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
+        if (this.filled)
+            disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
+    }
 	this.postDrawCached();
     
     disp.setCache(null);
@@ -6186,6 +6721,7 @@ b5.MapActor.prototype.draw = function()
  * @property {function}                started                      - Function that will be called when the app starts
  * @property {number}                  num_logic                    - Number of times that the logic loop has been ran since app start
  * @property {number}                  num_draw                     - Number of times that the draw loop has been ran since app start
+ * @property {function}                onAppPaused                  - Called when application enters a paused state or resumes from a paused state
  *
  */
 b5.App = function(canvas, web_audio)
@@ -6300,6 +6836,17 @@ b5.App = function(canvas, web_audio)
     window.addEventListener("keypress", this.onKeyPress, false);
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
+
+    Visibility.change(function (e, state) {
+        if (b5.app.onAppPaused !== undefined)
+        {
+            if (state === "hidden")
+                b5.app.onAppPaused(true);
+            else
+            if (state === "visible")
+                b5.app.onAppPaused(false);
+        }
+    });
 
 /*    this.resize = function(event)
     {
@@ -6791,7 +7338,9 @@ b5.App.prototype.onResourceLoadedBase = function(resource, error)
     if (error)
     {
         if (resource.preload)
+        {
             b5.app.total_load_errors++;
+        }
         console.log("Error loading resource " + resource.name);
     }
     else
@@ -8418,6 +8967,11 @@ b5.Xoml.prototype.parseBrush = function(parent, item)
         // Parse colour stops
         var stops = item.ST;
         brush = new b5.Gradient(item.N);
+        brush.rad_radius = item.RR;
+        if (brush.rad_radius !== undefined)
+            brush.rad_pos = [0, 0, 0, 0];
+        if (item.RP !== undefined)
+            brush.rad_pos = item.RP;
         for (var t = 0; t < stops.length; t++)
         {
             var stop = stops[t];
@@ -8976,7 +9530,10 @@ b5.Xoml.prototype.parseIcon = function(parent, item)
         actor.clip_shape = this.current_scene.findResource(item.CS, "shape");
 
     if (item.Ca === true)
+    {
+        actor.cached = true;
         actor.cache = true;
+    }
     if (item.Me === true)
         actor.merge_cache = true;
     if (item.Rd === true)
@@ -9002,7 +9559,10 @@ b5.Xoml.prototype.parseLabel = function(parent, item)
     if (item.Lh !== undefined)
         actor.line_height = item.Lh;
     if (item.Ca === true)
+    {
+        actor.cached = true;
         actor.cache = true;
+    }
     if (item.Me === true)
         actor.merge_cache = true;
     if (item.Rd === true)
@@ -9934,6 +10494,8 @@ b5.Bitmap.prototype.destroy = function()
  * @property {b5.App|b5.Scene}          parent          - Parent resource manager (internal)
  * @property {object[]}                 stops           - Array of colour stops (internal)
  * @property {string}                   name            - Name of this gradient resource
+ * @property {number[]}                 rad_pos         - Radial gradient position
+ * @property {number[]}                 rad_radius      - Radial gradient radii
  */
 b5.Gradient = function(name, colour_stops)
 {
@@ -10014,7 +10576,11 @@ b5.Gradient.prototype.createStyle = function(w, h, start, end)
         y1 = y1 * h - h / 2;
         x2 = x2 * w - w / 2;
         y2 = y2 * h - h / 2;
-        var grad = b5.app.display.context.createLinearGradient(x1, y1, x2, y2);
+        var grad;
+        if (this.rad_pos !== undefined)
+            grad = b5.app.display.context.createRadialGradient(this.rad_pos[0] * w, this.rad_pos[1] * w, this.rad_radius[0] * w, this.rad_pos[2] * w, this.rad_pos[3] * w, this.rad_radius[1] * w);
+        else
+            grad = b5.app.display.context.createLinearGradient(x1, y1, x2, y2);
         for (var t = 0; t < this.stops.length; t++)
         {
             var s = this.stops[t];

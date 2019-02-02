@@ -262,6 +262,7 @@
  * @property {string}                   composite_op        - Composite operation (default is null)
  * @property {boolean}                  cache               - If true then resource will be rendered to a cached canvas (default is false)
  * @property {boolean}                  merge_cache         - If true then resource will be rendered to parent cached canvas (default is false)
+ * @property {boolean}                  cached              - Cached if true
  * @property {boolean}                  round_pixels        - If set to true then vertices will be rounded before rendered which can boost performance, but there will be a loss in precision (default is false)
  * @property {number}                   padding             - Text padding (used when caching)
  * @property {number}                   scale_method        - Scale method used to fit actor to screen
@@ -353,6 +354,7 @@ b5.Actor = function(virtual)
 	this.shadow_colour = "#000000"; // Shadow colour
 	this.composite_op = null;       // Composite operation
 	this.cache = false;             // If true then resource will be rendered to a cached canvas
+	this.cached = false;
 	this.merge_cache = false;       // If true then resource will be rendered to parent cached canvas
 	this.round_pixels = false;      // If set to true then vertices will be rounded before rendered which can boost performance, but there will be a loss in precision
     this.padding = 0;	            // Amount of pixel padding to add around the actor when caching
@@ -1667,6 +1669,9 @@ b5.Actor.prototype.draw = function()
 	var dscale = app.canvas_scale;
 	var disp = app.display;
 	this.preDraw();
+	var ps = b5.app.pixel_ratio;
+	if (cache === null)
+		ps = 1;
 
 	// Get source image coordinates from the atlas
 	var src = null;
@@ -1689,8 +1694,8 @@ b5.Actor.prototype.draw = function()
 			this.prev_frame = this.current_frame;
 		}
 	}
-	var mx = app.canvas_cx + scene.x * dscale;
-	var my = app.canvas_cy + scene.y * dscale;
+	var mx = app.canvas_cx + scene.x * dscale / ps;
+	var my = app.canvas_cy + scene.y * dscale / ps;
 	if (this.ow === undefined)
 	{
 		this.ow = this.w;
@@ -1722,7 +1727,7 @@ b5.Actor.prototype.draw = function()
 	disp.setTransform(trans[0] * dscale, trans[1] * dscale, trans[2] * dscale, trans[3] * dscale, tx, ty);
 
 	if (self_clip)
-		this.setClipping(-cx, -cy);
+		this.setClipping(0,0);
 
 	if (cache === null)
 	{
@@ -1766,10 +1771,22 @@ b5.Actor.prototype.draw = function()
 };
 
 /**
+ * Enables caching on an actor
+ */
+b5.Actor.prototype.enableCache = function(merge)
+{
+	this.cache = true;
+	this.cached = true;
+	this.merge_cache = merge;
+};
+
+/**
  * Reset cache state of actor and all children
  */
 b5.Actor.prototype.resetCache = function()
 {
+	if (!this.cached)
+		return;
 	this.cache = true;
 	var count = this.actors.length;
 	if (count > 0)
@@ -1783,7 +1800,7 @@ b5.Actor.prototype.resetCache = function()
 /**
  * Renders this actor to a cache which can speed up rendering it the next frame
  */
-b5.Actor.prototype.drawToCache = function()
+/*b5.Actor.prototype.drawToCache = function()
 {
 	var disp = b5.app.display;
 	var cache = null;
@@ -1839,6 +1856,84 @@ b5.Actor.prototype.drawToCache = function()
 	disp.setCache(null);
 
 	this.cache_canvas = cache;
+};*/
+b5.Actor.prototype.drawToCache = function()
+{
+	var disp = b5.app.display;
+	var cache = null;
+	var parent = null;
+	if (this.merge_cache)
+	{
+		var parent = this.findFirstCachedParent();
+		if (parent !== null)
+		{
+			cache = parent.cache_canvas;
+		}
+	}
+
+	// Get source image coordinates from the atlas
+	var src = null;
+	var atlas = this.atlas;
+	if (atlas !== null)
+	{
+		if (this.anim_frames !== null)
+			src = atlas.getFrame(this.anim_frames[this.current_frame << 0]);
+		else
+			src = atlas.getFrame(this.current_frame << 0);
+	}
+
+	var ps = b5.app.pixel_ratio;
+	if (cache === null)
+	{
+        cache = disp.createCache();
+        cache.width = (this.ow * ps) | 0;
+        cache.height = (this.oh * ps) | 0;
+	}
+	disp.setCache(cache);
+
+	var cx = this.ow / 2;
+	var cy = this.oh / 2;
+	var scene = this.scene;
+	var trans = [];
+	var r = this.rotation;
+	var cos = Math.cos(r);
+	var sin = Math.sin(r);
+	var dscale = 1 / ps;
+	var sx = this.scale_x;
+	var sy = this.scale_y;
+	trans[0] = cos * sx;
+	trans[1] = sin * sx;
+	trans[2] = -sin * sy;
+	trans[3] = cos * sy;
+	trans[4] = this.x + cache.width / 2 - this.ox * this.ow;
+	trans[5] = this.y + cache.height / 2 - this.oy * this.oh;
+	var pre_mat = [1, 0, 0, 1, this.ox * this.ow, this.oy * this.oh];
+	b5.Maths.preMulMatrix(trans, pre_mat);
+
+	if (this.self_clip)
+	{
+		disp.setTransform(1,0,0,1, 0,0);
+		this.setClipping(trans[4], trans[5]);
+	}
+
+	this.preDrawCached();
+	
+
+	disp.setTransform(trans[0] * dscale, trans[1] * dscale, trans[2] * dscale, trans[3] * dscale, trans[4], trans[5]);
+	
+	if (atlas !== null)
+		disp.drawAtlasImage(atlas.bitmap.image, src.x, src.y, src.w, src.h, -cx, -cy, this.w, this.h);
+	else
+	if (this.bitmap !== null)
+		disp.drawImage(this.bitmap.image, -cx, -cy, this.w, this.h);
+	this.postDrawCached();
+	if (this.self_clip)
+		disp.restoreContext();
+
+	disp.setCache(null);
+
+	if (this.cached && !this.merge_cache)
+		this.cache_canvas = cache;
 };
 
 /**
@@ -1851,8 +1946,11 @@ b5.Actor.prototype.preDraw = function()
 		this.accum_opacity = this.opacity * this.scene.opacity;
 	else
 		this.accum_opacity = this.parent.accum_opacity * this.opacity;
-	disp.setGlobalAlpha(this.accum_opacity);
-
+	if (this.type === b5.Actor.Type_Image)
+		disp.setGlobalAlpha(this.accum_opacity);
+	else
+		disp.setGlobalAlpha(1);
+	
 	if (this.shadow)
 		disp.setShadow(this.shadow_x, this.shadow_y, this.shadow_colour, this.shadow_blur);
 	if (this.composite_op !== null)
@@ -2283,7 +2381,8 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 					act._av = true;
 				}
 			}
-			act.touching = false;
+			if (Math.abs(this.scroll_vx) > 1 || Math.abs(this.scroll_vy) > 1)
+				act.touching = false;
 			act.dirty();
 		}
 	}

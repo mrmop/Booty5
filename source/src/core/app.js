@@ -145,6 +145,7 @@
  * @property {function}                started                      - Function that will be called when the app starts
  * @property {number}                  num_logic                    - Number of times that the logic loop has been ran since app start
  * @property {number}                  num_draw                     - Number of times that the draw loop has been ran since app start
+ * @property {function}                onAppPaused                  - Called when application enters a paused state or resumes from a paused state
  *
  */
 b5.App = function(canvas, web_audio)
@@ -259,6 +260,17 @@ b5.App = function(canvas, web_audio)
     window.addEventListener("keypress", this.onKeyPress, false);
     window.addEventListener("keydown", this.onKeyDown, false);
     window.addEventListener("keyup", this.onKeyUp, false);
+
+    Visibility.change(function (e, state) {
+        if (b5.app.onAppPaused !== undefined)
+        {
+            if (state === "hidden")
+                b5.app.onAppPaused(true);
+            else
+            if (state === "visible")
+                b5.app.onAppPaused(false);
+        }
+    });
 
 /*    this.resize = function(event)
     {
@@ -750,7 +762,9 @@ b5.App.prototype.onResourceLoadedBase = function(resource, error)
     if (error)
     {
         if (resource.preload)
+        {
             b5.app.total_load_errors++;
+        }
         console.log("Error loading resource " + resource.name);
     }
     else

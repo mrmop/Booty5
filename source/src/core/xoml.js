@@ -239,6 +239,11 @@ b5.Xoml.prototype.parseBrush = function(parent, item)
         // Parse colour stops
         var stops = item.ST;
         brush = new b5.Gradient(item.N);
+        brush.rad_radius = item.RR;
+        if (brush.rad_radius !== undefined)
+            brush.rad_pos = [0, 0, 0, 0];
+        if (item.RP !== undefined)
+            brush.rad_pos = item.RP;
         for (var t = 0; t < stops.length; t++)
         {
             var stop = stops[t];
@@ -797,7 +802,10 @@ b5.Xoml.prototype.parseIcon = function(parent, item)
         actor.clip_shape = this.current_scene.findResource(item.CS, "shape");
 
     if (item.Ca === true)
+    {
+        actor.cached = true;
         actor.cache = true;
+    }
     if (item.Me === true)
         actor.merge_cache = true;
     if (item.Rd === true)
@@ -823,7 +831,10 @@ b5.Xoml.prototype.parseLabel = function(parent, item)
     if (item.Lh !== undefined)
         actor.line_height = item.Lh;
     if (item.Ca === true)
+    {
+        actor.cached = true;
         actor.cache = true;
+    }
     if (item.Me === true)
         actor.merge_cache = true;
     if (item.Rd === true)

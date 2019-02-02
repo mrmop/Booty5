@@ -241,10 +241,39 @@ b5.LabelActor.prototype.drawToCache = function()
         oy += h/2;
     else if (this.text_baseline === "bottom")
         oy += h;
-    if (this.stroke_filled)
-        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
-    if (this.filled)
-        disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
+	if (this.merge_cache)
+    {
+        var scene = this.scene;
+        var trans = [];
+        var r = this.rotation;
+        var cos = Math.cos(r);
+        var sin = Math.sin(r);
+        var dscale = 1;
+        var sx = this.scale_x;
+        var sy = this.scale_y;
+        trans[0] = cos * sx;
+        trans[1] = sin * sx;
+        trans[2] = -sin * sy;
+        trans[3] = cos * sy;
+            trans[4] = this.x + cache.width / 2 - this.ox * this.ow;
+        trans[5] = this.y + cache.height / 2 - this.oy * this.oh;
+        var pre_mat = [1, 0, 0, 1, this.ox * this.ow, this.oy * this.oh];
+        b5.Maths.preMulMatrix(trans, pre_mat);
+        disp.setTransform(trans[0] * dscale, trans[1] * dscale, trans[2] * dscale, trans[3] * dscale, trans[4], trans[5]);
+        if (this.stroke_filled)
+            disp.drawTextWrap(this.text, 0, 0, this.max_width, this.line_height, false, this.text_baseline);
+        if (this.filled)
+            disp.drawTextWrap(this.text, 0, 0, this.max_width, this.line_height, true, this.text_baseline);
+        disp.setTransform(1,0,0,1, 0, 0);
+    }
+    else
+    {
+        disp.setTransform(1,0,0,1, 0, 0);
+        if (this.stroke_filled)
+            disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, false, this.text_baseline);
+        if (this.filled)
+            disp.drawTextWrap(this.text, ox, oy, this.max_width, this.line_height, true, this.text_baseline);
+    }
 	this.postDrawCached();
     
     disp.setCache(null);
