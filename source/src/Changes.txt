@@ -1,3 +1,9 @@
+v1.5.10
+-------
+* IE fixes
+* Audio fallback
+* Fixed padding when docking to screen edges
+
 v1.5.9
 ------
 * Added support for radial gradients

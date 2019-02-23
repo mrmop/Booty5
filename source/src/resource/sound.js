@@ -88,7 +88,9 @@ b5.Sound.init = function(app)
     {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         if (window.AudioContext === undefined)
+        {
             return false;
+        }
         b5.Sound.context = new AudioContext();
 
         if (b5.Sound.context.state === "suspended")
@@ -120,6 +122,12 @@ b5.Sound.isSupported = function(filename)
  */
 b5.Sound.prototype.load = function(force, done_callback)
 {
+    if (!b5.app.use_web_audio)
+    {
+        this.snd = new Audio(this.location);
+        b5.app.onResourceLoaded(this, true);
+        return;
+    }
     var debug = b5.app.debug;
     //var snd;
     var that = this;
@@ -167,6 +175,13 @@ b5.Sound.prototype.play = function(force)
 {
     if (force != true && b5.Sound.muted)
         return null;
+    if (!b5.app.use_web_audio)
+    {
+        this.snd.loop = this.loop;
+        this.snd.play();
+        return;
+    }
+        
     if (this.buffer === null)
         return null;
     var context = b5.Sound.context;
@@ -191,6 +206,12 @@ b5.Sound.prototype.stop = function()
     var snd = this.snd;
     if (snd === null || snd === undefined)
         return;
+    if (!b5.app.use_web_audio)
+    {
+        snd.pause();
+        return;
+    }
+        
     snd = snd.source;
     snd.stop();
 };
@@ -200,6 +221,11 @@ b5.Sound.prototype.stop = function()
  */
 b5.Sound.prototype.pause = function()
 {
+    if (!b5.app.use_web_audio)
+    {
+        snd.pause();
+        return;
+    }
     var snd = this.snd;
     if (snd === null || snd === undefined)
         return;

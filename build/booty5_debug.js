@@ -1,3 +1,92 @@
+/*
+ * RequestAnimationFrame polyfill
+ */
+(function() {
+  var lastTime = 0;
+  var vendors = ['ms', 'moz', 'webkit', 'o'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+      window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+      window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                 || window[vendors[x]+'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame)
+      window.requestAnimationFrame = function(callback, element) {
+          var currTime = new Date().getTime();
+          var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+          var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+            timeToCall);
+          lastTime = currTime + timeToCall;
+          return id;
+      };
+
+  if (!window.cancelAnimationFrame)
+      window.cancelAnimationFrame = function(id) {
+          clearTimeout(id);
+      };
+}());
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+if (!Array.prototype.includes) {
+  Object.defineProperty(Array.prototype, 'includes', {
+    value: function(valueToFind, fromIndex) {
+
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+
+      // 1. Let O be ? ToObject(this value).
+      var o = Object(this);
+
+      // 2. Let len be ? ToLength(? Get(O, "length")).
+      var len = o.length >>> 0;
+
+      // 3. If len is 0, return false.
+      if (len === 0) {
+        return false;
+      }
+
+      // 4. Let n be ? ToInteger(fromIndex).
+      //    (If fromIndex is undefined, this step produces the value 0.)
+      var n = fromIndex | 0;
+
+      // 5. If n ≥ 0, then
+      //  a. Let k be n.
+      // 6. Else n < 0,
+      //  a. Let k be len + n.
+      //  b. If k < 0, let k be 0.
+      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+      function sameValueZero(x, y) {
+        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+      }
+
+      // 7. Repeat, while k < len
+      while (k < len) {
+        // a. Let elementK be the result of ? Get(O, ! ToString(k)).
+        // b. If SameValueZero(valueToFind, elementK) is true, return true.
+        if (sameValueZero(o[k], valueToFind)) {
+          return true;
+        }
+        // c. Increase k by 1. 
+        k++;
+      }
+
+      // 8. Return false
+      return false;
+    }
+  });
+}
+
+if (!String.prototype.startsWith) {
+    Object.defineProperty(String.prototype, 'startsWith', {
+        value: function(search, pos) {
+            pos = !pos || pos < 0 ? 0 : +pos;
+            return this.substring(pos, pos + search.length) === search;
+        }
+    });
+}
+
 // Add Page Visibility API support to old browsers by focus/blur hack.
 //
 // Include this script _before_ Visibility.js.
@@ -4406,18 +4495,18 @@ b5.Actor.prototype.baseUpdate = function(dt)
 				var s = this.getScaleFromMethod(2);
 				var sx = (this.scale_method === 0) ? 1 : s.x;
 				if (this.dock_x === b5.Actor.Dock_Left)
-					this.x = -scene.w * s.x / 2 + ((this.w * this.scale_x * sx) / 2 + this.margin[0] * s.x);
+					this.x = -scene.w * s.x / 2 + ((this.w * this.scale_x * sx) / 2 + this.margin[0] * sx);
 				else if (this.dock_x === b5.Actor.Dock_Right)
-					this.x = scene.w * s.x / 2 - ((this.w * this.scale_x * sx) / 2 + this.margin[1] * s.x);
+					this.x = scene.w * s.x / 2 - ((this.w * this.scale_x * sx) / 2 + this.margin[1] * sx);
 			}
 			if (this.dock_y !== 0)
 			{
 				var s = this.getScaleFromMethod(3);
 				var sy = (this.scale_method === 0) ? 1 : s.y;
 				if (this.dock_y === b5.Actor.Dock_Top)
-					this.y = -scene.h * s.y / 2 + ((this.h * this.scale_y * sy) / 2 + this.margin[2] * s.y);
+					this.y = -scene.h * s.y / 2 + ((this.h * this.scale_y * sy) / 2 + this.margin[2] * sy);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
-					this.y = scene.h * s.y / 2 - ((this.h * this.scale_y * sy) / 2 + this.margin[3] * s.y);
+					this.y = scene.h * s.y / 2 - ((this.h * this.scale_y * sy) / 2 + this.margin[3] * sy);
 			}
 		}
 		else
@@ -11012,7 +11101,9 @@ b5.Sound.init = function(app)
     {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         if (window.AudioContext === undefined)
+        {
             return false;
+        }
         b5.Sound.context = new AudioContext();
 
         if (b5.Sound.context.state === "suspended")
@@ -11044,6 +11135,12 @@ b5.Sound.isSupported = function(filename)
  */
 b5.Sound.prototype.load = function(force, done_callback)
 {
+    if (!b5.app.use_web_audio)
+    {
+        this.snd = new Audio(this.location);
+        b5.app.onResourceLoaded(this, true);
+        return;
+    }
     var debug = b5.app.debug;
     //var snd;
     var that = this;
@@ -11091,6 +11188,13 @@ b5.Sound.prototype.play = function(force)
 {
     if (force != true && b5.Sound.muted)
         return null;
+    if (!b5.app.use_web_audio)
+    {
+        this.snd.loop = this.loop;
+        this.snd.play();
+        return;
+    }
+        
     if (this.buffer === null)
         return null;
     var context = b5.Sound.context;
@@ -11115,6 +11219,12 @@ b5.Sound.prototype.stop = function()
     var snd = this.snd;
     if (snd === null || snd === undefined)
         return;
+    if (!b5.app.use_web_audio)
+    {
+        snd.pause();
+        return;
+    }
+        
     snd = snd.source;
     snd.stop();
 };
@@ -11124,6 +11234,11 @@ b5.Sound.prototype.stop = function()
  */
 b5.Sound.prototype.pause = function()
 {
+    if (!b5.app.use_web_audio)
+    {
+        snd.pause();
+        return;
+    }
     var snd = this.snd;
     if (snd === null || snd === undefined)
         return;
@@ -11849,7 +11964,7 @@ b5.Instants.prototype.GetLeaderboardScore = function(leaderboard_name, done_call
 b5.Instants.prototype.CanMatchPlayer = function(done_callback)
 {
     FBInstant.checkCanPlayerMatchAsync()
-        .then(canMatch => {
+        .then(function(canMatch) {
             if (done_callback !== undefined)
                 done_callback(canMatch);
         }).catch(function(error) {
@@ -11887,7 +12002,7 @@ b5.Instants.prototype.PreloadVideoAd = function(done_callback, placement_id)
         return;
     var that = this;
     FBInstant.getRewardedVideoAsync(
-        placement_id,
+        placement_id
       ).then(function(rewarded) {
         that.preloadedVideoAd = rewarded;
         return that.preloadedVideoAd.loadAsync();
@@ -11957,7 +12072,7 @@ b5.Instants.prototype.PreloadInterstitialAd = function(done_callback, placement_
         return;
     var that = this;
     FBInstant.getInterstitialAdAsync(
-        placement_id,
+        placement_id
       ).then(function(interstitial) {
         that.preloadedInterAd = interstitial;
         return that.preloadedInterAd.loadAsync();

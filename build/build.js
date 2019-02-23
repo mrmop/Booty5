@@ -2,6 +2,7 @@ var concat = require('concat');
 var compressor = require('node-minify');
 
 var sources = [
+	"../source/src/utils/polyfill.js",
 	"../source/src/ext/vis.js",
 	"../source/src/b5.js",
 	"../source/src/animation/ease.js",

@@ -2113,18 +2113,18 @@ b5.Actor.prototype.baseUpdate = function(dt)
 				var s = this.getScaleFromMethod(2);
 				var sx = (this.scale_method === 0) ? 1 : s.x;
 				if (this.dock_x === b5.Actor.Dock_Left)
-					this.x = -scene.w * s.x / 2 + ((this.w * this.scale_x * sx) / 2 + this.margin[0] * s.x);
+					this.x = -scene.w * s.x / 2 + ((this.w * this.scale_x * sx) / 2 + this.margin[0] * sx);
 				else if (this.dock_x === b5.Actor.Dock_Right)
-					this.x = scene.w * s.x / 2 - ((this.w * this.scale_x * sx) / 2 + this.margin[1] * s.x);
+					this.x = scene.w * s.x / 2 - ((this.w * this.scale_x * sx) / 2 + this.margin[1] * sx);
 			}
 			if (this.dock_y !== 0)
 			{
 				var s = this.getScaleFromMethod(3);
 				var sy = (this.scale_method === 0) ? 1 : s.y;
 				if (this.dock_y === b5.Actor.Dock_Top)
-					this.y = -scene.h * s.y / 2 + ((this.h * this.scale_y * sy) / 2 + this.margin[2] * s.y);
+					this.y = -scene.h * s.y / 2 + ((this.h * this.scale_y * sy) / 2 + this.margin[2] * sy);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
-					this.y = scene.h * s.y / 2 - ((this.h * this.scale_y * sy) / 2 + this.margin[3] * s.y);
+					this.y = scene.h * s.y / 2 - ((this.h * this.scale_y * sy) / 2 + this.margin[3] * sy);
 			}
 		}
 		else

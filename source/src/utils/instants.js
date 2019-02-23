@@ -368,7 +368,7 @@ b5.Instants.prototype.GetLeaderboardScore = function(leaderboard_name, done_call
 b5.Instants.prototype.CanMatchPlayer = function(done_callback)
 {
     FBInstant.checkCanPlayerMatchAsync()
-        .then(canMatch => {
+        .then(function(canMatch) {
             if (done_callback !== undefined)
                 done_callback(canMatch);
         }).catch(function(error) {
@@ -406,7 +406,7 @@ b5.Instants.prototype.PreloadVideoAd = function(done_callback, placement_id)
         return;
     var that = this;
     FBInstant.getRewardedVideoAsync(
-        placement_id,
+        placement_id
       ).then(function(rewarded) {
         that.preloadedVideoAd = rewarded;
         return that.preloadedVideoAd.loadAsync();
@@ -476,7 +476,7 @@ b5.Instants.prototype.PreloadInterstitialAd = function(done_callback, placement_
         return;
     var that = this;
     FBInstant.getInterstitialAdAsync(
-        placement_id,
+        placement_id
       ).then(function(interstitial) {
         that.preloadedInterAd = interstitial;
         return that.preloadedInterAd.loadAsync();
