@@ -2883,8 +2883,25 @@ Object.defineProperty(b5.Actor.prototype, "_av", {
 		if (value !== this.visible && this.onAVChanged !== undefined)
 			this.onAVChanged(value);
 		this.visible = value; this.active = value;
+		this.setBodyActive(this.active);
 	}
 });
+
+/**
+ * Sets the active body state of the actor (applies to all child actors)
+ * @param active {boolean} Active state
+ */
+b5.Actor.prototype.setBodyActive = function(active)
+{
+	if (this.body !== null)
+		this.body.SetActive(active);
+	var children = this.actors;
+	var count = children.length;
+	for (var t = 0; t < count; t++)
+	{
+		children[t].setBodyActive(active);
+	}
+};
 
 /**
  * Sets the actors scene position
@@ -2978,8 +2995,7 @@ b5.Actor.prototype.playAnim = function(name, repeat)
 {
 	if (!this.active)
 	{
-		this.active = true;
-		this.visible = true;
+		this._av = true;
 	}
 	if (this.atlas !== null)
 	{
@@ -3013,8 +3029,7 @@ b5.Actor.prototype.playTimeline = function(name, recurse)
     {
 		if (!this.active)
 		{
-			this.active = true;
-			this.visible = true;
+			this._av = true;
 		}
         timeline.restart();
 		timeline.update(0);
@@ -9562,6 +9577,8 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
 
     if (item.Cn !== undefined)
         this.parseResources(actor, item.Cn);
+
+    actor.setBodyActive(actor.active);
 
     return actor;
 };

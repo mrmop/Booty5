@@ -199,7 +199,7 @@ b5.Sound.prototype.play = function(force)
 };
 
 /**
- * Stops playback of thr sound (re-usable sound only)
+ * Stops playback of the sound (re-usable sound only)
  */
 b5.Sound.prototype.stop = function()
 {

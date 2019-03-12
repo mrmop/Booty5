@@ -120,8 +120,10 @@
  * @property {b5.Scene}                focus_scene                  - Scene that has current input focus, if set via _focus_scene then instance of Scene or string based path to Scene can be used
  * @property {b5.Scene}                focus_scene2                 - Scene that has will receive touch events if focus scene does not process them, if set via _focus_scene2 then instance of Scene or string based path to Scene can be used
  * @property {b5.Actor}                touch_focus                  - The Actor that has the current touch focus
+ * @property {number}                  global_scale                 - Global scale
  * @property {booean}                  prevent_default              - Set to true to prevent bropwser from receiving touch events
  * @property {booean}                  fill_screen                  - Set to true to fill client window
+ * @property {boolean}                 disable_dock_screen          - If true then screen docking is disabled
  * @property {number}                  dt                           - Last frame time delta
  * @property {number}                  avg_fps                      - Average frames per second of app
  * @property {number}                  total_loaded                 - Total pre-loadable resources that have been loaded
@@ -178,6 +180,7 @@ b5.App = function(canvas, web_audio)
 	this.inner_width = b5.Display.getWidth();
     this.inner_height = b5.Display.getHeight();
     this.fill_screen = false;       // Set to true to fill client window
+    this.disable_dock_screen = false;
     this.started = null;            // Function callback which is called when the app starts
     this.num_logic = 0;             // Number of times the logic loop has been ran since app start
     this.num_draw = 0;              // Number of times the draw  loop has been ran since app start
@@ -195,6 +198,7 @@ b5.App = function(canvas, web_audio)
     this.hover_focus = null;        // Actor with current hover focus
     this.clear_canvas = false;		// If true then canvas will be cleared each frame
     this.touch_focus = null;		// The Actor that has the current touch focus
+    this.global_scale = 1;          // 
     this.prevent_default = false;   // Set to true to prevent bropwser from receiving touch events
     this.debug = false;				// Can be used to enable / disable debug trace info
     this.timelines = new b5.TimelineManager();	// Global animation timeline manager
@@ -1035,7 +1039,7 @@ b5.App.prototype.setCanvasScalingMethod = function(method)
     var dh = sh;
     var sx = 1;
     var sy = 1;
-    this.canvas_scale = 1;
+    this.canvas_scale = this.global_scale;
     if (this.canvas_scale_method === b5.App.FitNone)
     {
     }
@@ -1076,7 +1080,7 @@ b5.App.prototype.setCanvasScalingMethod = function(method)
 					scale = sy;
                 break;
         }
-        this.canvas_scale = scale;
+        this.canvas_scale = scale * this.global_scale;
     }
 
 	var nw = (dw * this.pixel_ratio) | 0;

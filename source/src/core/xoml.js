@@ -739,6 +739,8 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
     if (item.Cn !== undefined)
         this.parseResources(actor, item.Cn);
 
+    actor.setBodyActive(actor.active);
+
     return actor;
 };
 b5.Xoml.prototype.parseIcon = function(parent, item)

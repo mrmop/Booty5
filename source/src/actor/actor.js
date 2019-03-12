@@ -501,8 +501,25 @@ Object.defineProperty(b5.Actor.prototype, "_av", {
 		if (value !== this.visible && this.onAVChanged !== undefined)
 			this.onAVChanged(value);
 		this.visible = value; this.active = value;
+		this.setBodyActive(this.active);
 	}
 });
+
+/**
+ * Sets the active body state of the actor (applies to all child actors)
+ * @param active {boolean} Active state
+ */
+b5.Actor.prototype.setBodyActive = function(active)
+{
+	if (this.body !== null)
+		this.body.SetActive(active);
+	var children = this.actors;
+	var count = children.length;
+	for (var t = 0; t < count; t++)
+	{
+		children[t].setBodyActive(active);
+	}
+};
 
 /**
  * Sets the actors scene position
@@ -596,8 +613,7 @@ b5.Actor.prototype.playAnim = function(name, repeat)
 {
 	if (!this.active)
 	{
-		this.active = true;
-		this.visible = true;
+		this._av = true;
 	}
 	if (this.atlas !== null)
 	{
@@ -631,8 +647,7 @@ b5.Actor.prototype.playTimeline = function(name, recurse)
     {
 		if (!this.active)
 		{
-			this.active = true;
-			this.visible = true;
+			this._av = true;
 		}
         timeline.restart();
 		timeline.update(0);
@@ -1462,66 +1477,69 @@ b5.Actor.prototype.removeJoint = function(joint)
  */
 b5.Actor.prototype.getScaleFromMethod = function(method)
 {
-	var sx = 1;
-	var sy = 1;
-	var sm = method;
-	if (sm !== 0)
+	var app = b5.app;
+	var sx = app.global_scale;
+	var sy = app.global_scale;
+	if (!app.disable_dock_screen)
 	{
-		var app = b5.app;
-		var cs = 1 / app.canvas_scale;
-		var dsx = (app.inner_width / app.design_width) * cs;
-		var dsy = (app.inner_height / app.design_height) * cs;
-		if (sm === 4)
+		var sm = method;
+		if (sm !== 0)
 		{
-			if (dsx < dsy) { sx *= dsx; sy *= dsx; }
-			else { sx *= dsy; sy *= dsy; }
-		}
-		else if (sm === 2)
-		{
-			sx *= dsx;
-			sy *= dsx;
-		}
-		else if (sm === 3)
-		{
-			sx *= dsy;
-			sy *= dsy;
-		}
-		else if (sm === 5)
-		{
-			var ds = (dsx + dsy) * 0.5;
-			sx *= ds;
-			sy *= ds;
-		}
-		else if (sm === 6)
-		{
-			var ds;
-			if (app.inner_width > app.inner_height)
-				ds = dsx;
+			var cs = 1 / app.canvas_scale;
+			var dsx = (app.inner_width / app.design_width) * cs;
+			var dsy = (app.inner_height / app.design_height) * cs;
+			if (sm === 4)
+			{
+				if (dsx < dsy) { sx *= dsx; sy *= dsx; }
+				else { sx *= dsy; sy *= dsy; }
+			}
+			else if (sm === 2)
+			{
+				sx *= dsx;
+				sy *= dsx;
+			}
+			else if (sm === 3)
+			{
+				sx *= dsy;
+				sy *= dsy;
+			}
+			else if (sm === 5)
+			{
+				var ds = (dsx + dsy) * 0.5;
+				sx *= ds;
+				sy *= ds;
+			}
+			else if (sm === 6)
+			{
+				var ds;
+				if (app.inner_width > app.inner_height)
+					ds = dsx;
+				else
+					ds = dsy;
+				sx *= ds;
+				sy *= ds;
+			}
+			else if (sm === 7)
+			{
+				var ds;
+				if (app.inner_width < app.inner_height)
+					ds = dsx;
+				else
+					ds = dsy;
+				sx *= ds;
+				sy *= ds;
+			}
+			else if (sm === 8)
+			{
+				sx *= dsx;
+				sy *= dsy;
+			}
 			else
-				ds = dsy;
-			sx *= ds;
-			sy *= ds;
-		}
-		else if (sm === 7)
-		{
-			var ds;
-			if (app.inner_width < app.inner_height)
-				ds = dsx;
-			else
-				ds = dsy;
-			sx *= ds;
-			sy *= ds;
-		}
-		else if (sm === 8)
-		{
-			sx *= dsx;
-			sy *= dsy;
-		}
-		else
-		if (sm === 1)
-		{
-			sx *= cs;
-			sy *= cs;
+			if (sm === 1)
+			{
+				sx *= cs;
+				sy *= cs;
+			}
 		}
 	}
 	return { x: sx, y: sy };
@@ -2106,7 +2124,7 @@ b5.Actor.prototype.baseUpdate = function(dt)
 	// Apply docking
 	if (this.parent === null || !this.parent.virtual)
 	{
-		if (this.dock_screen)
+		if (this.dock_screen && !b5.app.disable_dock_screen)
 		{
 			if (this.dock_x !== 0)
 			{
