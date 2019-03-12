@@ -338,3 +338,26 @@ b5.Utils.RunafterTime = function(delay, task_function, task_data)
     b5.app.addTask("", delay, 1, task_function, task_data);
 };
 
+
+b5.Utils.SetFullscreen = function(enable)
+{
+    if (!document.fullscreenEnabled)
+    {
+        return;
+    }
+
+    if (enable)
+    {
+        if (document.fullscreenElement == null)
+        {
+            b5.app.canvas.requestFullscreen();
+        }
+    }
+    else
+    {
+        if (document.fullscreenElement != null)
+        {
+            document.exitFullscreen();
+        }
+    }
+};

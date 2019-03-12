@@ -3844,66 +3844,69 @@ b5.Actor.prototype.removeJoint = function(joint)
  */
 b5.Actor.prototype.getScaleFromMethod = function(method)
 {
-	var sx = 1;
-	var sy = 1;
-	var sm = method;
-	if (sm !== 0)
+	var app = b5.app;
+	var sx = app.global_scale;
+	var sy = app.global_scale;
+	if (!app.disable_dock_screen)
 	{
-		var app = b5.app;
-		var cs = 1 / app.canvas_scale;
-		var dsx = (app.inner_width / app.design_width) * cs;
-		var dsy = (app.inner_height / app.design_height) * cs;
-		if (sm === 4)
+		var sm = method;
+		if (sm !== 0)
 		{
-			if (dsx < dsy) { sx *= dsx; sy *= dsx; }
-			else { sx *= dsy; sy *= dsy; }
-		}
-		else if (sm === 2)
-		{
-			sx *= dsx;
-			sy *= dsx;
-		}
-		else if (sm === 3)
-		{
-			sx *= dsy;
-			sy *= dsy;
-		}
-		else if (sm === 5)
-		{
-			var ds = (dsx + dsy) * 0.5;
-			sx *= ds;
-			sy *= ds;
-		}
-		else if (sm === 6)
-		{
-			var ds;
-			if (app.inner_width > app.inner_height)
-				ds = dsx;
+			var cs = 1 / app.canvas_scale;
+			var dsx = (app.inner_width / app.design_width) * cs;
+			var dsy = (app.inner_height / app.design_height) * cs;
+			if (sm === 4)
+			{
+				if (dsx < dsy) { sx *= dsx; sy *= dsx; }
+				else { sx *= dsy; sy *= dsy; }
+			}
+			else if (sm === 2)
+			{
+				sx *= dsx;
+				sy *= dsx;
+			}
+			else if (sm === 3)
+			{
+				sx *= dsy;
+				sy *= dsy;
+			}
+			else if (sm === 5)
+			{
+				var ds = (dsx + dsy) * 0.5;
+				sx *= ds;
+				sy *= ds;
+			}
+			else if (sm === 6)
+			{
+				var ds;
+				if (app.inner_width > app.inner_height)
+					ds = dsx;
+				else
+					ds = dsy;
+				sx *= ds;
+				sy *= ds;
+			}
+			else if (sm === 7)
+			{
+				var ds;
+				if (app.inner_width < app.inner_height)
+					ds = dsx;
+				else
+					ds = dsy;
+				sx *= ds;
+				sy *= ds;
+			}
+			else if (sm === 8)
+			{
+				sx *= dsx;
+				sy *= dsy;
+			}
 			else
-				ds = dsy;
-			sx *= ds;
-			sy *= ds;
-		}
-		else if (sm === 7)
-		{
-			var ds;
-			if (app.inner_width < app.inner_height)
-				ds = dsx;
-			else
-				ds = dsy;
-			sx *= ds;
-			sy *= ds;
-		}
-		else if (sm === 8)
-		{
-			sx *= dsx;
-			sy *= dsy;
-		}
-		else
-		if (sm === 1)
-		{
-			sx *= cs;
-			sy *= cs;
+			if (sm === 1)
+			{
+				sx *= cs;
+				sy *= cs;
+			}
 		}
 	}
 	return { x: sx, y: sy };
@@ -4488,7 +4491,7 @@ b5.Actor.prototype.baseUpdate = function(dt)
 	// Apply docking
 	if (this.parent === null || !this.parent.virtual)
 	{
-		if (this.dock_screen)
+		if (this.dock_screen && !b5.app.disable_dock_screen)
 		{
 			if (this.dock_x !== 0)
 			{
@@ -6785,8 +6788,10 @@ b5.MapActor.prototype.draw = function()
  * @property {b5.Scene}                focus_scene                  - Scene that has current input focus, if set via _focus_scene then instance of Scene or string based path to Scene can be used
  * @property {b5.Scene}                focus_scene2                 - Scene that has will receive touch events if focus scene does not process them, if set via _focus_scene2 then instance of Scene or string based path to Scene can be used
  * @property {b5.Actor}                touch_focus                  - The Actor that has the current touch focus
+ * @property {number}                  global_scale                 - Global scale
  * @property {booean}                  prevent_default              - Set to true to prevent bropwser from receiving touch events
  * @property {booean}                  fill_screen                  - Set to true to fill client window
+ * @property {boolean}                 disable_dock_screen          - If true then screen docking is disabled
  * @property {number}                  dt                           - Last frame time delta
  * @property {number}                  avg_fps                      - Average frames per second of app
  * @property {number}                  total_loaded                 - Total pre-loadable resources that have been loaded
@@ -6843,6 +6848,7 @@ b5.App = function(canvas, web_audio)
 	this.inner_width = b5.Display.getWidth();
     this.inner_height = b5.Display.getHeight();
     this.fill_screen = false;       // Set to true to fill client window
+    this.disable_dock_screen = false;
     this.started = null;            // Function callback which is called when the app starts
     this.num_logic = 0;             // Number of times the logic loop has been ran since app start
     this.num_draw = 0;              // Number of times the draw  loop has been ran since app start
@@ -6860,6 +6866,7 @@ b5.App = function(canvas, web_audio)
     this.hover_focus = null;        // Actor with current hover focus
     this.clear_canvas = false;		// If true then canvas will be cleared each frame
     this.touch_focus = null;		// The Actor that has the current touch focus
+    this.global_scale = 1;          // 
     this.prevent_default = false;   // Set to true to prevent bropwser from receiving touch events
     this.debug = false;				// Can be used to enable / disable debug trace info
     this.timelines = new b5.TimelineManager();	// Global animation timeline manager
@@ -7700,7 +7707,7 @@ b5.App.prototype.setCanvasScalingMethod = function(method)
     var dh = sh;
     var sx = 1;
     var sy = 1;
-    this.canvas_scale = 1;
+    this.canvas_scale = this.global_scale;
     if (this.canvas_scale_method === b5.App.FitNone)
     {
     }
@@ -7741,7 +7748,7 @@ b5.App.prototype.setCanvasScalingMethod = function(method)
 					scale = sy;
                 break;
         }
-        this.canvas_scale = scale;
+        this.canvas_scale = scale * this.global_scale;
     }
 
 	var nw = (dw * this.pixel_ratio) | 0;
@@ -11212,7 +11219,7 @@ b5.Sound.prototype.play = function(force)
 };
 
 /**
- * Stops playback of thr sound (re-usable sound only)
+ * Stops playback of the sound (re-usable sound only)
  */
 b5.Sound.prototype.stop = function()
 {
@@ -11594,6 +11601,28 @@ b5.Utils.RunafterTime = function(delay, task_function, task_data)
 };
 
 
+b5.Utils.SetFullscreen = function(enable)
+{
+    if (!document.fullscreenEnabled)
+    {
+        return;
+    }
+
+    if (enable)
+    {
+        if (document.fullscreenElement == null)
+        {
+            b5.app.canvas.requestFullscreen();
+        }
+    }
+    else
+    {
+        if (document.fullscreenElement != null)
+        {
+            document.exitFullscreen();
+        }
+    }
+};
 "use strict";
 
 var Log = function(message)
