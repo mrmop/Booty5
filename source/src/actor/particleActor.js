@@ -83,8 +83,10 @@ b5.ParticleActor = function()
     // Internal variables
 
     // public variables
-    this.type = b5.Actor.Type_Particle;    // Type of actor
+    this.type = b5.Actor.Type_Particle; // Type of actor
     this.gravity = 0;                   // Gravity applied to particles
+    this.added_callback = null;         // Callback that is called when a particle is added
+    this.reset_callback = null;         // Callback that is called when a particle is reset
 };
 b5.ParticleActor.prototype = new b5.Actor();
 b5.ParticleActor.prototype.constructor = b5.ParticleActor;
@@ -122,6 +124,8 @@ b5.ParticleActor.prototype.resetParticle = function(actor)
     actor.vo = actor.org_vo;
     actor.vsx = actor.org_vsx;
     actor.vsy = actor.org_vsy;
+    if (this.reset_callback !== null)
+        this.reset_callback(actor);
 };
 
 /**
@@ -170,6 +174,10 @@ b5.ParticleActor.prototype.addParticle = function(actor, life_span, num_lives, s
         actor.x = tpos.x;
         actor.y = tpos.y;
     }
+
+    if (this.added_callback !== null)
+        this.added_callback(actor);
+    
     return actor;
 };
 
