@@ -455,6 +455,10 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
             done_callback(false);
         return;
     }
+    if (this.preloadedVideoAd === null)
+    {
+        return;
+    }
     this.preloadedVideoAd.showAsync()
     .then(function() {
         if (done_callback !== undefined)
@@ -523,6 +527,14 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
         that.adLoadError = "Not supported";
         if (done_callback !== undefined)
             done_callback(false);
+        return;
+    }
+    if (this.preloadedInterAd === null)
+    {
+        if (done_callback !== undefined)
+        {
+            done_callback(true);
+        }
         return;
     }
     this.preloadedInterAd.showAsync()

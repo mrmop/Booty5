@@ -110,6 +110,8 @@
  * @property {b5.Raw[]}                raw                          - Raw JSON resources (internal)
  * @property {number}                  avg_time                     - Total time since last measure (internal)
  * @property {number}                  avg_frame                    - Counter used to measure average frame rate (internal)
+ * @property {bool}                    mobile                       - True if mobile platform
+ * @property {string}                  platform                     - Client platform
  *
  * @property {boolean}                 touch_supported              - If true then touch input is supported
  * @property {boolean}                 allow_touchables             - if true then app will search to find Actor that was touched (default is true)
@@ -216,7 +218,9 @@ b5.App = function(canvas, web_audio)
     };
 
     this.use_web_audio = web_audio || true;     // If true then Web Audio will be used if its available (default is true)
-
+    this.mobile = b5.Utils.IsMobile();
+    this.platform = b5.Utils.GetPlatform();
+    
     // Resources
     this.bitmaps = {};				// Bitmap resources
     this.brushes = {};				// Brush resources
@@ -334,6 +338,11 @@ b5.App.FitGreatest = 5;
  * @constant
  */
 b5.App.FitSmallest = 6;
+/**
+ * The canvas is resized to fit the client area. Rendering is scaled to fit either the x or y axis depending on which retains least information.
+ * @constant
+ */
+b5.App.FitBest2 = 7;
 
 //
 // Keyboard handling
@@ -1022,6 +1031,9 @@ b5.App.prototype.setCanvasScalingMethod = function(method)
             case b5.App.FitSmallest:
                 major_x = (iw < ih) ? true : false;
                 break;
+            case b5.App.FitBest2:
+                major_x = (iw / sw) > (ih / sh) ? true : false;
+                break;
         }
         if (major_x)
         {
@@ -1078,6 +1090,9 @@ b5.App.prototype.setCanvasScalingMethod = function(method)
 					scale = sx;
 				else
 					scale = sy;
+                break;
+            case b5.App.FitBest2:
+                scale = sx > sy ? sx : sy;
                 break;
         }
         this.canvas_scale = scale * this.global_scale;

@@ -1,3 +1,11 @@
+v1.5.11
+-------
+- Actors now have onDblTapped (double click) event handler
+- Actors now have onAnimEnd evet which is called when a bitmap animation ends
+- Fixed margin scaling on docked actors
+- Added support for multiple image assets for desktop and mobile
+- Added new IsMobile() and GetPlatform() functionality to Utils
+
 v1.5.10
 -------
 * IE fixes

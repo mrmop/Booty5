@@ -39,6 +39,7 @@
  * - onDestroy() - Called just before Actor is destroyed
  * - onTick(delta_time) - Called each time the Actor is updated (every frame)
  * - onTapped(touch_pos) - Called when the Actor is tapped / clicked
+ * - onDblTapped(touch_pos) - Called when the Actor is double tapped / clicked
  * - onBeginTouch(touch_pos) - Called if the user begins to touch this actor
  * - onEndTouch(touch_pos) - Called when the user stops touching display and this actor was beneath last touch point
  * - onLostTouchFocus(touch_pos) - Called if actor was touched on initial begin touch event when the user stops touching display, even if this actor is not under touch point
@@ -48,6 +49,7 @@
  * - onCollisionStart(contact) - Called when the Actor started colliding with another
  * - onCollisionEnd(contact) - Called when the Actor stopped colliding with another
  * - onAVChanged(visible) - Called when the active-visible state of an actor changes via the _av property
+ * - onAnimEnd() - Called when the playing bitmap ends
  *
  * For an actor to be processed and rendered you must add it to a added to a {@link b5.Scene} or another {@link b5.Actor}
  * that is part of a scene hierarchy
@@ -198,6 +200,7 @@
  * @property {Box2DBody}                body                - Box2D body (null if none attached) (internal)
  * @property {number[]}                 transform           - Current visual transform (internal)
  * @property {boolean}                  transform_dirty     - If set to true then transforms will be rebuilt next update (internal)
+ * @property {number}                   touch_et        	- Time when the actor last received an end touch (internal)
  * @property {boolean}                  touching            - Set to true when user touching (internal)
  * @property {boolean}                  touchmove           - Set to true when touch is moving on this actor (internal)
  * @property {number}                   layer               - Visible layer (set via property _layers) (internal)
@@ -290,6 +293,7 @@ b5.Actor = function(virtual)
 	this.body = null;				// Box2D body
 	this.transform = [];			// Current transform
 	this.transform_dirty = true;	// If set to true then transforms will be rebuilt next update
+	this.touch_et = null;
 	this.touching = false;			// Set to true when user touching
 	this.touchmove = false;			// Set to true when touch is moving on this actor
 	this.layer = 0;                 // Visible layer (set via property _layers)
@@ -364,6 +368,18 @@ b5.Actor = function(virtual)
 	if (virtual === true)
 		this.makeVirtual();
 };
+
+// Actor scaling methods
+b5.Actor.FitNone = 0;
+b5.Actor.FitPP = 1;
+b5.Actor.FitX = 2;
+b5.Actor.FitY = 3;
+b5.Actor.FitBest = 4;
+b5.Actor.FitAverage = 5;
+b5.Actor.FitGreatest = 6;
+b5.Actor.FitSmallest = 7;
+b5.Actor.FitSize = 8;
+b5.Actor.FitBest2 = 9;
 
 /**
  * Actor is not docked
@@ -1114,7 +1130,24 @@ b5.Actor.prototype.onBeginTouchBase = function(touch_pos)
 b5.Actor.prototype.onEndTouchBase = function(touch_pos)
 {
 	if (this.touching && this.onTapped !== undefined)
+	{
 		this.onTapped(touch_pos);
+		if (this.onDblTapped !== undefined)
+		{
+			if (this.touch_et === null)
+			{
+				this.touch_et = Date.now();
+			}
+			else
+			{
+				var now = Date.now();
+				var dt = now - this.touch_et;
+				if (dt < 500)
+					this.onDblTapped(touch_pos);
+				this.touch_et = now;
+			}
+		}
+	}
 	this.touching = false;
 	this.touchmove = false;
 	// Bubble event to parent if enabled
@@ -1483,33 +1516,38 @@ b5.Actor.prototype.getScaleFromMethod = function(method)
 	if (!app.disable_dock_screen)
 	{
 		var sm = method;
-		if (sm !== 0)
+		if (sm !== b5.Actor.FitNone)
 		{
 			var cs = 1 / app.canvas_scale;
 			var dsx = (app.inner_width / app.design_width) * cs;
 			var dsy = (app.inner_height / app.design_height) * cs;
-			if (sm === 4)
+			if (sm === b5.Actor.FitBest)
+			{
+				if (dsx > dsy) { sx *= dsx; sy *= dsx; }
+				else { sx *= dsy; sy *= dsy; }
+			}
+			else if (sm === b5.Actor.FitBest2)
 			{
 				if (dsx < dsy) { sx *= dsx; sy *= dsx; }
 				else { sx *= dsy; sy *= dsy; }
 			}
-			else if (sm === 2)
+			else if (sm === b5.Actor.FitX)
 			{
 				sx *= dsx;
 				sy *= dsx;
 			}
-			else if (sm === 3)
+			else if (sm === b5.Actor.FitY)
 			{
 				sx *= dsy;
 				sy *= dsy;
 			}
-			else if (sm === 5)
+			else if (sm === b5.Actor.FitAverage)
 			{
 				var ds = (dsx + dsy) * 0.5;
 				sx *= ds;
 				sy *= ds;
 			}
-			else if (sm === 6)
+			else if (sm === b5.Actor.FitGreatest)
 			{
 				var ds;
 				if (app.inner_width > app.inner_height)
@@ -1519,7 +1557,7 @@ b5.Actor.prototype.getScaleFromMethod = function(method)
 				sx *= ds;
 				sy *= ds;
 			}
-			else if (sm === 7)
+			else if (sm === b5.Actor.FitSmallest)
 			{
 				var ds;
 				if (app.inner_width < app.inner_height)
@@ -1529,13 +1567,13 @@ b5.Actor.prototype.getScaleFromMethod = function(method)
 				sx *= ds;
 				sy *= ds;
 			}
-			else if (sm === 8)
+			else if (sm === b5.Actor.FitSize)
 			{
 				sx *= dsx;
 				sy *= dsy;
 			}
 			else
-			if (sm === 1)
+			if (sm === b5.Actor.FitPP)
 			{
 				sx *= cs;
 				sy *= cs;
@@ -2071,10 +2109,18 @@ b5.Actor.prototype.baseUpdate = function(dt)
 		else
 		{
 			if (this.current_frame >= max)
+			{
+				if (this.onAnimEnd !== undefined)
+					this.onAnimEnd();
 				this.current_frame = max - 1;
+			}
 			else
 			if (this.current_frame < 0)
+			{
+				if (this.onAnimEnd !== undefined)
+					this.onAnimEnd();
 				this.current_frame = 0;
+			}
 		}
 	}
 	var x = this.x;
@@ -2126,23 +2172,30 @@ b5.Actor.prototype.baseUpdate = function(dt)
 	{
 		if (this.dock_screen && !b5.app.disable_dock_screen)
 		{
+			var sm = this.scale_method;
+			var sx = 1;
+			var sy = 1;
+			if (sm !== 0)
+			{
+				var s = this.getScaleFromMethod(sm);
+				sx = s.x;
+				sy = s.y;
+			}
 			if (this.dock_x !== 0)
 			{
 				var s = this.getScaleFromMethod(2);
-				var sx = (this.scale_method === 0) ? 1 : s.x;
 				if (this.dock_x === b5.Actor.Dock_Left)
-					this.x = -scene.w * s.x / 2 + ((this.w * this.scale_x * sx) / 2 + this.margin[0] * sx);
+					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0]) * this.scale_x * sx) / 2);
 				else if (this.dock_x === b5.Actor.Dock_Right)
-					this.x = scene.w * s.x / 2 - ((this.w * this.scale_x * sx) / 2 + this.margin[1] * sx);
+					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1]) * this.scale_x * sx) / 2);
 			}
 			if (this.dock_y !== 0)
 			{
 				var s = this.getScaleFromMethod(3);
-				var sy = (this.scale_method === 0) ? 1 : s.y;
 				if (this.dock_y === b5.Actor.Dock_Top)
-					this.y = -scene.h * s.y / 2 + ((this.h * this.scale_y * sy) / 2 + this.margin[2] * sy);
+					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2]) * this.scale_y * sy) / 2);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
-					this.y = scene.h * s.y / 2 - ((this.h * this.scale_y * sy) / 2 + this.margin[3] * sy);
+					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3]) * this.scale_y * sy) / 2);
 			}
 		}
 		else

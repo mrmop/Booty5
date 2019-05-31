@@ -269,7 +269,11 @@ b5.Xoml.prototype.parseImage = function(parent, item)
 {
     if (this.app.debug)
         console.log("Parsing Image " + item.N);
-    var bitmap = new b5.Bitmap(item.N, item.Loc, item.P);
+    var bitmap;
+    if (item.Loc2 !== undefined && b5.app.mobile)
+        bitmap = new b5.Bitmap(item.N, item.Loc2, item.P);
+    else
+        bitmap = new b5.Bitmap(item.N, item.Loc, item.P);
     parent.addResource(bitmap, "bitmap");
 
     return bitmap;

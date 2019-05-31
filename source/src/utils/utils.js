@@ -361,3 +361,40 @@ b5.Utils.SetFullscreen = function(enable)
         }
     }
 };
+
+b5.Utils.IsMobile = function()
+{
+    var ua = navigator.userAgent;
+    function IsAndroid() {
+        return ua.match(/Android/i);
+    }
+    function IsBlackBerry() {
+        return ua.match(/BlackBerry/i);
+    }
+    function IsiOS() {
+        return ua.match(/iPhone|iPad|iPod/i);
+    }
+    function IsOpera() {
+        return ua.match(/Opera Mini/i);
+    }
+    function IsWindows() {
+        return ua.match(/IEMobile/i);
+    }
+    return (IsAndroid() || IsBlackBerry() || IsiOS() || IsOpera() || IsWindows());
+};
+
+b5.Utils.GetPlatform = function()
+{
+    var ua = navigator.userAgent;
+    if (ua.match(/Android/i))
+        return "ANDROID";
+    if (ua.match(/BlackBerry/i))
+        return "BLACKBERRY";
+    if (ua.match(/iPhone|iPad|iPod/i))
+        return "IOS";
+    if (ua.match(/Opera Mini/i))
+        return "OPERA";
+    if (ua.match(/IEMobile/i))
+        return "WINDOWS"
+    return "WEB";
+};
