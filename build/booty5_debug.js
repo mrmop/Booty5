@@ -2408,6 +2408,7 @@ b5.TasksManager.prototype.execute = function()
  * - Composite operations
  * - Begin, end and move touch events (when touchable is true), also supports event bubbling
  * - Canvas edge docking with dock margins
+ * - Child stacking
  * - Can move in relation to camera or be locked in place
  * - Can be made to wrap with scene extents on x and y axis
  * - Clip children against the extents of the parent with margins and shapes
@@ -2433,7 +2434,7 @@ b5.TasksManager.prototype.execute = function()
  * - onAVChanged(visible) - Called when the active-visible state of an actor changes via the _av property
  * - onAnimEnd() - Called when the playing bitmap ends
  *
- * For an actor to be processed and rendered you must add it to a added to a {@link b5.Scene} or another {@link b5.Actor}
+ * For an actor to be processed and rendered you must add it to a {@link b5.Scene} or another {@link b5.Actor}
  * that is part of a scene hierarchy
  *
  * <b>Examples</b>
@@ -2638,6 +2639,7 @@ b5.TasksManager.prototype.execute = function()
  * @property {boolean}                  self_clip           - If set to true then this actor will be clipped against its own clipping shape (default is false)
  * @property {boolean}                  orphaned            - If set to true then this actor will not use its parent actors transform, scene transform will be used instead (default is false)
  * @property {boolean}                  virtual             - If true then actor will be classed as a container with a virtual canvas that can scroll and stack its content (default is false)
+ * @property {boolean}                  stacking            - Stacking method to used to stack child actors
  * @property {boolean}                  clip_virtual        - f true then children with virtual actors will be clipped by rect
  * @property {boolean}                  shadow              - If set to true then shadow will be added to text (default is false)
  * @property {number}                   shadow_x            - Shadow x axis offset (default is 0)
@@ -2675,6 +2677,7 @@ b5.Actor = function(virtual)
 	this.body = null;				// Box2D body
 	this.transform = [];			// Current transform
 	this.transform_dirty = true;	// If set to true then transforms will be rebuilt next update
+	this.layout_dirty = true;		// If set to true then layout will ne updated
 	this.touch_et = null;
 	this.touching = false;			// Set to true when user touching
 	this.touchmove = false;			// Set to true when touch is moving on this actor
@@ -2732,6 +2735,7 @@ b5.Actor = function(virtual)
 	this.self_clip = false;		    // If set to true then this actor will be clipped against its own clipping shape
 	this.orphaned = false;          // If set to true then this actor will not use its parent actors transform, scene transform will be used instead
 	this.virtual = false;           // If true then actor will be classed as a container with a virtual canvas that can scroll and stack its content
+	this.stacking = 0;            	// Stacking method to used to stack child actors
 	this.clip_virtual = true;		// If true then children with virtual actors will be clipped by rect
 	this.shadow = false;            // If set to true then shadow will be added to text
 	this.shadow_x = 0;              // Shadow x axis offset
@@ -2824,6 +2828,23 @@ b5.Actor.Type_Particle = 5;
  * @constant
  */
 b5.Actor.Type_Map = 6;
+
+/**
+ * Child actors are not stacked
+ * @constant
+ */
+b5.Actor.Stack_None = 0;
+/**
+ * Child actors are stacked horizontally
+ * @constant
+ */
+b5.Actor.Stack_H = 1;
+/**
+ * Child actors are stacked vertically
+ * @constant
+ */
+b5.Actor.Stack_V = 2;
+
 
 //
 // Properties
@@ -2943,6 +2964,47 @@ b5.Actor.prototype.setPositionPhysics = function(x, y) // Deprecated and will be
 {
 	this.setPosition(x, y);
 };
+/**
+ * Sets the actors scene position
+ * @param x {number} X coordinate
+ * @param y {number} Y coordinate
+ */
+b5.Actor.prototype.setPosition = function(x, y)
+{
+	if (this.x !== x || this.y !== y)
+	{
+		this.x = x;
+		this.y = y;
+		this.dirty();
+		if (this.body !== null)
+		{
+			var b2Vec2 = Box2D.Common.Math.b2Vec2;
+			var ws = this.scene.world_scale;
+			this.body.SetPosition(new b2Vec2(x / ws, y / ws));
+		}
+	}
+};
+/**
+ * Sets the size of the actor
+ * @param w {number} New width
+ * @param h {number} new height
+ */
+b5.Actor.prototype.setSize = function(w, h)
+{
+	if (this.w !== w || this.h !== h)
+	{
+		this.ignore_atlas_size = true;
+		this.w = w;
+		this.h = h;
+		this.dirty();
+		if (this.virtual)
+		{
+			this.layout_dirty = true;
+			this.Virtual_updateLayout(true);
+		}
+	}
+};
+
 /**
  * Sets the actors render origin
  * @param x {number} X coordinate
@@ -3216,6 +3278,7 @@ b5.Actor.prototype.addActor = function(actor)
 	this.actors.push(actor);
 	actor.parent = this;
 	actor.scene = this.scene;
+	this.layout_dirty = true;
 	return actor;
 };
 
@@ -3226,6 +3289,7 @@ b5.Actor.prototype.addActor = function(actor)
 b5.Actor.prototype.removeActor = function(actor)
 {
 	this.removals.push(actor);
+	this.layout_dirty = true;
 };
 
 /**
@@ -3246,6 +3310,7 @@ b5.Actor.prototype.removeActorsWithTag = function(tag)
 			total++;
 		}
 	}
+	this.layout_dirty = true;
 	return total;
 };
 
@@ -3261,6 +3326,7 @@ b5.Actor.prototype.removeAllActors = function()
 	{
 		removals.push(acts[t]);
 	}
+	this.layout_dirty = true;
 };
 /**
  * Cleans up all child actors that were destroyed this frame
@@ -4706,6 +4772,7 @@ b5.Actor.prototype.Virtual_onMoveTouch = function(touch_pos)
 		if (this.scroll_vx !== 0 || this.scroll_vy !== 0)
 		{
 			this.Virtual_scrollRangeCheck();
+			this.layout_dirty = true;
 			this.Virtual_updateLayout();
 		}
 	}
@@ -4718,8 +4785,6 @@ b5.Actor.prototype.Virtual_onMoveTouch = function(touch_pos)
  */
 b5.Actor.prototype.Virtual_update = function(dt)
 {
-	var layout_dirty = false;
-
 	if (!this.touching)
 	{
 		this.prev_scroll_pos_x = this.scroll_pos_x;
@@ -4729,6 +4794,7 @@ b5.Actor.prototype.Virtual_update = function(dt)
 		if (this.scroll_vx !== 0 || this.scroll_vy !== 0)
 		{
 			this.Virtual_scrollRangeCheck();
+			this.layout_dirty = true;
 			this.Virtual_updateLayout();
 		}
 		this.scroll_vx *= 0.9;
@@ -4738,8 +4804,7 @@ b5.Actor.prototype.Virtual_update = function(dt)
 		if (this.scroll_vy > -0.5 && this.scroll_vy < 0.5)
 			this.scroll_vy = 0;
 	}
-	if (this.frame_count === 0)
-		this.Virtual_updateLayout();
+//	this.Virtual_updateLayout();
 };
 
 /**
@@ -4781,13 +4846,35 @@ b5.Actor.prototype.Virtual_scrollRangeCheck = function()
 };
 
 
+b5.Actor.prototype.Virtual_clipLayout = function(act, w, h)
+{
+	if (this.clip_virtual)
+	{
+		var aw = act.w / 2;
+		var ah = act.h / 2;
+		if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+		{
+			act._av = false;
+		}
+		else
+		{
+			act._av = true;
+		}
+	}
+	if (Math.abs(this.scroll_vx) > 1 || Math.abs(this.scroll_vy) > 1)
+		act.touching = false;
+	act.dirty();
+}
+
 /**
  * Updates the virtual canvas layout
  * @private
- * @param dt {number} Amount of time that has passed since last called by the logic loop in seconds
  */
-b5.Actor.prototype.Virtual_updateLayout = function(dt)
+b5.Actor.prototype.Virtual_updateLayout = function(recurse)
 {
+	if (!this.layout_dirty)
+		return;
+	this.layout_dirty = false;
 	var dx = this.prev_scroll_pos_x - this.scroll_pos_x;
 	var dy = this.prev_scroll_pos_y - this.scroll_pos_y;
 	// Update child actors
@@ -4796,48 +4883,68 @@ b5.Actor.prototype.Virtual_updateLayout = function(dt)
 	var h = this.h * this.scale_y / 2;
 	if (count > 0)
 	{
+		var stack = this.stacking;
 		var act;
 		var acts = this.actors;
-		for (var t = 0; t < count; t++)
+		if (stack === b5.Actor.Stack_None)
 		{
-			act = acts[t];
-			// Apply docking
-			if (act.dock_x !== 0)
+			for (var t = 0; t < count; t++)
 			{
-				if (act.dock_x === b5.Actor.Dock_Left)
-					act.x = -w + act.w * act.scale_x / 2 + act.margin[0];
-				else if (act.dock_x === b5.Actor.Dock_Right)
-					act.x = w - act.w * act.scale_x / 2 + act.margin[1];
-			}
-			else
-				act.x += dx;
-			if (act.dock_y !== 0)
-			{
-				if (act.dock_y === b5.Actor.Dock_Top)
-					act.y = -h + act.h * act.scale_y / 2 + act.margin[2];
-				else if (act.dock_y === b5.Actor.Dock_Bottom)
-					act.y = h - act.h * act.scale_y / 2 + act.margin[3];
-			}
-			else
-				act.y += dy;
-			// Disable actors out of range
-			if (this.clip_virtual)
-			{
-				var aw = act.w / 2;
-				var ah = act.h / 2;
-				if (act.y < -h - ah || act.y > h + ah || act.x < -w - aw || act.x > w + aw)
+				act = acts[t];
+				// Apply docking
+				if (act.dock_x !== 0)
 				{
-					act._av = false;
+					if (act.dock_x === b5.Actor.Dock_Left)
+						act.x = -w + act.w * act.scale_x / 2 + act.margin[0];
+					else if (act.dock_x === b5.Actor.Dock_Right)
+						act.x = w - act.w * act.scale_x / 2 + act.margin[1];
 				}
 				else
+					act.x += dx;
+				if (act.dock_y !== 0)
 				{
-					act._av = true;
+					if (act.dock_y === b5.Actor.Dock_Top)
+						act.y = -h + act.h * act.scale_y / 2 + act.margin[2];
+					else if (act.dock_y === b5.Actor.Dock_Bottom)
+						act.y = h - act.h * act.scale_y / 2 + act.margin[3];
 				}
-			}
-			if (Math.abs(this.scroll_vx) > 1 || Math.abs(this.scroll_vy) > 1)
-				act.touching = false;
-			act.dirty();
+				else
+					act.y += dy;
+				// Disable actors out of range
+				this.Virtual_clipLayout(act, w, h);
+			}			
 		}
+		else if (stack === b5.Actor.Stack_H)
+		{
+			act = acts[0];
+			var x = -w + act.w * act.scale_x / 2;
+			for (var t = 0; t < count; t++)
+			{
+				act = acts[t];
+				act.x = x + act.margin[0];
+				x += act.w * act.scale_x + act.margin[1];
+				this.Virtual_clipLayout(act, w, h);
+			}			
+		}
+		else if (stack === b5.Actor.Stack_V)
+		{
+			act = acts[0];
+			var y = -h + act.h * act.scale_y / 2;
+			for (var t = 0; t < count; t++)
+			{
+				act = acts[t];
+				act.y = y + act.margin[2];
+				y += act.h * act.scale_y + act.margin[3];
+				// Disable actors out of range
+				this.Virtual_clipLayout(act, w, h);
+			}			
+		}
+	}
+	if (recurse)
+	{
+		var a = this.actors;
+		for (var t = 0; t < a.length; t++)
+			a[t].Virtual_updateLayout(true);
 	}
 };
 
@@ -7659,9 +7766,10 @@ b5.App.prototype.mainLogic = function()
     var now = Date.now();
     var delta = now - app.last_time;
     app.last_time = now;
+    app.adt = delta / 1000;
 	var dt;
     if (app.target_frame_rate === 0)
-        dt = delta / 1000;
+        dt = app.adt;
     else
         dt = 1 / app.target_frame_rate;
     if (dt > 0.1) dt = 0.1;
@@ -9371,6 +9479,7 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         actor.scale_y = item.S[1];
     }
     if (item.SM !== undefined) actor.scale_method = item.SM;
+    if (item.St !== undefined) actor.stacking = item.St;
     if (item.FX !== undefined && item.FX) actor.scale_x = -actor.scale_x;
     if (item.FY !== undefined && item.FY) actor.scale_y = -actor.scale_y;
     if (item.Or !== undefined) actor.orphaned = item.Or;

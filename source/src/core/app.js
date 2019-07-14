@@ -915,9 +915,10 @@ b5.App.prototype.mainLogic = function()
     var now = Date.now();
     var delta = now - app.last_time;
     app.last_time = now;
+    app.adt = delta / 1000;
 	var dt;
     if (app.target_frame_rate === 0)
-        dt = delta / 1000;
+        dt = app.adt;
     else
         dt = 1 / app.target_frame_rate;
     if (dt > 0.1) dt = 0.1;

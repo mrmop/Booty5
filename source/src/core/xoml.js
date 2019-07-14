@@ -456,6 +456,7 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         actor.scale_y = item.S[1];
     }
     if (item.SM !== undefined) actor.scale_method = item.SM;
+    if (item.St !== undefined) actor.stacking = item.St;
     if (item.FX !== undefined && item.FX) actor.scale_x = -actor.scale_x;
     if (item.FY !== undefined && item.FY) actor.scale_y = -actor.scale_y;
     if (item.Or !== undefined) actor.orphaned = item.Or;
