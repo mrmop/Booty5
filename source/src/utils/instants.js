@@ -41,8 +41,13 @@ b5.Instants.prototype.Init = function()
     var supportedAPIs = FBInstant.getSupportedAPIs();
     if (supportedAPIs.includes("getInterstitialAdAsync"))
         this.interstitialAdsSupported = true;
+    else
+        Social.LogEvent("Ads inter not supported", 1);
     if (supportedAPIs.includes("getRewardedVideoAsync"))
         this.videoAdsSupported = true;
+    else
+        Social.LogEvent("Ads video not supported", 1);
+    
     if (supportedAPIs.includes("payments.purchaseAsync"))
         this.purchasingSupported = true;
 };
@@ -453,6 +458,7 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
         that.adLoadError = "Not supported";
         if (done_callback !== undefined)
             done_callback(false);
+        Social.LogEvent("ADVS no support", 1);
         return;
     }
     if (this.preloadedVideoAd === null)
@@ -527,6 +533,7 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
         that.adLoadError = "Not supported";
         if (done_callback !== undefined)
             done_callback(false);
+        Social.LogEvent("ADIS no support", 1);
         return;
     }
     if (this.preloadedInterAd === null)
