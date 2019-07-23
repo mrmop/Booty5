@@ -247,9 +247,10 @@ b5.App = function(canvas, web_audio)
         canvas.addEventListener("MSPointerMove", this.onTouchMove, false);
         canvas.addEventListener("MSPointerUp", this.onTouchEnd, false);
     }
-/*    else
-    if (this.touch_supported)
-    {*/
+    else
+    {
+//    if (this.touch_supported)
+//    {
         canvas.addEventListener("touchstart", this.onTouchStart, false);
         canvas.addEventListener("touchmove", this.onTouchMove, false);
         canvas.addEventListener("touchend", this.onTouchEnd, false);
@@ -261,6 +262,7 @@ b5.App = function(canvas, web_audio)
         canvas.addEventListener("mouseup", this.onTouchEnd, false);
         canvas.addEventListener("mouseout", this.onTouchEnd, false);
 //    }
+    }
     var wheel_event =   "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
                         document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
                         "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox

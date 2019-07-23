@@ -2251,17 +2251,17 @@ b5.Actor.prototype.baseUpdate = function(dt)
 			{
 				var s = this.getScaleFromMethod(2);
 				if (this.dock_x === b5.Actor.Dock_Left)
-					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0]) * this.scale_x * sx) / 2);
+					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0] * 2) * this.scale_x * sx) / 2);
 				else if (this.dock_x === b5.Actor.Dock_Right)
-					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1]) * this.scale_x * sx) / 2);
+					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1] * 2) * this.scale_x * sx) / 2);
 			}
 			if (this.dock_y !== 0)
 			{
 				var s = this.getScaleFromMethod(3);
 				if (this.dock_y === b5.Actor.Dock_Top)
-					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2]) * this.scale_y * sy) / 2);
+					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2] * 2) * this.scale_y * sy) / 2);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
-					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3]) * this.scale_y * sy) / 2);
+					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3] * 2) * this.scale_y * sy) / 2);
 			}
 		}
 		else
