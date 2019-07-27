@@ -257,6 +257,10 @@ Object.defineProperty(b5.Scene.prototype, "_av", {
  */
 b5.Scene.prototype.release = function()
 {
+	for (var t = 0; t < this.actors.length; t++)
+	{
+		this.actors[t].release();
+	}
     if (this.onDestroy !== undefined)
         this.onDestroy();
     this.world = null;

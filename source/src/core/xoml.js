@@ -748,7 +748,7 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
 
     return actor;
 };
-b5.Xoml.prototype.parseIcon = function(parent, item)
+b5.Xoml.prototype.parseIcon = function(parent, item, template)
 {
     if (this.app.debug)
         console.log("Parsing Icon " + item.N);
@@ -757,6 +757,11 @@ b5.Xoml.prototype.parseIcon = function(parent, item)
     var render_as = 0;
     if (item.RA !== undefined)
         render_as = item.RA;
+    if (template !== true)
+    {
+        if (item.Tmp)
+            return null;
+    }
 
     if (render_as === 1)	// Circle
         actor = new b5.ArcActor();
@@ -871,9 +876,10 @@ b5.Xoml.prototype.parseResources = function(parent, objects)
  * Parses a specific XOML JSON resource and instantiates all Booty5 objects that it contains
  * @param parent {object} Object that will receive the created objects, for example the app or a scene
  * @param resource {object} XOML JSON object to parse
+ * @param template {boolean} Template insantiation, true when instantiating template
  * @returns {object} Created object (may also contain sub objects / resources)
  */
-b5.Xoml.prototype.parseResource = function(parent, resource)
+b5.Xoml.prototype.parseResource = function(parent, resource, template)
 {
     var res_type = resource.RT;
     if (res_type === "Scene")
@@ -891,7 +897,7 @@ b5.Xoml.prototype.parseResource = function(parent, resource)
     else if (res_type === "Material")
         return this.parseMaterial(parent, resource);
     else if (res_type === "Icon")
-        return this.parseIcon(parent, resource);
+        return this.parseIcon(parent, resource, template);
     else if (res_type === "Label")
         return this.parseLabel(parent, resource);
     else if (res_type === "GFile")

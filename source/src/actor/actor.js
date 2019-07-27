@@ -838,6 +838,10 @@ b5.Actor.prototype.removeTask = function(task_name)
  */
 b5.Actor.prototype.release = function()
 {
+	for (var t = 0; t < this.actors.length; t++)
+	{
+		this.actors[t].release();
+	}
 	if (this.onDestroy !== undefined)
 		this.onDestroy();
 	this.releaseJoints();
