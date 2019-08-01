@@ -945,11 +945,15 @@ b5.App.prototype.mainLogic = function()
 b5.App.prototype.mainDraw = function()
 {
     var app = b5.app;
-    var dx = (b5.Display.getWidth() - app.inner_width) | 0;
-    var dy = (b5.Display.getHeight() - app.inner_height) | 0;
+    var sw = b5.Display.getWidth();
+    var sh = b5.Display.getHeight();
+    var iw = app.inner_width;
+    var ih = app.inner_height;
+    var dx = (sw - iw) | 0;
+    var dy = (sh - ih) | 0;
     if (dx !== 0 || dy !== 0)
 	{
-		app.setCanvasScalingMethod();
+        app.setCanvasScalingMethod();
 	}
     app.mainLogic();
 	
@@ -957,6 +961,11 @@ b5.App.prototype.mainDraw = function()
         app.display.clear(true);
     app.draw();
     app.num_draw++;
+    if (dx !== 0 || dy !== 0)
+    {
+        if (app.onResize)
+            app.onResize(sw, sh, iw, ih);
+    }
     requestAnimationFrame(app.mainDraw);
 };
 
