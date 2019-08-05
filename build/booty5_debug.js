@@ -3220,6 +3220,10 @@ b5.Actor.prototype.removeTask = function(task_name)
  */
 b5.Actor.prototype.release = function()
 {
+	for (var t = 0; t < this.actors.length; t++)
+	{
+		this.actors[t].release();
+	}
 	if (this.onDestroy !== undefined)
 		this.onDestroy();
 	this.releaseJoints();
@@ -4633,17 +4637,17 @@ b5.Actor.prototype.baseUpdate = function(dt)
 			{
 				var s = this.getScaleFromMethod(2);
 				if (this.dock_x === b5.Actor.Dock_Left)
-					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0]) * this.scale_x * sx) / 2);
+					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0] * 2) * this.scale_x * sx) / 2);
 				else if (this.dock_x === b5.Actor.Dock_Right)
-					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1]) * this.scale_x * sx) / 2);
+					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1] * 2) * this.scale_x * sx) / 2);
 			}
 			if (this.dock_y !== 0)
 			{
 				var s = this.getScaleFromMethod(3);
 				if (this.dock_y === b5.Actor.Dock_Top)
-					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2]) * this.scale_y * sy) / 2);
+					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2] * 2) * this.scale_y * sy) / 2);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
-					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3]) * this.scale_y * sy) / 2);
+					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3] * 2) * this.scale_y * sy) / 2);
 			}
 		}
 		else
@@ -7098,9 +7102,10 @@ b5.App = function(canvas, web_audio)
         canvas.addEventListener("MSPointerMove", this.onTouchMove, false);
         canvas.addEventListener("MSPointerUp", this.onTouchEnd, false);
     }
-/*    else
-    if (this.touch_supported)
-    {*/
+    else
+    {
+//    if (this.touch_supported)
+//    {
         canvas.addEventListener("touchstart", this.onTouchStart, false);
         canvas.addEventListener("touchmove", this.onTouchMove, false);
         canvas.addEventListener("touchend", this.onTouchEnd, false);
@@ -7112,6 +7117,7 @@ b5.App = function(canvas, web_audio)
         canvas.addEventListener("mouseup", this.onTouchEnd, false);
         canvas.addEventListener("mouseout", this.onTouchEnd, false);
 //    }
+    }
     var wheel_event =   "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
                         document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
                         "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
@@ -7794,11 +7800,15 @@ b5.App.prototype.mainLogic = function()
 b5.App.prototype.mainDraw = function()
 {
     var app = b5.app;
-    var dx = (b5.Display.getWidth() - app.inner_width) | 0;
-    var dy = (b5.Display.getHeight() - app.inner_height) | 0;
+    var sw = b5.Display.getWidth();
+    var sh = b5.Display.getHeight();
+    var iw = app.inner_width;
+    var ih = app.inner_height;
+    var dx = (sw - iw) | 0;
+    var dy = (sh - ih) | 0;
     if (dx !== 0 || dy !== 0)
 	{
-		app.setCanvasScalingMethod();
+        app.setCanvasScalingMethod();
 	}
     app.mainLogic();
 	
@@ -7806,6 +7816,11 @@ b5.App.prototype.mainDraw = function()
         app.display.clear(true);
     app.draw();
     app.num_draw++;
+    if (dx !== 0 || dy !== 0)
+    {
+        if (app.onResize)
+            app.onResize(sw, sh, iw, ih);
+    }
     requestAnimationFrame(app.mainDraw);
 };
 
@@ -8247,6 +8262,10 @@ Object.defineProperty(b5.Scene.prototype, "_av", {
  */
 b5.Scene.prototype.release = function()
 {
+	for (var t = 0; t < this.actors.length; t++)
+	{
+		this.actors[t].release();
+	}
     if (this.onDestroy !== undefined)
         this.onDestroy();
     this.world = null;
@@ -9771,7 +9790,7 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
 
     return actor;
 };
-b5.Xoml.prototype.parseIcon = function(parent, item)
+b5.Xoml.prototype.parseIcon = function(parent, item, template)
 {
     if (this.app.debug)
         console.log("Parsing Icon " + item.N);
@@ -9780,6 +9799,11 @@ b5.Xoml.prototype.parseIcon = function(parent, item)
     var render_as = 0;
     if (item.RA !== undefined)
         render_as = item.RA;
+    if (template !== true)
+    {
+        if (item.Tmp)
+            return null;
+    }
 
     if (render_as === 1)	// Circle
         actor = new b5.ArcActor();
@@ -9894,9 +9918,10 @@ b5.Xoml.prototype.parseResources = function(parent, objects)
  * Parses a specific XOML JSON resource and instantiates all Booty5 objects that it contains
  * @param parent {object} Object that will receive the created objects, for example the app or a scene
  * @param resource {object} XOML JSON object to parse
+ * @param template {boolean} Template insantiation, true when instantiating template
  * @returns {object} Created object (may also contain sub objects / resources)
  */
-b5.Xoml.prototype.parseResource = function(parent, resource)
+b5.Xoml.prototype.parseResource = function(parent, resource, template)
 {
     var res_type = resource.RT;
     if (res_type === "Scene")
@@ -9914,7 +9939,7 @@ b5.Xoml.prototype.parseResource = function(parent, resource)
     else if (res_type === "Material")
         return this.parseMaterial(parent, resource);
     else if (res_type === "Icon")
-        return this.parseIcon(parent, resource);
+        return this.parseIcon(parent, resource, template);
     else if (res_type === "Label")
         return this.parseLabel(parent, resource);
     else if (res_type === "GFile")
@@ -11558,7 +11583,7 @@ b5.Utils.loadJS = function(filename)
 /**
  * Sends a get request over http
  * @param url {string} URL + data
- * @parm callback (function) Callback to call then complete
+ * @parm callback (function) Callback to call when complete
  */
 b5.Utils.SendGetRequest = function(url, callback)
 {
@@ -11567,11 +11592,36 @@ b5.Utils.SendGetRequest = function(url, callback)
 	{ 
         //if (callback != undefined && req.readyState == 4 && req.status == 200)
             //callback(req.responseText);
-        if (callback != undefined && req.readyState == 4)
+        if (callback != undefined)
+        {
             callback(req);
+        }
     }
     req.open("GET", url, true);
     req.send();
+}
+
+/**
+ * Sends JSON using a post request over http
+ * @param url {string} URL
+ * @param json {string} JSON data
+ * @parm callback (function) Callback to call when complete
+ */
+b5.Utils.SendPostJSONRequest = function(url, json, callback)
+{
+    var req = new XMLHttpRequest();
+    req.open("POST", url, true);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.onreadystatechange = function()
+	{ 
+        //if (callback != undefined && req.readyState == 4 && req.status == 200)
+            //callback(req.responseText);
+        if (callback != undefined)
+        {
+            callback(req);
+        }
+    }
+    req.send(JSON.stringify(json));
 }
 
 /**
@@ -11910,8 +11960,13 @@ b5.Instants.prototype.Init = function()
     var supportedAPIs = FBInstant.getSupportedAPIs();
     if (supportedAPIs.includes("getInterstitialAdAsync"))
         this.interstitialAdsSupported = true;
+    else
+        FBInstant.logEvent("Ads inter not supported", 1);
     if (supportedAPIs.includes("getRewardedVideoAsync"))
         this.videoAdsSupported = true;
+    else
+        FBInstant.logEvent("Ads video not supported", 1);
+    
     if (supportedAPIs.includes("payments.purchaseAsync"))
         this.purchasingSupported = true;
 };
@@ -12322,6 +12377,7 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
         that.adLoadError = "Not supported";
         if (done_callback !== undefined)
             done_callback(false);
+        FBInstant.logEvent("ADVS no support", 1);
         return;
     }
     if (this.preloadedVideoAd === null)
@@ -12396,6 +12452,7 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
         that.adLoadError = "Not supported";
         if (done_callback !== undefined)
             done_callback(false);
+        FBInstant.logEvent("ADIS no support", 1);
         return;
     }
     if (this.preloadedInterAd === null)
