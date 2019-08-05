@@ -90,7 +90,7 @@ b5.Utils.loadJS = function(filename)
 /**
  * Sends a get request over http
  * @param url {string} URL + data
- * @parm callback (function) Callback to call then complete
+ * @parm callback (function) Callback to call when complete
  */
 b5.Utils.SendGetRequest = function(url, callback)
 {
@@ -99,11 +99,36 @@ b5.Utils.SendGetRequest = function(url, callback)
 	{ 
         //if (callback != undefined && req.readyState == 4 && req.status == 200)
             //callback(req.responseText);
-        if (callback != undefined && req.readyState == 4)
+        if (callback != undefined)
+        {
             callback(req);
+        }
     }
     req.open("GET", url, true);
     req.send();
+}
+
+/**
+ * Sends JSON using a post request over http
+ * @param url {string} URL
+ * @param json {string} JSON data
+ * @parm callback (function) Callback to call when complete
+ */
+b5.Utils.SendPostJSONRequest = function(url, json, callback)
+{
+    var req = new XMLHttpRequest();
+    req.open("POST", url, true);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.onreadystatechange = function()
+	{ 
+        //if (callback != undefined && req.readyState == 4 && req.status == 200)
+            //callback(req.responseText);
+        if (callback != undefined)
+        {
+            callback(req);
+        }
+    }
+    req.send(JSON.stringify(json));
 }
 
 /**
