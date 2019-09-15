@@ -221,7 +221,6 @@ b5.MapActor.prototype.draw = function()
     var app = scene.app;
     var dscale = app.canvas_scale;
     var disp = app.display;
-    this.preDraw();
 
     var mx = app.canvas_cx + scene.x * dscale;
     var my = app.canvas_cy + scene.y * dscale;
@@ -232,6 +231,11 @@ b5.MapActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
     this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
+    this.preDraw();
+    
     var trans = this.transform;
     var tx = trans[4] * dscale + mx;
     var ty = trans[5] * dscale + my;
@@ -310,13 +314,8 @@ b5.MapActor.prototype.draw = function()
 
     this.postDraw();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
+	// Draw child actors
+	if (!this.child_behind)
+		this.drawChildren();
 };
 

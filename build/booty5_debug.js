@@ -2600,6 +2600,8 @@ b5.TasksManager.prototype.execute = function()
  * @property {number}                   layer               - Actor sorting layer, set via _layer (default is 0)
  * @property {number}                   x                   - X position in scene, set via _x (default is 0)
  * @property {number}                   y                   - Y position in scene, set via _y (default is 0)
+ * @property {number}                   x2                  - X offset
+ * @property {number}                   y2                  - Y offset
  * @property {number}                   w                   - Width of actor (default is 0)
  * @property {number}                   h                   - Height of actor (default is 0)
  * @property {number}                   ox                  - X origin (between -1 and 1), set via _ox, if value falls outside that range then origin will be interpreted as pixels (default is 0)
@@ -2654,6 +2656,7 @@ b5.TasksManager.prototype.execute = function()
  * @property {number}                   padding             - Text padding (used when caching)
  * @property {number}                   scale_method        - Scale method used to fit actor to screen
  * @property {bool}                   	draw_reverse        - If set to true children are drawn in reverse order
+ * @property {bool}                   	child_behind        - When set children are displayed behind the parent
  *
  *
  */
@@ -2695,6 +2698,8 @@ b5.Actor = function(virtual)
 	this.hit = true;				// True to include this actor in hit test
 	this.x = 0;						// X position in scene, set via _x
 	this.y = 0;						// Y position in scene, set via _y
+	this.x2 = 0;					// X offset
+	this.y2 = 0;					// Y offset
 	this.w = 0;						// Width of actor
 	this.h = 0;						// Height of actor
 	this.ox = 0;					// X origin (between -1 and 1), set via _ox, if value falls outside that range then origin will be interpreted as pixels
@@ -2856,6 +2861,14 @@ Object.defineProperty(b5.Actor.prototype, "_x", {
 Object.defineProperty(b5.Actor.prototype, "_y", {
 	get: function() { return this.y; },
 	set: function(value) { if (this.y !== value) { this.y = value; this.dirty(); } }
+});
+Object.defineProperty(b5.Actor.prototype, "_x2", {
+	get: function() { return this.x2; },
+	set: function(value) { if (this.x2 !== value) { this.x2 = value; this.dirty(); } }
+});
+Object.defineProperty(b5.Actor.prototype, "_y2", {
+	get: function() { return this.y2; },
+	set: function(value) { if (this.y2 !== value) { this.y2 = value; this.dirty(); } }
 });
 Object.defineProperty(b5.Actor.prototype, "_ox", {
 	get: function() { return this.ox; },
@@ -4050,6 +4063,8 @@ b5.Actor.prototype.updateTransform = function()
 		var r = this.rotation;
 		var sx = this.scale_x;
 		var sy = this.scale_y;
+		var x = this.x + this.x2;
+		var y = this.y + this.y2;
 		if (this.parent === null)
 		{
 			sx *= scene.scale;
@@ -4081,14 +4096,14 @@ b5.Actor.prototype.updateTransform = function()
 			var ooa = 1 / this.depth;
 			sx *= ooa;
 			sy *= ooa;
-			trans[4] = (this.x - scene.camera_x) * ooa;
-			trans[5] = (this.y - scene.camera_y) * ooa;
+			trans[4] = (x - scene.camera_x) * ooa;
+			trans[5] = (y - scene.camera_y) * ooa;
 		}
 		else
 		{
 			this.transform_dirty = false;
-			trans[4] = this.x;
-			trans[5] = this.y;
+			trans[4] = x;
+			trans[5] = y;
 		}
 		trans[0] = cos * sx;
 		trans[1] = sin * sx;
@@ -4139,6 +4154,28 @@ b5.Actor.prototype.updateTransform = function()
 // Rendering
 //
 /**
+ * Renders this actors children
+ */
+b5.Actor.prototype.drawChildren = function()
+{
+	var count = this.actors.length;
+	if (count > 0)
+	{
+		var acts = this.actors;
+		if (this.draw_reverse)
+		{
+			for (var t = count - 1; t >= 0; t--)
+				acts[t].draw();
+		}
+		else
+		{
+			for (var t = 0; t < count; t++)
+				acts[t].draw();
+		}
+	}
+};
+
+/**
  * Renders this actor and all of its children, called by the base app render loop. You can derive your own actor types from Actor and implement draw() to provide your own custom rendering
  */
 b5.Actor.prototype.draw = function()
@@ -4153,21 +4190,7 @@ b5.Actor.prototype.draw = function()
 	}
 	if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-		var count = this.actors.length;
-		if (count > 0)
-		{
-			var acts = this.actors;
-			if (this.draw_reverse)
-			{
-				for (var t = count - 1; t >= 0; t--)
-					acts[t].draw();
-			}
-			else
-			{
-				for (var t = 0; t < count; t++)
-					acts[t].draw();
-			}
-		}
+		this.drawChildren();
 		return;
 	}
 
@@ -4176,7 +4199,6 @@ b5.Actor.prototype.draw = function()
 	var app = scene.app;
 	var dscale = app.canvas_scale;
 	var disp = app.display;
-	this.preDraw();
 	var ps = b5.app.pixel_ratio;
 	if (cache === null)
 		ps = 1;
@@ -4219,6 +4241,11 @@ b5.Actor.prototype.draw = function()
 	}
 
 	this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+		this.drawChildren();
+
+	this.preDraw();
 	var self_clip = this.self_clip;
 	var clip_children = this.clip_children;
 	var trans = this.transform;
@@ -4259,21 +4286,8 @@ b5.Actor.prototype.draw = function()
 		disp.restoreContext();
 
 	// Draw child actors
-	var count = this.actors.length;
-	if (count > 0)
-	{
-		var acts = this.actors;
-		if (this.draw_reverse)
-		{
-			for (var t = count - 1; t >= 0; t--)
-				acts[t].draw();
-		}
-		else
-		{
-			for (var t = 0; t < count; t++)
-				acts[t].draw();
-		}
-	}
+	if (!this.child_behind)
+		this.drawChildren();
 	if (clip_children)
 		disp.restoreContext();
 };
@@ -5079,12 +5093,14 @@ b5.Actor.prototype.setClipping = function(x, y)
  */
 b5.Actor.prototype.overlaps = function(other)
 {
+	var x = this.x + this.x2;
+	var y = this.y + this.y2;
 	var w1 = this.w;
 	var h1 = this.h;
 	var w2 = other.w;
 	var h2 = other.h;
-	var x1 = this.x - w1 / 2;
-	var y1 = this.y - h1 / 2;
+	var x1 = x - w1 / 2;
+	var y1 = y - h1 / 2;
 	var x2 = other.x - w2 / 2;
 	var y2 = other.y - h2 / 2;
 
@@ -5092,12 +5108,14 @@ b5.Actor.prototype.overlaps = function(other)
 };
 b5.Actor.prototype.overlapsRect = function(rect)
 {
+	var x = this.x + this.x2;
+	var y = this.y + this.y2;
 	var w1 = this.w;
 	var h1 = this.h;
 	var w2 = rect.x2 - rect.x1;
 	var h2 = rect.y2 - rect.y1;
-	var x1 = this.x - w1 / 2;
-	var y1 = this.y - h1 / 2;
+	var x1 = x - w1 / 2;
+	var y1 = y - h1 / 2;
 	var x2 = rect.x1;
 	var y2 = rect.y1;
 
@@ -5116,8 +5134,8 @@ b5.Actor.prototype.circleOverlaps = function(other)
 	var ry1 = other.y - other.h / 2;
 	var rx2 = other.x + other.w / 2;
 	var ry2 = other.y + other.h / 2;
-	var x = this.x;
-	var y = this.y;
+	var x = this.x + this.x2;
+	var y = this.y + this.y2;
 	var closex = (x < rx1) ? rx1 : ((x > rx2) ? rx2 : x);
 	var closey = (y < ry1) ? ry1 : ((y > ry2) ? ry2 : y);
 	var dx = x - closex;
@@ -5131,8 +5149,8 @@ b5.Actor.prototype.circleOverlapsRect = function(rect)
 	var ry1 = rect.y1;
 	var rx2 = rect.x2;
 	var ry2 = rect.y2;
-	var x = this.x;
-	var y = this.y;
+	var x = this.x + this.x2;
+	var y = this.y + this.y2;
 	var closex = (x < rx1) ? rx1 : ((x > rx2) ? rx2 : x);
 	var closey = (y < ry1) ? ry1 : ((y > ry2) ? ry2 : y);
 	var dx = x - closex;
@@ -5242,24 +5260,15 @@ b5.ArcActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
     {
-        var count = this.actors.length;
-        if (count > 0)
-        {
-            var acts = this.actors;
-            if (this.draw_reverse)
-            {
-                for (var t = count - 1; t >= 0; t--)
-                    acts[t].draw();
-            }
-            else
-            {
-                for (var t = 0; t < count; t++)
-                    acts[t].draw();
-            }
-        }
+        this.drawChildren();
         return;
     }
     
+    this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
+
     // Render the actor
     var cache = this.cache_canvas;
     var scene = this.scene;
@@ -5275,7 +5284,6 @@ b5.ArcActor.prototype.draw = function()
         if (this.stroke_filled)
             disp.setLineWidth(this.stroke_thickness);
     }
-    this.preDraw();
 
     var mx = app.canvas_cx + scene.x * dscale;
     var my = app.canvas_cy + scene.y * dscale;
@@ -5286,7 +5294,8 @@ b5.ArcActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
 
-    this.updateTransform();
+    this.preDraw();
+    
     var self_clip = this.self_clip;
     var clip_children = this.clip_children;
     var trans = this.transform;
@@ -5317,15 +5326,9 @@ b5.ArcActor.prototype.draw = function()
     if (self_clip)
         disp.restoreContext();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
-
+	// Draw child actors
+	if (!this.child_behind)
+		this.drawChildren();
     if (clip_children)
         disp.restoreContext();
 };
@@ -5530,23 +5533,15 @@ b5.LabelActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-		var count = this.actors.length;
-		if (count > 0)
-		{
-			var acts = this.actors;
-			if (this.draw_reverse)
-			{
-				for (var t = count - 1; t >= 0; t--)
-					acts[t].draw();
-			}
-			else
-			{
-				for (var t = 0; t < count; t++)
-					acts[t].draw();
-			}
-		}
+        this.drawChildren();
 		return;
 	}
+
+    this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
+    this.preDraw();
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -5569,7 +5564,6 @@ b5.LabelActor.prototype.draw = function()
         if (this.stroke_filled)
             disp.setLineWidth(this.stroke_thickness);
     }
-    this.preDraw();
 	var ps = b5.app.pixel_ratio;
 	if (cache === null)
 		ps = 1;
@@ -5583,7 +5577,6 @@ b5.LabelActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
 
-    this.updateTransform();
     var trans = this.transform;
     var tx = trans[4] * dscale + mx;
     var ty = trans[5] * dscale + my;
@@ -5612,14 +5605,9 @@ b5.LabelActor.prototype.draw = function()
     }
     this.postDraw();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
+	// Draw child actors
+	if (!this.child_behind)
+		this.drawChildren();
 };
 
 /**
@@ -6150,23 +6138,14 @@ b5.PolygonActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
 	{
-		var count = this.actors.length;
-		if (count > 0)
-		{
-			var acts = this.actors;
-			if (this.draw_reverse)
-			{
-				for (var t = count - 1; t >= 0; t--)
-					acts[t].draw();
-			}
-			else
-			{
-				for (var t = 0; t < count; t++)
-					acts[t].draw();
-			}
-		}
+        this.drawChildren();
 		return;
 	}
+
+    this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -6182,7 +6161,6 @@ b5.PolygonActor.prototype.draw = function()
         if (this.stroke_filled)
             disp.setLineWidth(this.stroke_thickness);
     }
-    this.preDraw();
 
     var dscale = app.canvas_scale;
     var mx = app.canvas_cx + this.scene.x * dscale;
@@ -6194,7 +6172,8 @@ b5.PolygonActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
 
-    this.updateTransform();
+    this.preDraw();
+    
     var self_clip = this.self_clip;
     var clip_children = this.clip_children;
     var trans = this.transform;
@@ -6225,14 +6204,9 @@ b5.PolygonActor.prototype.draw = function()
     if (self_clip)
         disp.restoreContext();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
+	// Draw child actors
+	if (!this.child_behind)
+        this.drawChildren();
 
     if (clip_children)
         disp.restoreContext();
@@ -6373,23 +6347,14 @@ b5.RectActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
 	{
-		var count = this.actors.length;
-		if (count > 0)
-		{
-			var acts = this.actors;
-			if (this.draw_reverse)
-			{
-				for (var t = count - 1; t >= 0; t--)
-					acts[t].draw();
-			}
-			else
-			{
-				for (var t = 0; t < count; t++)
-					acts[t].draw();
-			}
-		}
+        this.drawChildren();
 		return;
 	}
+
+    this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -6406,7 +6371,6 @@ b5.RectActor.prototype.draw = function()
         if (this.stroke_filled)
             disp.setLineWidth(this.stroke_thickness);
     }
-    this.preDraw();
 
     var mx = app.canvas_cx + scene.x * dscale;
     var my = app.canvas_cy + scene.y * dscale;
@@ -6420,7 +6384,8 @@ b5.RectActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
 
-    this.updateTransform();
+    this.preDraw();
+    
     var self_clip = this.self_clip;
     var clip_children = this.clip_children;
     var trans = this.transform;
@@ -6458,14 +6423,9 @@ b5.RectActor.prototype.draw = function()
     if (self_clip)
         disp.restoreContext();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
+	// Draw child actors
+	if (!this.child_behind)
+        this.drawChildren();
 
     if (clip_children)
         disp.restoreContext();
@@ -6753,7 +6713,6 @@ b5.MapActor.prototype.draw = function()
     var app = scene.app;
     var dscale = app.canvas_scale;
     var disp = app.display;
-    this.preDraw();
 
     var mx = app.canvas_cx + scene.x * dscale;
     var my = app.canvas_cy + scene.y * dscale;
@@ -6764,6 +6723,11 @@ b5.MapActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
     this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
+    this.preDraw();
+    
     var trans = this.transform;
     var tx = trans[4] * dscale + mx;
     var ty = trans[5] * dscale + my;
@@ -6842,14 +6806,9 @@ b5.MapActor.prototype.draw = function()
 
     this.postDraw();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
+	// Draw child actors
+	if (!this.child_behind)
+		this.drawChildren();
 };
 
 
@@ -9508,6 +9467,7 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
     if (item.F !== undefined) actor.filled = item.F;
     if (item.FS !== undefined) actor.stroke_filled = item.FS;
     if (item.Th !== undefined) actor.stroke_thickness = item.Th;
+    if (item.CB !== undefined) actor.child_behind = item.CB;
     if (item.Sz !== undefined)
     {
         actor.w = item.Sz[0];

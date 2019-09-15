@@ -94,23 +94,15 @@ b5.LabelActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-		var count = this.actors.length;
-		if (count > 0)
-		{
-			var acts = this.actors;
-			if (this.draw_reverse)
-			{
-				for (var t = count - 1; t >= 0; t--)
-					acts[t].draw();
-			}
-			else
-			{
-				for (var t = 0; t < count; t++)
-					acts[t].draw();
-			}
-		}
+        this.drawChildren();
 		return;
 	}
+
+    this.updateTransform();
+	// Draw child actors
+	if (this.child_behind)
+        this.drawChildren();
+    this.preDraw();
 
     // Render the actor
     var cache = this.cache_canvas;
@@ -133,7 +125,6 @@ b5.LabelActor.prototype.draw = function()
         if (this.stroke_filled)
             disp.setLineWidth(this.stroke_thickness);
     }
-    this.preDraw();
 	var ps = b5.app.pixel_ratio;
 	if (cache === null)
 		ps = 1;
@@ -147,7 +138,6 @@ b5.LabelActor.prototype.draw = function()
         my -= scene.camera_y * dscale;
     }
 
-    this.updateTransform();
     var trans = this.transform;
     var tx = trans[4] * dscale + mx;
     var ty = trans[5] * dscale + my;
@@ -176,14 +166,9 @@ b5.LabelActor.prototype.draw = function()
     }
     this.postDraw();
 
-    // Draw child actors
-    var count = this.actors.length;
-    if (count > 0)
-    {
-        var acts = this.actors;
-        for (var t = 0; t < count; t++)
-            acts[t].draw();
-    }
+	// Draw child actors
+	if (!this.child_behind)
+		this.drawChildren();
 };
 
 /**

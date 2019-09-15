@@ -146,6 +146,8 @@
  * @property {b5.Display}              display                      - Rendering module
  * @property {boolean}                 clear_canvas                 - If true then canvas will be cleared each frame (default is false)
  * @property {boolean}                 use_web_audio                - If true then Web Audio will be used if its available (default is true)
+ * @property {boolean}                 shared_world                 - If true then box2d world is shared across all scenes
+ * @property {number}                  time_step                    - Physics time step used when using global box2d world
  * @property {function}                started                      - Function that will be called when the app starts
  * @property {number}                  num_logic                    - Number of times that the logic loop has been ran since app start
  * @property {number}                  num_draw                     - Number of times that the draw loop has been ran since app start
@@ -186,6 +188,7 @@ b5.App = function(canvas, web_audio)
     this.started = null;            // Function callback which is called when the app starts
     this.num_logic = 0;             // Number of times the logic loop has been ran since app start
     this.num_draw = 0;              // Number of times the draw  loop has been ran since app start
+    this.world = null;
     
     // Public variables
     this.scenes = [];               // An array of Scenes
@@ -218,6 +221,8 @@ b5.App = function(canvas, web_audio)
     };
 
     this.use_web_audio = web_audio || true;     // If true then Web Audio will be used if its available (default is true)
+    this.shared_world = false;
+    this.time_step = 0.3333;
     this.mobile = b5.Utils.IsMobile();
     this.platform = b5.Utils.GetPlatform();
     
@@ -887,6 +892,27 @@ b5.App.prototype.update = function(dt)
     if (app.actions !== undefined)
         app.actions.execute();
     app.tasks.execute();
+    if (this.world !== null)
+    {
+        if (this.time_step === 0)
+            this.world.Step(dt, 10, 10);		// frame-rate, velocity iterations, position iterations
+        else
+        {
+            var run_count = 1;
+            if (this.adaptive_physics)
+            {
+                run_count = (this.target_frame_rate / this.avg_fps + 0.5) << 0;
+                if (run_count < 1)
+                    run_count = 1;
+                else if (run_count > 3)
+                    run_count = 3;
+            }
+            for (var t = 0; t < run_count; t++)
+                this.world.Step(this.time_step, 10, 10);
+        }
+        if (this.world !== null)
+            this.world.ClearForces();
+    }
     for (var t = 0; t < count; t++)
         scenes[t].update(dt);
     this.cleanupDestroyedScenes();
@@ -1147,3 +1173,57 @@ b5.App.prototype.removeTask = function(task_name)
     this.tasks.remove(task_name);
 };
 
+//
+// Physics
+//
+/**
+ * Creates and initialises a Box2D world and attaches it to the scene. Note that all scenes that contain Box2D physics
+ * objects must also contain a Box2D world
+ * @param gravity_x {number} X axis gravity
+ * @param gravity_y {number} Y axis gravity
+ * @param allow_sleep {boolean} If set to true then actors with physics attached will be allowed to sleep which will
+ * speed up the processing of physics considerably
+ */
+b5.App.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
+{
+    if (!this.box2d)
+        return;
+    this.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(gravity_x, gravity_y), allow_sleep);
+
+    var listener = new Box2D.Dynamics.b2ContactListener;
+    listener.BeginContact = function(contact)
+    {
+        var actor = contact.GetFixtureA().GetBody().GetUserData();
+        if (actor.onCollisionStart !== undefined)
+            actor.onCollisionStart(contact);
+        actor = contact.GetFixtureB().GetBody().GetUserData();
+        if (actor.onCollisionStart !== undefined)
+            actor.onCollisionStart(contact);
+    };
+    listener.EndContact = function(contact)
+    {
+        var actor = contact.GetFixtureA().GetBody().GetUserData();
+        if (actor.onCollisionEnd !== undefined)
+            actor.onCollisionEnd(contact);
+        actor = contact.GetFixtureB().GetBody().GetUserData();
+        if (actor.onCollisionEnd !== undefined)
+            actor.onCollisionEnd(contact);
+    };
+/*	listener.PostSolve = function(contact, impulse)
+    {
+    }
+    listener.PreSolve = function(contact, oldManifold)
+    {
+    }*/
+    this.world.SetContactListener(listener);
+
+/*	var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+    var debugDraw = new b2DebugDraw();
+    var context = this.app.display.context;
+    debugDraw.SetSprite(context);
+    debugDraw.SetDrawScale(this.world_scale);
+    debugDraw.SetFillAlpha(0.5);
+    debugDraw.SetLineThickness(1.0);
+    debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+    this.world.SetDebugDraw(debugDraw);*/
+};

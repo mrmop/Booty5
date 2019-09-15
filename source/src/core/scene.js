@@ -569,7 +569,17 @@ b5.Scene.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
 {
     if (!this.app.box2d)
         return;
-    this.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(gravity_x, gravity_y), allow_sleep);
+    if (this.app.shared_world)
+    {
+        if (this.app.world === null)
+            this.app.initWorld(gravity_x, gravity_y, allow_sleep);
+        this.world = this.app.world;
+        return;
+    }
+    else
+    {
+        this.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(gravity_x, gravity_y), allow_sleep);
+    }
 
     var listener = new Box2D.Dynamics.b2ContactListener;
     listener.BeginContact = function(contact)
@@ -580,7 +590,6 @@ b5.Scene.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
         actor = contact.GetFixtureB().GetBody().GetUserData();
         if (actor.onCollisionStart !== undefined)
             actor.onCollisionStart(contact);
-//		console.log(actor.name);
     };
     listener.EndContact = function(contact)
     {
@@ -590,7 +599,6 @@ b5.Scene.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
         actor = contact.GetFixtureB().GetBody().GetUserData();
         if (actor.onCollisionEnd !== undefined)
             actor.onCollisionEnd(contact);
-//		console.log(actor);
     };
 /*	listener.PostSolve = function(contact, impulse)
     {
@@ -701,7 +709,7 @@ b5.Scene.prototype.baseUpdate = function(dt)
         acts[t].update(dt);
     }
 
-    if (this.world !== null)
+    if (!this.app.box2dworld && this.world !== null)
     {
         var app = b5.app;
         if (this.time_step === 0)
@@ -720,10 +728,9 @@ b5.Scene.prototype.baseUpdate = function(dt)
             for (var t = 0; t < run_count; t++)
                 this.world.Step(this.time_step, 10, 10);
         }
+        if (this.world !== null)
+            this.world.ClearForces();
     }
-
-    if (this.world !== null)
-        this.world.ClearForces();
 
     this.frame_count++;
 
