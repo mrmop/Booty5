@@ -508,14 +508,18 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         var docking = item.Do;
         if (item.Dse !== undefined)
             actor.dock_screen = item.Dse;
-        if (docking === "top" || docking === "topleft" || docking === "topright")
+        if (docking === "top" || docking === "topleft" || docking === "topright" || docking === "topcentre")
             actor.dock_y = b5.Actor.Dock_Top;
-        else if (docking === "bottom" || docking === "bottomleft" || docking === "bottomright")
+        else if (docking === "bottom" || docking === "bottomleft" || docking === "bottomright" || docking === "bottomcentre")
             actor.dock_y = b5.Actor.Dock_Bottom;
-        if (docking === "left" || docking === "topleft" || docking === "bottomleft")
+        else if (docking === "middleleft" || docking === "middleright" || docking === "middlecentre")
+            actor.dock_y = b5.Actor.Dock_Middle;
+        if (docking === "left" || docking === "topleft" || docking === "bottomleft" || docking === "middleleft")
             actor.dock_x = b5.Actor.Dock_Left;
-        else if (docking === "right" || docking === "topright" || docking === "bottomright")
+        else if (docking === "right" || docking === "topright" || docking === "bottomright" || docking === "middleright")
             actor.dock_x = b5.Actor.Dock_Right;
+        else if (docking === "topcentre" || docking === "bottomcentre" || docking === "middlecentre")
+            actor.dock_x = b5.Actor.Dock_Centre;
     }
     if (item.M !== undefined)
     {

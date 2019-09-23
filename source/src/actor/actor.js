@@ -406,6 +406,11 @@ b5.Actor.Dock_Top = 1;
  */
 b5.Actor.Dock_Bottom = 2;
 /**
+ * Actor is docked against middle of scene / actor on y-axis
+ * @constant
+ */
+b5.Actor.Dock_Middle = 3;
+/**
  * Actor is docked against left of scene / actor on x-axis
  * @constant
  */
@@ -415,6 +420,11 @@ b5.Actor.Dock_Left = 1;
  * @constant
  */
 b5.Actor.Dock_Right = 2;
+/**
+ * Actor is docked against centre of scene / actor on x-axis
+ * @constant
+ */
+b5.Actor.Dock_Centre = 3;
 
 /**
  * Actor is an image based actor
@@ -2253,6 +2263,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0] * 2) * this.scale_x * sx) / 2);
 				else if (this.dock_x === b5.Actor.Dock_Right)
 					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1] * 2) * this.scale_x * sx) / 2);
+				else if (this.dock_x === b5.Actor.Dock_Centre)
+					this.x = (((this.w + this.margin[0] * 2) * this.scale_x * sx) / 2);
 			}
 			if (this.dock_y !== 0)
 			{
@@ -2261,6 +2273,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2] * 2) * this.scale_y * sy) / 2);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
 					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3] * 2) * this.scale_y * sy) / 2);
+				else if (this.dock_y === b5.Actor.Dock_Middle)
+					this.y = (((this.h + this.margin[2] * 2) * this.scale_y * sy) / 2);
 			}
 		}
 		else
@@ -2271,6 +2285,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.x = -scene.w / 2 + (this.w * this.scale_x)/ 2 + this.margin[0];
 				else if (this.dock_x === b5.Actor.Dock_Right)
 					this.x = scene.w / 2 - (this.w * this.scale_x) / 2 + this.margin[1];
+				else if (this.dock_x === b5.Actor.Dock_Centre)
+					this.x = (this.w * this.scale_x) / 2 + this.margin[0];
 			}
 			if (this.dock_y !== 0)
 			{
@@ -2278,6 +2294,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.y = -scene.h / 2 + (this.h * this.scale_y) / 2 + this.margin[2];
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
 					this.y = scene.h / 2 - (this.h * this.scale_y) / 2 + this.margin[3];
+				else if (this.dock_y === b5.Actor.Dock_Middle)
+					this.y = (this.h * this.scale_y) / 2 + this.margin[2];
 			}
 		}
 	}

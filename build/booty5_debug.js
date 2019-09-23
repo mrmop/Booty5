@@ -2788,6 +2788,11 @@ b5.Actor.Dock_Top = 1;
  */
 b5.Actor.Dock_Bottom = 2;
 /**
+ * Actor is docked against middle of scene / actor on y-axis
+ * @constant
+ */
+b5.Actor.Dock_Middle = 3;
+/**
  * Actor is docked against left of scene / actor on x-axis
  * @constant
  */
@@ -2797,6 +2802,11 @@ b5.Actor.Dock_Left = 1;
  * @constant
  */
 b5.Actor.Dock_Right = 2;
+/**
+ * Actor is docked against centre of scene / actor on x-axis
+ * @constant
+ */
+b5.Actor.Dock_Centre = 3;
 
 /**
  * Actor is an image based actor
@@ -2976,26 +2986,6 @@ b5.Actor.prototype.setPosition = function(x, y)
 b5.Actor.prototype.setPositionPhysics = function(x, y) // Deprecated and will be removed, use setPosition instead
 {
 	this.setPosition(x, y);
-};
-/**
- * Sets the actors scene position
- * @param x {number} X coordinate
- * @param y {number} Y coordinate
- */
-b5.Actor.prototype.setPosition = function(x, y)
-{
-	if (this.x !== x || this.y !== y)
-	{
-		this.x = x;
-		this.y = y;
-		this.dirty();
-		if (this.body !== null)
-		{
-			var b2Vec2 = Box2D.Common.Math.b2Vec2;
-			var ws = this.scene.world_scale;
-			this.body.SetPosition(new b2Vec2(x / ws, y / ws));
-		}
-	}
 };
 /**
  * Sets the size of the actor
@@ -3727,12 +3717,15 @@ b5.Actor.prototype.addFixture = function(options)
 	var ws = this.scene.world_scale;
 	var sx = this.scale_x;
 	var sy = this.scale_y;
+	var b2Vec2 = Box2D.Common.Math.b2Vec2;
 
 	if (shape.type === b5.Shape.TypeBox)
 	{
 		fix_def = new Box2D.Dynamics.b2FixtureDef;
 		fix_def.shape = new Box2D.Collision.Shapes.b2PolygonShape;
-		fix_def.shape.SetAsBox(shape.width / (2 * ws) * sx, shape.height / (2 * ws) * sy);
+		var w = shape.width / (2 * ws) * sx;
+		var h = shape.height / (2 * ws) * sy;
+		fix_def.shape.SetAsOrientedBox(w, h, new b2Vec2(shape.width / ws * this.ox, shape.height / ws * this.oy), 0);
 	}
 	else if (shape.type === b5.Shape.TypeCircle)
 	{
@@ -4125,19 +4118,17 @@ b5.Actor.prototype.updateTransform = function()
 		{
 			if (!this.absolute_origin)
 			{
-				ox *= this.w;
-				oy *= this.h;
+				ox *= this.ow;
+				oy *= this.oh;
 			}
-			trans[4] -= ox;
-			trans[5] -= oy;
 			// Apply frame offset
 			if (src !== null)
 			{
 				ox -= src.ox;
 				oy -= src.oy;
 			}
-			var pre_mat = [1, 0, 0, 1, ox, oy];
-			b5.Maths.preMulMatrix(trans, pre_mat);
+			trans[4] += ((ox * trans[0]) + (oy * trans[2]));
+			trans[5] += ((ox * trans[1]) + (oy * trans[3]));
 		}
 //		[0][2][4]		[0][2][4]
 //		[1][3][5]		[1][3][5]
@@ -4654,6 +4645,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.x = -scene.w * s.x / 2 + (((this.w + this.margin[0] * 2) * this.scale_x * sx) / 2);
 				else if (this.dock_x === b5.Actor.Dock_Right)
 					this.x = scene.w * s.x / 2 - (((this.w + this.margin[1] * 2) * this.scale_x * sx) / 2);
+				else if (this.dock_x === b5.Actor.Dock_Centre)
+					this.x = (((this.w + this.margin[0] * 2) * this.scale_x * sx) / 2);
 			}
 			if (this.dock_y !== 0)
 			{
@@ -4662,6 +4655,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.y = -scene.h * s.y / 2 + (((this.h + this.margin[2] * 2) * this.scale_y * sy) / 2);
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
 					this.y = scene.h * s.y / 2 - (((this.h + this.margin[3] * 2) * this.scale_y * sy) / 2);
+				else if (this.dock_y === b5.Actor.Dock_Middle)
+					this.y = (((this.h + this.margin[2] * 2) * this.scale_y * sy) / 2);
 			}
 		}
 		else
@@ -4672,6 +4667,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.x = -scene.w / 2 + (this.w * this.scale_x)/ 2 + this.margin[0];
 				else if (this.dock_x === b5.Actor.Dock_Right)
 					this.x = scene.w / 2 - (this.w * this.scale_x) / 2 + this.margin[1];
+				else if (this.dock_x === b5.Actor.Dock_Centre)
+					this.x = (this.w * this.scale_x) / 2 + this.margin[0];
 			}
 			if (this.dock_y !== 0)
 			{
@@ -4679,6 +4676,8 @@ b5.Actor.prototype.baseUpdate = function(dt)
 					this.y = -scene.h / 2 + (this.h * this.scale_y) / 2 + this.margin[2];
 				else if (this.dock_y === b5.Actor.Dock_Bottom)
 					this.y = scene.h / 2 - (this.h * this.scale_y) / 2 + this.margin[3];
+				else if (this.dock_y === b5.Actor.Dock_Middle)
+					this.y = (this.h * this.scale_y) / 2 + this.margin[2];
 			}
 		}
 	}
@@ -6960,6 +6959,8 @@ b5.MapActor.prototype.draw = function()
  * @property {b5.Display}              display                      - Rendering module
  * @property {boolean}                 clear_canvas                 - If true then canvas will be cleared each frame (default is false)
  * @property {boolean}                 use_web_audio                - If true then Web Audio will be used if its available (default is true)
+ * @property {boolean}                 shared_world                 - If true then box2d world is shared across all scenes
+ * @property {number}                  time_step                    - Physics time step used when using global box2d world
  * @property {function}                started                      - Function that will be called when the app starts
  * @property {number}                  num_logic                    - Number of times that the logic loop has been ran since app start
  * @property {number}                  num_draw                     - Number of times that the draw loop has been ran since app start
@@ -7000,6 +7001,7 @@ b5.App = function(canvas, web_audio)
     this.started = null;            // Function callback which is called when the app starts
     this.num_logic = 0;             // Number of times the logic loop has been ran since app start
     this.num_draw = 0;              // Number of times the draw  loop has been ran since app start
+    this.world = null;
     
     // Public variables
     this.scenes = [];               // An array of Scenes
@@ -7032,6 +7034,8 @@ b5.App = function(canvas, web_audio)
     };
 
     this.use_web_audio = web_audio || true;     // If true then Web Audio will be used if its available (default is true)
+    this.shared_world = false;
+    this.time_step = 0.3333;
     this.mobile = b5.Utils.IsMobile();
     this.platform = b5.Utils.GetPlatform();
     
@@ -7701,6 +7705,27 @@ b5.App.prototype.update = function(dt)
     if (app.actions !== undefined)
         app.actions.execute();
     app.tasks.execute();
+    if (this.world !== null)
+    {
+        if (this.time_step === 0)
+            this.world.Step(dt, 10, 10);		// frame-rate, velocity iterations, position iterations
+        else
+        {
+            var run_count = 1;
+            if (this.adaptive_physics)
+            {
+                run_count = (this.target_frame_rate / this.avg_fps + 0.5) << 0;
+                if (run_count < 1)
+                    run_count = 1;
+                else if (run_count > 3)
+                    run_count = 3;
+            }
+            for (var t = 0; t < run_count; t++)
+                this.world.Step(this.time_step, 10, 10);
+        }
+        if (this.world !== null)
+            this.world.ClearForces();
+    }
     for (var t = 0; t < count; t++)
         scenes[t].update(dt);
     this.cleanupDestroyedScenes();
@@ -7961,7 +7986,60 @@ b5.App.prototype.removeTask = function(task_name)
     this.tasks.remove(task_name);
 };
 
+//
+// Physics
+//
+/**
+ * Creates and initialises a Box2D world and attaches it to the scene. Note that all scenes that contain Box2D physics
+ * objects must also contain a Box2D world
+ * @param gravity_x {number} X axis gravity
+ * @param gravity_y {number} Y axis gravity
+ * @param allow_sleep {boolean} If set to true then actors with physics attached will be allowed to sleep which will
+ * speed up the processing of physics considerably
+ */
+b5.App.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
+{
+    if (!this.box2d)
+        return;
+    this.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(gravity_x, gravity_y), allow_sleep);
 
+    var listener = new Box2D.Dynamics.b2ContactListener;
+    listener.BeginContact = function(contact)
+    {
+        var actor = contact.GetFixtureA().GetBody().GetUserData();
+        if (actor.onCollisionStart !== undefined)
+            actor.onCollisionStart(contact);
+        actor = contact.GetFixtureB().GetBody().GetUserData();
+        if (actor.onCollisionStart !== undefined)
+            actor.onCollisionStart(contact);
+    };
+    listener.EndContact = function(contact)
+    {
+        var actor = contact.GetFixtureA().GetBody().GetUserData();
+        if (actor.onCollisionEnd !== undefined)
+            actor.onCollisionEnd(contact);
+        actor = contact.GetFixtureB().GetBody().GetUserData();
+        if (actor.onCollisionEnd !== undefined)
+            actor.onCollisionEnd(contact);
+    };
+/*	listener.PostSolve = function(contact, impulse)
+    {
+    }
+    listener.PreSolve = function(contact, oldManifold)
+    {
+    }*/
+    this.world.SetContactListener(listener);
+
+/*	var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+    var debugDraw = new b2DebugDraw();
+    var context = this.app.display.context;
+    debugDraw.SetSprite(context);
+    debugDraw.SetDrawScale(this.world_scale);
+    debugDraw.SetFillAlpha(0.5);
+    debugDraw.SetLineThickness(1.0);
+    debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+    this.world.SetDebugDraw(debugDraw);*/
+};
 /**
  * author       Mat Hopwood
  * copyright    2014 Mat Hopwood
@@ -8533,7 +8611,17 @@ b5.Scene.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
 {
     if (!this.app.box2d)
         return;
-    this.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(gravity_x, gravity_y), allow_sleep);
+    if (this.app.shared_world)
+    {
+        if (this.app.world === null)
+            this.app.initWorld(gravity_x, gravity_y, allow_sleep);
+        this.world = this.app.world;
+        return;
+    }
+    else
+    {
+        this.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(gravity_x, gravity_y), allow_sleep);
+    }
 
     var listener = new Box2D.Dynamics.b2ContactListener;
     listener.BeginContact = function(contact)
@@ -8544,7 +8632,6 @@ b5.Scene.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
         actor = contact.GetFixtureB().GetBody().GetUserData();
         if (actor.onCollisionStart !== undefined)
             actor.onCollisionStart(contact);
-//		console.log(actor.name);
     };
     listener.EndContact = function(contact)
     {
@@ -8554,7 +8641,6 @@ b5.Scene.prototype.initWorld = function(gravity_x, gravity_y, allow_sleep)
         actor = contact.GetFixtureB().GetBody().GetUserData();
         if (actor.onCollisionEnd !== undefined)
             actor.onCollisionEnd(contact);
-//		console.log(actor);
     };
 /*	listener.PostSolve = function(contact, impulse)
     {
@@ -8665,7 +8751,7 @@ b5.Scene.prototype.baseUpdate = function(dt)
         acts[t].update(dt);
     }
 
-    if (this.world !== null)
+    if (!this.app.box2dworld && this.world !== null)
     {
         var app = b5.app;
         if (this.time_step === 0)
@@ -8684,10 +8770,9 @@ b5.Scene.prototype.baseUpdate = function(dt)
             for (var t = 0; t < run_count; t++)
                 this.world.Step(this.time_step, 10, 10);
         }
+        if (this.world !== null)
+            this.world.ClearForces();
     }
-
-    if (this.world !== null)
-        this.world.ClearForces();
 
     this.frame_count++;
 
@@ -9509,14 +9594,18 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         var docking = item.Do;
         if (item.Dse !== undefined)
             actor.dock_screen = item.Dse;
-        if (docking === "top" || docking === "topleft" || docking === "topright")
+        if (docking === "top" || docking === "topleft" || docking === "topright" || docking === "topcentre")
             actor.dock_y = b5.Actor.Dock_Top;
-        else if (docking === "bottom" || docking === "bottomleft" || docking === "bottomright")
+        else if (docking === "bottom" || docking === "bottomleft" || docking === "bottomright" || docking === "bottomcentre")
             actor.dock_y = b5.Actor.Dock_Bottom;
-        if (docking === "left" || docking === "topleft" || docking === "bottomleft")
+        else if (docking === "middleleft" || docking === "middleright" || docking === "middlecentre")
+            actor.dock_y = b5.Actor.Dock_Middle;
+        if (docking === "left" || docking === "topleft" || docking === "bottomleft" || docking === "middleleft")
             actor.dock_x = b5.Actor.Dock_Left;
-        else if (docking === "right" || docking === "topright" || docking === "bottomright")
+        else if (docking === "right" || docking === "topright" || docking === "bottomright" || docking === "middleright")
             actor.dock_x = b5.Actor.Dock_Right;
+        else if (docking === "topcentre" || docking === "bottomcentre" || docking === "middlecentre")
+            actor.dock_x = b5.Actor.Dock_Centre;
     }
     if (item.M !== undefined)
     {
