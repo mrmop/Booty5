@@ -222,7 +222,7 @@ b5.App = function(canvas, web_audio)
 
     this.use_web_audio = web_audio || true;     // If true then Web Audio will be used if its available (default is true)
     this.shared_world = false;
-    this.time_step = 0.3333;
+    this.time_step = 0.03333;
     this.mobile = b5.Utils.IsMobile();
     this.platform = b5.Utils.GetPlatform();
     

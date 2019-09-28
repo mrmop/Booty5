@@ -709,7 +709,7 @@ b5.Scene.prototype.baseUpdate = function(dt)
         acts[t].update(dt);
     }
 
-    if (!this.app.box2dworld && this.world !== null)
+    if (this.world !== null && b5.app.world === null)
     {
         var app = b5.app;
         if (this.time_step === 0)
