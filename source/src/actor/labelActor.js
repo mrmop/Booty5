@@ -94,14 +94,14 @@ b5.LabelActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-        this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
+    var drawn_all = this.drawChildren(false);
     this.preDraw();
 
     // Render the actor
@@ -167,8 +167,8 @@ b5.LabelActor.prototype.draw = function()
     this.postDraw();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 };
 
 /**

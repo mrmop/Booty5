@@ -204,7 +204,7 @@
  * @property {number}                   touch_et        	- Time when the actor last received an end touch (internal)
  * @property {boolean}                  touching            - Set to true when user touching (internal)
  * @property {boolean}                  touchmove           - Set to true when touch is moving on this actor (internal)
- * @property {number}                   layer               - Visible layer (set via property _layers) (internal)
+ * @property {number}                   layer               - Visible layer, negative layer causes hte actor to be rendered beneath parent (set via property _layers) (internal)
  * @property {boolean}                  order_changed       - Set to true when child actors change order (internal)
  * @property {Canvas}                   cache_canvas        - The HTML5 Canvas object that is used to cache rendering (internal)
 
@@ -274,7 +274,6 @@
  * @property {number}                   padding             - Text padding (used when caching)
  * @property {number}                   scale_method        - Scale method used to fit actor to screen
  * @property {bool}                   	draw_reverse        - If set to true children are drawn in reverse order
- * @property {bool}                   	child_behind        - When set children are displayed behind the parent
  *
  *
  */
@@ -1765,23 +1764,61 @@ b5.Actor.prototype.updateTransform = function()
 /**
  * Renders this actors children
  */
-b5.Actor.prototype.drawChildren = function()
+b5.Actor.prototype.drawChildren = function(post)
 {
 	var count = this.actors.length;
+	var drawn = 0;
 	if (count > 0)
 	{
 		var acts = this.actors;
 		if (this.draw_reverse)
 		{
 			for (var t = count - 1; t >= 0; t--)
-				acts[t].draw();
+			{
+				var layer = acts[t].layer;
+				if (post)
+				{
+					if (layer >= 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+				else
+				{
+					if (layer < 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+			}
 		}
 		else
 		{
 			for (var t = 0; t < count; t++)
-				acts[t].draw();
+			{
+				var layer = acts[t].layer;
+				if (post)
+				{
+					if (layer >= 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+				else
+				{
+					if (layer < 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+			}
 		}
 	}
+	return drawn === count;
 };
 
 /**
@@ -1799,7 +1836,8 @@ b5.Actor.prototype.draw = function()
 	}
 	if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-		this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
@@ -1851,8 +1889,7 @@ b5.Actor.prototype.draw = function()
 
 	this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-		this.drawChildren();
+	var drawn_all = this.drawChildren(false);
 
 	this.preDraw();
 	var self_clip = this.self_clip;
@@ -1895,8 +1932,8 @@ b5.Actor.prototype.draw = function()
 		disp.restoreContext();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 	if (clip_children)
 		disp.restoreContext();
 };

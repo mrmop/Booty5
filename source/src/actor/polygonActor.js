@@ -76,15 +76,15 @@ b5.PolygonActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
 	{
-        this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
-
+    var drawn_all = this.drawChildren(false);
+    
     // Render the actor
     var cache = this.cache_canvas;
     var scene = this.scene;
@@ -143,8 +143,8 @@ b5.PolygonActor.prototype.draw = function()
         disp.restoreContext();
 
 	// Draw child actors
-	if (!this.child_behind)
-        this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 
     if (clip_children)
         disp.restoreContext();

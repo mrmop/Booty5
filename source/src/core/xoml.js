@@ -466,7 +466,6 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
     if (item.F !== undefined) actor.filled = item.F;
     if (item.FS !== undefined) actor.stroke_filled = item.FS;
     if (item.Th !== undefined) actor.stroke_thickness = item.Th;
-    if (item.CB !== undefined) actor.child_behind = item.CB;
     if (item.Sz !== undefined)
     {
         actor.w = item.Sz[0];

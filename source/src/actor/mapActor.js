@@ -232,8 +232,7 @@ b5.MapActor.prototype.draw = function()
     }
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
+    var drawn_all = this.drawChildren(false);
     this.preDraw();
     
     var trans = this.transform;
@@ -315,7 +314,7 @@ b5.MapActor.prototype.draw = function()
     this.postDraw();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 };
 
