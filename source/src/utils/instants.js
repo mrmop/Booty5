@@ -17,7 +17,12 @@ b5.Instants = function()
     this.preloadedVideoAd = null;
     this.preloadedInterAd = null;
     this.adReady = false;
+    this.adLoadErrorCode = 0;
     this.adLoadError = "";
+    this.adLoadErrorCount = "";
+    this.vadReady = false;
+    this.vadLoadErrorCode = 0;
+    this.vadLoadError = "";
     this.shotCache = null;
     var that = this;
     
@@ -416,13 +421,16 @@ b5.Instants.prototype.PreloadVideoAd = function(done_callback, placement_id)
         that.preloadedVideoAd = rewarded;
         return that.preloadedVideoAd.loadAsync();
       }).then(function() {
-        that.adReady = true;
-        that.adLoadError = "";
+        that.vadReady = true;
+        that.vadLoadError = "";
+        that.vadLoadErrorCode = 0;
         Log("Rewarded video preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
-        that.adLoadError = err.message;
+        that.vadReady = false;
+        that.vadLoadError = err.message;
+        that.vadLoadErrorCode = err.error;
         Log("Rewarded video failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -436,13 +444,16 @@ b5.Instants.prototype.ReloadVideoAd = function(done_callback)
     var that = this;
     this.preloadedVideoAd.loadAsync()
       .then(function() {
-        that.adReady = true;
-        that.adLoadError = "";
+        that.vadReady = true;
+        that.vadLoadError = "";
+        that.vadLoadErrorCode = 0;
         Log("Rewarded video preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
-        that.adLoadError = err.message;
+        that.vadReady = false;
+        that.vadLoadError = err.message;
+        that.vadLoadErrorCode = err.error;
         Log("Rewarded video failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -452,10 +463,12 @@ b5.Instants.prototype.ReloadVideoAd = function(done_callback)
 b5.Instants.prototype.ShowVideoAd = function(done_callback)
 {
     var that = this;
+    this.vadReady = false;
     if (!this.videoAdsSupported)
     {
         Log("Rewarded video ads not supported on this device");
-        that.adLoadError = "Not supported";
+        that.vadLoadError = "Not supported";
+        that.vadLoadErrorCode = -1;
         if (done_callback !== undefined)
             done_callback(false);
         FBInstant.logEvent("ADVS no support", 1);
@@ -474,7 +487,8 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
         }
     }).catch(function(e) {
         Log("Rewarded video playback error: " + e.message);
-        that.adLoadError = e.message;
+        that.vadLoadError = e.message;
+        that.vadLoadErrorCode = e.error;
         if (done_callback !== undefined)
             done_callback(false, e);
     });
@@ -493,11 +507,14 @@ b5.Instants.prototype.PreloadInterstitialAd = function(done_callback, placement_
       }).then(function() {
         that.adReady = true;
         that.adLoadError = "";
+        that.adLoadErrorCode = 0;
         Log("Interstitial preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
+        that.adReady = false;
         that.adLoadError = err.message;
+        that.adLoadErrorCode = err.error;
         Log("Interstitial failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -513,11 +530,14 @@ b5.Instants.prototype.ReloadInterstitialAd = function(done_callback)
       .then(function() {
         that.adReady = true;
         that.adLoadError = "";
+        that.adLoadErrorCode = 0;
         Log("Interstitial preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
+        that.adReady = false;
         that.adLoadError = err.message;
+        that.adLoadErrorCode = err.error;
         Log("Interstitial failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -527,10 +547,12 @@ b5.Instants.prototype.ReloadInterstitialAd = function(done_callback)
 b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
 {
     var that = this;
+    this.adReady = false;
     if (!this.interstitialAdsSupported)
     {
         Log("Interstitial ads not supported on this device");
         that.adLoadError = "Not supported";
+        that.adLoadErrorCode = -1;
         if (done_callback !== undefined)
             done_callback(false);
         FBInstant.logEvent("ADIS no support", 1);
@@ -553,16 +575,10 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
     }).catch(function(e) {
         Log("Interstitial playback error: " + e.message);
         that.adLoadError = e.message;
+        that.adLoadErrorCode = e.error;
         if (done_callback !== undefined)
             done_callback(false, e);
     });
-};
-
-b5.Instants.prototype.IsAdReady = function()
-{
-    var r = this.adReady;
-    this.adReady = false;
-    return r;
 };
 
 b5.Instants.prototype.CreateScreenshotCache = function(height)

@@ -2586,7 +2586,7 @@ b5.TasksManager.prototype.execute = function()
  * @property {number}                   touch_et        	- Time when the actor last received an end touch (internal)
  * @property {boolean}                  touching            - Set to true when user touching (internal)
  * @property {boolean}                  touchmove           - Set to true when touch is moving on this actor (internal)
- * @property {number}                   layer               - Visible layer (set via property _layers) (internal)
+ * @property {number}                   layer               - Visible layer, negative layer causes hte actor to be rendered beneath parent (set via property _layers) (internal)
  * @property {boolean}                  order_changed       - Set to true when child actors change order (internal)
  * @property {Canvas}                   cache_canvas        - The HTML5 Canvas object that is used to cache rendering (internal)
 
@@ -2656,7 +2656,6 @@ b5.TasksManager.prototype.execute = function()
  * @property {number}                   padding             - Text padding (used when caching)
  * @property {number}                   scale_method        - Scale method used to fit actor to screen
  * @property {bool}                   	draw_reverse        - If set to true children are drawn in reverse order
- * @property {bool}                   	child_behind        - When set children are displayed behind the parent
  *
  *
  */
@@ -4147,23 +4146,61 @@ b5.Actor.prototype.updateTransform = function()
 /**
  * Renders this actors children
  */
-b5.Actor.prototype.drawChildren = function()
+b5.Actor.prototype.drawChildren = function(post)
 {
 	var count = this.actors.length;
+	var drawn = 0;
 	if (count > 0)
 	{
 		var acts = this.actors;
 		if (this.draw_reverse)
 		{
 			for (var t = count - 1; t >= 0; t--)
-				acts[t].draw();
+			{
+				var layer = acts[t].layer;
+				if (post)
+				{
+					if (layer >= 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+				else
+				{
+					if (layer < 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+			}
 		}
 		else
 		{
 			for (var t = 0; t < count; t++)
-				acts[t].draw();
+			{
+				var layer = acts[t].layer;
+				if (post)
+				{
+					if (layer >= 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+				else
+				{
+					if (layer < 0)
+					{
+						acts[t].draw();
+						drawn++;
+					}
+				}
+			}
 		}
 	}
+	return drawn === count;
 };
 
 /**
@@ -4181,7 +4218,8 @@ b5.Actor.prototype.draw = function()
 	}
 	if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-		this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
@@ -4233,8 +4271,7 @@ b5.Actor.prototype.draw = function()
 
 	this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-		this.drawChildren();
+	var drawn_all = this.drawChildren(false);
 
 	this.preDraw();
 	var self_clip = this.self_clip;
@@ -4277,8 +4314,8 @@ b5.Actor.prototype.draw = function()
 		disp.restoreContext();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 	if (clip_children)
 		disp.restoreContext();
 };
@@ -5259,15 +5296,15 @@ b5.ArcActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
     {
-        this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
         return;
     }
     
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
-
+    var drawn_all = this.drawChildren(false);
+    
     // Render the actor
     var cache = this.cache_canvas;
     var scene = this.scene;
@@ -5326,8 +5363,8 @@ b5.ArcActor.prototype.draw = function()
         disp.restoreContext();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
     if (clip_children)
         disp.restoreContext();
 };
@@ -5532,14 +5569,14 @@ b5.LabelActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent cache then parent will have drawn so no need to draw again
 	{
-        this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
+    var drawn_all = this.drawChildren(false);
     this.preDraw();
 
     // Render the actor
@@ -5605,8 +5642,8 @@ b5.LabelActor.prototype.draw = function()
     this.postDraw();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 };
 
 /**
@@ -6137,15 +6174,15 @@ b5.PolygonActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
 	{
-        this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
-
+    var drawn_all = this.drawChildren(false);
+    
     // Render the actor
     var cache = this.cache_canvas;
     var scene = this.scene;
@@ -6204,8 +6241,8 @@ b5.PolygonActor.prototype.draw = function()
         disp.restoreContext();
 
 	// Draw child actors
-	if (!this.child_behind)
-        this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 
     if (clip_children)
         disp.restoreContext();
@@ -6346,15 +6383,15 @@ b5.RectActor.prototype.draw = function()
     }
     if (this.merge_cache)   // If merged into parent ache then parent will have drawn so no need to draw again
 	{
-        this.drawChildren();
+		this.drawChildren(false);
+		this.drawChildren(true);
 		return;
 	}
 
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
-
+    var drawn_all = this.drawChildren(false);
+    
     // Render the actor
     var cache = this.cache_canvas;
     var scene = this.scene;
@@ -6423,8 +6460,8 @@ b5.RectActor.prototype.draw = function()
         disp.restoreContext();
 
 	// Draw child actors
-	if (!this.child_behind)
-        this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 
     if (clip_children)
         disp.restoreContext();
@@ -6723,8 +6760,7 @@ b5.MapActor.prototype.draw = function()
     }
     this.updateTransform();
 	// Draw child actors
-	if (this.child_behind)
-        this.drawChildren();
+    var drawn_all = this.drawChildren(false);
     this.preDraw();
     
     var trans = this.transform;
@@ -6806,8 +6842,8 @@ b5.MapActor.prototype.draw = function()
     this.postDraw();
 
 	// Draw child actors
-	if (!this.child_behind)
-		this.drawChildren();
+	if (!drawn_all)
+		this.drawChildren(true);
 };
 
 
@@ -7035,7 +7071,7 @@ b5.App = function(canvas, web_audio)
 
     this.use_web_audio = web_audio || true;     // If true then Web Audio will be used if its available (default is true)
     this.shared_world = false;
-    this.time_step = 0.3333;
+    this.time_step = 0.03333;
     this.mobile = b5.Utils.IsMobile();
     this.platform = b5.Utils.GetPlatform();
     
@@ -8751,7 +8787,7 @@ b5.Scene.prototype.baseUpdate = function(dt)
         acts[t].update(dt);
     }
 
-    if (!this.app.box2dworld && this.world !== null)
+    if (this.world !== null && b5.app.world === null)
     {
         var app = b5.app;
         if (this.time_step === 0)
@@ -9552,7 +9588,6 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
     if (item.F !== undefined) actor.filled = item.F;
     if (item.FS !== undefined) actor.stroke_filled = item.FS;
     if (item.Th !== undefined) actor.stroke_thickness = item.Th;
-    if (item.CB !== undefined) actor.child_behind = item.CB;
     if (item.Sz !== undefined)
     {
         actor.w = item.Sz[0];
@@ -11985,7 +12020,12 @@ b5.Instants = function()
     this.preloadedVideoAd = null;
     this.preloadedInterAd = null;
     this.adReady = false;
+    this.adLoadErrorCode = 0;
     this.adLoadError = "";
+    this.adLoadErrorCount = "";
+    this.vadReady = false;
+    this.vadLoadErrorCode = 0;
+    this.vadLoadError = "";
     this.shotCache = null;
     var that = this;
     
@@ -12384,13 +12424,16 @@ b5.Instants.prototype.PreloadVideoAd = function(done_callback, placement_id)
         that.preloadedVideoAd = rewarded;
         return that.preloadedVideoAd.loadAsync();
       }).then(function() {
-        that.adReady = true;
-        that.adLoadError = "";
+        that.vadReady = true;
+        that.vadLoadError = "";
+        that.vadLoadErrorCode = 0;
         Log("Rewarded video preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
-        that.adLoadError = err.message;
+        that.vadReady = false;
+        that.vadLoadError = err.message;
+        that.vadLoadErrorCode = err.error;
         Log("Rewarded video failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -12404,13 +12447,16 @@ b5.Instants.prototype.ReloadVideoAd = function(done_callback)
     var that = this;
     this.preloadedVideoAd.loadAsync()
       .then(function() {
-        that.adReady = true;
-        that.adLoadError = "";
+        that.vadReady = true;
+        that.vadLoadError = "";
+        that.vadLoadErrorCode = 0;
         Log("Rewarded video preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
-        that.adLoadError = err.message;
+        that.vadReady = false;
+        that.vadLoadError = err.message;
+        that.vadLoadErrorCode = err.error;
         Log("Rewarded video failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -12420,10 +12466,12 @@ b5.Instants.prototype.ReloadVideoAd = function(done_callback)
 b5.Instants.prototype.ShowVideoAd = function(done_callback)
 {
     var that = this;
+    this.vadReady = false;
     if (!this.videoAdsSupported)
     {
         Log("Rewarded video ads not supported on this device");
-        that.adLoadError = "Not supported";
+        that.vadLoadError = "Not supported";
+        that.vadLoadErrorCode = -1;
         if (done_callback !== undefined)
             done_callback(false);
         FBInstant.logEvent("ADVS no support", 1);
@@ -12442,7 +12490,8 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
         }
     }).catch(function(e) {
         Log("Rewarded video playback error: " + e.message);
-        that.adLoadError = e.message;
+        that.vadLoadError = e.message;
+        that.vadLoadErrorCode = e.error;
         if (done_callback !== undefined)
             done_callback(false, e);
     });
@@ -12461,11 +12510,14 @@ b5.Instants.prototype.PreloadInterstitialAd = function(done_callback, placement_
       }).then(function() {
         that.adReady = true;
         that.adLoadError = "";
+        that.adLoadErrorCode = 0;
         Log("Interstitial preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
+        that.adReady = false;
         that.adLoadError = err.message;
+        that.adLoadErrorCode = err.error;
         Log("Interstitial failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -12481,11 +12533,14 @@ b5.Instants.prototype.ReloadInterstitialAd = function(done_callback)
       .then(function() {
         that.adReady = true;
         that.adLoadError = "";
+        that.adLoadErrorCode = 0;
         Log("Interstitial preloaded");
         if (done_callback !== undefined)
             done_callback(true);
       }).catch(function(err){
+        that.adReady = false;
         that.adLoadError = err.message;
+        that.adLoadErrorCode = err.error;
         Log("Interstitial failed to preload: " + err.message);
         if (done_callback !== undefined)
             done_callback(false, err);
@@ -12495,10 +12550,12 @@ b5.Instants.prototype.ReloadInterstitialAd = function(done_callback)
 b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
 {
     var that = this;
+    this.adReady = false;
     if (!this.interstitialAdsSupported)
     {
         Log("Interstitial ads not supported on this device");
         that.adLoadError = "Not supported";
+        that.adLoadErrorCode = -1;
         if (done_callback !== undefined)
             done_callback(false);
         FBInstant.logEvent("ADIS no support", 1);
@@ -12521,16 +12578,10 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
     }).catch(function(e) {
         Log("Interstitial playback error: " + e.message);
         that.adLoadError = e.message;
+        that.adLoadErrorCode = e.error;
         if (done_callback !== undefined)
             done_callback(false, e);
     });
-};
-
-b5.Instants.prototype.IsAdReady = function()
-{
-    var r = this.adReady;
-    this.adReady = false;
-    return r;
 };
 
 b5.Instants.prototype.CreateScreenshotCache = function(height)
