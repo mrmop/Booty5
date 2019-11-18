@@ -9728,6 +9728,11 @@ b5.Xoml.prototype.parseActor = function(actor, parent, item)
         actor.touchable = true;
         actor.onTapped = Function("touch_pos", item.OnT);
     }
+    if (item.OnDBT !== undefined)
+    {
+        actor.touchable = true;
+        actor.onDblTapped = Function("touch_pos", item.OnDBT);
+    }
     if (item.OnB !== undefined)
     {
         actor.touchable = true;
