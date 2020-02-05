@@ -441,6 +441,12 @@ b5.Instants.prototype.ReloadVideoAd = function(done_callback)
 {
     if (!this.videoAdsSupported)
         return;
+    if (!this.preloadedVideoAd)
+    {
+        if (done_callback !== undefined)
+            done_callback(false, { message: "invalid vid instance" });
+        return;
+    }
     var that = this;
     this.preloadedVideoAd.loadAsync()
       .then(function() {
@@ -474,8 +480,10 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
         FBInstant.logEvent("ADVS no support", 1);
         return;
     }
-    if (this.preloadedVideoAd === null)
+    if (!this.preloadedVideoAd)
     {
+        if (done_callback !== undefined)
+            done_callback(false);
         return;
     }
     this.preloadedVideoAd.showAsync()
@@ -525,6 +533,12 @@ b5.Instants.prototype.ReloadInterstitialAd = function(done_callback)
 {
     if (!this.interstitialAdsSupported)
         return;
+    if (!this.preloadedInterAd)
+    {
+        if (done_callback !== undefined)
+            done_callback(false, { message: "invalid inter instance" });
+        return;
+    }
     var that = this;
     this.preloadedInterAd.loadAsync()
       .then(function() {
@@ -558,7 +572,7 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
         FBInstant.logEvent("ADIS no support", 1);
         return;
     }
-    if (this.preloadedInterAd === null)
+    if (!this.preloadedInterAd)
     {
         if (done_callback !== undefined)
         {
