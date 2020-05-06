@@ -421,6 +421,8 @@ b5.App.prototype.onTouchStart = function(e)
         e.stopPropagation();
         if (app.prevent_default)
             e.preventDefault();
+        if (e.touches.length > 1)
+            return;
     }
 
     // Get touch pos
@@ -467,6 +469,8 @@ b5.App.prototype.onTouchEnd = function(e)
         e.stopPropagation();
         if (app.prevent_default)
             e.preventDefault();
+        if (e.touches.length > 1)
+            return;
     }
 
     // Get touch pos
@@ -513,7 +517,10 @@ b5.App.prototype.onTouchMove = function(e)
         e.stopPropagation();
         if (app.prevent_default)
             e.preventDefault();
+        if (e.touches.length > 1)
+            return;
     }
+
     // Get touch pos and drag
     var focus1 = app.focus_scene;
     var focus2 = app.focus_scene2;

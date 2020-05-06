@@ -101,7 +101,10 @@ b5.Sound.init = function(app)
     catch(e)
     {
         if (b5.app.instants)
-            FBInstant.logEvent('Web audio error');
+        {
+            if (FBInstant)
+                FBInstant.logEvent('Web audio error');
+        }
         return false;
     }
     return true;
