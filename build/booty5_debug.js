@@ -7270,6 +7270,8 @@ b5.App.prototype.onTouchStart = function(e)
         e.stopPropagation();
         if (app.prevent_default)
             e.preventDefault();
+        if (e.touches.length > 1)
+            return;
     }
 
     // Get touch pos
@@ -7316,6 +7318,8 @@ b5.App.prototype.onTouchEnd = function(e)
         e.stopPropagation();
         if (app.prevent_default)
             e.preventDefault();
+        if (e.touches.length > 1)
+            return;
     }
 
     // Get touch pos
@@ -7362,7 +7366,10 @@ b5.App.prototype.onTouchMove = function(e)
         e.stopPropagation();
         if (app.prevent_default)
             e.preventDefault();
+        if (e.touches.length > 1)
+            return;
     }
+
     // Get touch pos and drag
     var focus1 = app.focus_scene;
     var focus2 = app.focus_scene2;
@@ -11441,7 +11448,10 @@ b5.Sound.init = function(app)
     catch(e)
     {
         if (b5.app.instants)
-            FBInstant.logEvent('Web audio error');
+        {
+            if (FBInstant)
+                FBInstant.logEvent('Web audio error');
+        }
         return false;
     }
     return true;
@@ -12449,6 +12459,12 @@ b5.Instants.prototype.ReloadVideoAd = function(done_callback)
 {
     if (!this.videoAdsSupported)
         return;
+    if (!this.preloadedVideoAd)
+    {
+        if (done_callback !== undefined)
+            done_callback(false, { message: "invalid vid instance" });
+        return;
+    }
     var that = this;
     this.preloadedVideoAd.loadAsync()
       .then(function() {
@@ -12482,8 +12498,10 @@ b5.Instants.prototype.ShowVideoAd = function(done_callback)
         FBInstant.logEvent("ADVS no support", 1);
         return;
     }
-    if (this.preloadedVideoAd === null)
+    if (!this.preloadedVideoAd)
     {
+        if (done_callback !== undefined)
+            done_callback(false);
         return;
     }
     this.preloadedVideoAd.showAsync()
@@ -12533,6 +12551,12 @@ b5.Instants.prototype.ReloadInterstitialAd = function(done_callback)
 {
     if (!this.interstitialAdsSupported)
         return;
+    if (!this.preloadedInterAd)
+    {
+        if (done_callback !== undefined)
+            done_callback(false, { message: "invalid inter instance" });
+        return;
+    }
     var that = this;
     this.preloadedInterAd.loadAsync()
       .then(function() {
@@ -12566,7 +12590,7 @@ b5.Instants.prototype.ShowInterstitialAd = function(done_callback)
         FBInstant.logEvent("ADIS no support", 1);
         return;
     }
-    if (this.preloadedInterAd === null)
+    if (!this.preloadedInterAd)
     {
         if (done_callback !== undefined)
         {
