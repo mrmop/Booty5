@@ -26,7 +26,7 @@ b5.Instants = function()
     this.shotCache = null;
     var that = this;
     
-    if (FBInstant !== undefined)
+    if (typeof FBInstant != "undefined")
     {
         FBInstant.onPause(function() {
             if (that.onPaused !== undefined)
